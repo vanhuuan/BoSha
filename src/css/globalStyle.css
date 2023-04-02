@@ -1,0 +1,18 @@
+input[type='number'] {
+  appearance: none;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.table-container {
+  margin-top: 20px;
+  width: 100%;
+  background-color: white;
+}
+
+@import url('./header.css');
+@import url('./search.css');
