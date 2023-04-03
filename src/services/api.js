@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.services";
 
 const instance = axios.create({
-    baseURL: "https://takefood-apigateway-admin.azurewebsites.net",
+    baseURL: "http://167.71.200.53:80",
     headers: {
         "Content-Type": "application/json",
     },
