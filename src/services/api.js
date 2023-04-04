@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.services";
 
 const instance = axios.create({
-    baseURL: "http://167.71.200.53:80",
+    baseURL: "https://boshaapi.site",
     headers: {
         "Content-Type": "application/json",
     },
