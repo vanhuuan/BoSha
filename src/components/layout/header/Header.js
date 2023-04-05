@@ -20,7 +20,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['HOT', 'Đang theo dõi', 'Thể loại', 'Tìm truyện'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Tài khoản', 'Tác giả', 'Đăng xuất'];
 
 function Header() {
     let navigate = useNavigate()
@@ -61,7 +61,13 @@ function Header() {
 
     const handleAvaMenuClick = (event, setting) => {
         switch (setting) {
-            case 'Logout': logout()
+            case 'Đăng xuất': logout() 
+                break;
+            case 'Tài khoản': navigate('/')
+                break;
+            case 'Tác giả': navigate('/')
+                break;
+            default: navigate('/')
         }
         handleCloseUserMenu()
     };
