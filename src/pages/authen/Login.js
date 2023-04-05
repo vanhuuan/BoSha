@@ -79,6 +79,7 @@ const Login = () => {
         localStorage.setItem("RefreshToken", login.data.refreshToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
+        localStorage.setItem("Ava", login.data.photo)
         navigate("/")
       }else{
         setNotifyText('Email chưa đăng ký!')

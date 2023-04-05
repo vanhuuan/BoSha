@@ -26,6 +26,7 @@ function Header() {
     let navigate = useNavigate()
     let isLogin = false;
     const userName = localStorage.getItem("Name")
+    const ava = localStorage.getItem('Ava')
 
     if (userName) {
         isLogin = true
@@ -158,7 +159,7 @@ function Header() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={ userName } src={ ava } />
                             </IconButton>
                         </Tooltip>
                         <Menu
