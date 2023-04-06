@@ -7,6 +7,7 @@ import {
   Navigate,
   // Link
 } from "react-router-dom";
+import { useEffect } from 'react';
 import Home from './pages/Home';
 import Header from './components/layout/header/Header';
 import Login from './pages/authen/Login';
@@ -15,6 +16,10 @@ import ForgotPassword from './pages/authen/CheckEmail';
 import ChangePassword from './pages/authen/ChangePassword';
 
 function App() {
+  useEffect(() => {
+    document.title = 'BoSha';
+  }, []);
+
   return (
     <>
       <BrowserRouter>

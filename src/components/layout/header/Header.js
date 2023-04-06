@@ -61,7 +61,7 @@ function Header() {
 
     const handleAvaMenuClick = (event, setting) => {
         switch (setting) {
-            case 'Đăng xuất': logout() 
+            case 'Đăng xuất': logout()
                 break;
             case 'Tài khoản': navigate('/')
                 break;
@@ -73,7 +73,7 @@ function Header() {
     };
 
     return (
-        <AppBar position="static" sx={{backgroundColor: "#89D5C9"}}>
+        <AppBar position="static" sx={{ backgroundColor: "#89D5C9" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -155,49 +155,49 @@ function Header() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block', marginRight: 3 , fontSize: 16}}
+                                sx={{ my: 2, color: 'white', display: 'block', marginRight: 3, fontSize: 16 }}
                             >
                                 {page}
                             </Button>
                         ))}
                     </Box>
-                    { isLogin ?
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={ userName } src={ ava } />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={(event) => handleAvaMenuClick(event, setting)}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    :
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Button sx={{ my: 2, color: 'white', display: 'block', fontFamily: 'monospace', fontSize: 20 }} 
-                         onClick={(event) => SignIn(event)}>
-                            Đăng nhập
-                        </Button>
-                    </Box>
+                    {isLogin ?
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt={userName} src={ava} />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting} onClick={(event) => handleAvaMenuClick(event, setting)}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                        :
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Button sx={{ my: 2, color: 'white', display: 'block', fontFamily: 'monospace', fontSize: 20 }}
+                                onClick={(event) => SignIn(event)}>
+                                Đăng nhập
+                            </Button>
+                        </Box>
                     }
                 </Toolbar>
             </Container>
