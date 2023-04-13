@@ -7,6 +7,8 @@ import {
   Navigate,
   // Link
 } from "react-router-dom";
+import 'bootstrap/dist/js/bootstrap.bundle'
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from 'react';
 import Home from './pages/Home';
 import Header from './components/layout/header/Header';
@@ -14,6 +16,7 @@ import Login from './pages/authen/Login';
 import SignUp from './pages/authen/SignUp';
 import ForgotPassword from './pages/authen/CheckEmail';
 import ChangePassword from './pages/authen/ChangePassword';
+import UserBook from './pages/book/UserBooks';
 
 function App() {
   useEffect(() => {
@@ -29,6 +32,7 @@ function App() {
           <Route path="/signUp" element={<><Header/><SignUp /></>}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route path="/changePass" element={<ChangePassword />}></Route>
+          <Route path="/userBook" element={<><Header/><UserBook /></>}></Route>
         </Routes>      
       </BrowserRouter>
     </>
