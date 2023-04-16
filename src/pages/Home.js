@@ -15,7 +15,7 @@ const Home = () => {
   
   return (
     <>
-    <EditorImage sx={{margin: 100, border:'1px solid black'}}/>
+      Hallo
     </>
     
   )

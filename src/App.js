@@ -17,6 +17,7 @@ import SignUp from './pages/authen/SignUp';
 import ForgotPassword from './pages/authen/CheckEmail';
 import ChangePassword from './pages/authen/ChangePassword';
 import UserBook from './pages/book/UserBooks';
+import AddBook from './pages/book/AddBook';
 
 function App() {
   useEffect(() => {
@@ -32,7 +33,8 @@ function App() {
           <Route path="/signUp" element={<><Header/><SignUp /></>}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route path="/changePass" element={<ChangePassword />}></Route>
-          <Route path="/userBook" element={<><Header/><UserBook /></>}></Route>
+          <Route path="/book/userBook" element={<><Header/><UserBook /></>}></Route>
+          <Route path="/book/addBook" element={<><Header/><AddBook/></>}></Route>
         </Routes>      
       </BrowserRouter>
     </>

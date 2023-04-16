@@ -1,35 +1,49 @@
 .mangaCard{
-    width: 225px;
+    width: 20%;
     position: relative;
-    height: 350px;
+    height: 100%;
     border-radius: 5px;
     margin: 5px;
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     justify-content: center;
     align-items: center
 }
 
 .mangaCard img{
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     width: 100%;
     height: 100%;
 }
 
-.mangaCard div{
+.mangaCard .name{
     position: absolute;
     left: auto;
     width: 100%;
     height: 50px;
-    background: rgba(0,0,0,0.7);
-    display: flex;
+    background: transparent;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
     bottom: 0;
 }
-.mangaCard:hover div{
+
+.mangaCard .info{
+    left: auto;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    bottom: 0;
+}
+
+.mangaCard:hover .name{
     font-weight: bold;
     text-decoration: underline;
 }

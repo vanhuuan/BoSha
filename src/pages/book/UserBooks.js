@@ -2,24 +2,31 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import BookCard from '../../components/book/BookCard'
+import { useNavigate } from 'react-router-dom';
 
 import '../../css/userbook.css'
+import { Button } from '@mui/material';
 
 var book = [{
     'name': 'Test',
     'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
     'id': 1
-    },
-    {
-        'name': 'Test',
-        'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
-        'id': 1
-    },
-    {
-        'name': 'Test',
-        'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
-        'id': 1
-    }
+},
+{
+    'name': 'Test',
+    'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
+    'id': 1
+},
+{
+    'name': 'Test',
+    'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
+    'id': 1
+},
+{
+    'name': 'Test',
+    'image': 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=YGjrBjbapT8AX8jRZAJ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfDegp71Nyok3qcGoMHWhK7omg5voETDGVVnfFd6yDvaCw&oe=643C6297',
+    'id': 1
+}
 ]
 
 const UserBook = () => {
@@ -27,6 +34,8 @@ const UserBook = () => {
     const [searchInput, setSearchInput] = useState('')
     const [searchSent, setSearchSent] = useState(false)
     const [mangaList, setMangaList] = useState(book)
+
+    let navigate = useNavigate();
 
     useEffect(() => {
 
@@ -37,6 +46,10 @@ const UserBook = () => {
         if (e.target.value.length === 0) {
             setSearchSent(false)
         }
+    }
+
+    const addBook = () => {
+        navigate('/book/addBook')
     }
     return (
         <div className='homePage container-fluid'>
@@ -53,13 +66,9 @@ const UserBook = () => {
             </div>
 
             <div className='row d-flex flex-row justify-content-between'>
-                <div className="col-lg-2"></div>
+                {/* <div className="col-lg-2"></div> */}
                 <div className='col-lg-8 container-fluid' >
                     <div className='row'>
-                        <div style={{ padding: '10px' }} className='col-lg-12 text-center'>
-                            <h2>Read Manga Online</h2>
-                        </div>
-
                         <div className='row d-flex flex-row justify-content-between'>
                             <div className='col-lg-12 d-flex justify-content-center flex-wrap' style={{ paddingTop: '20px' }}>
                                 {
@@ -72,10 +81,7 @@ const UserBook = () => {
                     </div>
                 </div>
                 <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>
-                    <h4>Manga by genres:</h4>
-                    <ul className='d-flex flex-column align-items-start' style={{ listStyle: 'none', width: '100%' }}>
-                        <li><Link style={{ color: '#000' }} to='/genres/algo'>Algo</Link></li>
-                    </ul>
+                    <Button id="addBook" href="/book/addBook" variant="contained">Thêm truyện mới</Button>
                 </div>
             </div>
         </div>

@@ -65,7 +65,7 @@ function Header() {
                 break;
             case 'Tài khoản': navigate('/')
                 break;
-            case 'Tác giả': navigate('/userBook')
+            case 'Tác giả': navigate('/book/userBook')
                 break;
             default: navigate('/')
         }

@@ -1,0 +1,18 @@
+.App {
+    font-family: sans-serif;
+  }
+
+.comment-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-icon {
+    display: flex;
+    align-items: center;
+}
+
+
+.icon:hover {
+    color: red;
+}
