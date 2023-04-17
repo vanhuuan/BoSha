@@ -1,6 +1,9 @@
 import React from "react";
-import { Typography } from "@mui/material";
-
+import { Typography, Grid, Button } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ForumIcon from '@mui/icons-material/Forum';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ShareIcon from '@mui/icons-material/Share';
 
 const BookInfo = () => {
     return (
@@ -46,3 +49,5 @@ const BookInfo = () => {
         </>
     );
 }
+
+export default BookInfo;

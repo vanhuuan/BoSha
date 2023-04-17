@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid } from "@mui/material";
 
 const BottomInfo = () => {
     return (
@@ -30,3 +31,5 @@ const BottomInfo = () => {
         </Grid>
     );
 }
+
+export default  BottomInfo;

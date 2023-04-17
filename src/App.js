@@ -18,6 +18,8 @@ import ForgotPassword from './pages/authen/CheckEmail';
 import ChangePassword from './pages/authen/ChangePassword';
 import UserBook from './pages/book/UserBooks';
 import AddBook from './pages/book/AddBook';
+import BookDetail from './pages/book/BookDetails';
+import PageNotFound from './pages/NotFound';
 
 function App() {
   useEffect(() => {
@@ -35,6 +37,8 @@ function App() {
           <Route path="/changePass" element={<ChangePassword />}></Route>
           <Route path="/book/userBook" element={<><Header/><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header/><AddBook/></>}></Route>
+          <Route path="/book/:id" element={<><Header/><BookDetail /></>}></Route>
+          <Route path="*" component={<><Header/><PageNotFound/></>} />
         </Routes>      
       </BrowserRouter>
     </>

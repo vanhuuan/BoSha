@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import { Divider, Avatar, Grid, Paper } from "@mui/material";
 
-import "./CommentList.css";
+import "../css/CommentList.css";
 
 const imgLink =
     "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/341263434_237177232146883_4137101451342149163_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oVBrUKg6yQAAX8WzY_X&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBi2or8ZeYBWoubGayzCsvCNN5xr_CldVenzY8DGaB3jw&oe=6440F313";
