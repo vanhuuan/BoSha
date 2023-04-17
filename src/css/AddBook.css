@@ -30,7 +30,12 @@
 }
 @media (min-width: 1400px){
     .container{
-        width: 100%;
-        max-width: none;
+        max-width: 100%;
     }    
+}
+
+@media (min-width: 576px){
+    .container, .container-md, .container-sm {
+        max-width: 100%;
+    }
 }
