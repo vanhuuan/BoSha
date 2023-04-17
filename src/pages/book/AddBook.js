@@ -42,7 +42,7 @@ const AddBook = () => {
                         className='input-text'
                       />
                     </div>
-                    <MultipleSelect></MultipleSelect>
+                      <MultipleSelect></MultipleSelect>
                     <div sx={{ marginTop: '4px' }}>
                       <RadioPrice></RadioPrice>
                     </div>
@@ -54,8 +54,8 @@ const AddBook = () => {
              <EditorDescription sx={{margin: 100, border:'1px solid black'}}/>
             </div>
             <div style={{display: 'flex',  justifyContent: 'space-between', margin: '1em 0'}}>
-              <Button variant="contained" color='success' sx={{marginRight: '1em', width: '10em'}}>Thêm truyện</Button>
-              <Button variant="contained" color='error' sx={{marginRight: '1em', width: '10em'}}>Reset</Button>
+              <Button variant="contained" color='success' sx={{ width: '10em'}}>Thêm truyện</Button>
+              <Button variant="contained" color='error' sx={{ width: '10em'}}>Reset</Button>
             </div>
           </Grid>
           <Grid item xs={1}>

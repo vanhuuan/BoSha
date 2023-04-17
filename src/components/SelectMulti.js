@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { Theme, useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import './../css/SelectMulti.css';
+import { userBookService } from '../services/userBook.service';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -17,19 +18,6 @@ const MenuProps = {
     }
   }
 };
-
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder"
-];
 
 function getStyles(name, category, theme) {
   return {
@@ -43,13 +31,21 @@ function getStyles(name, category, theme) {
 export default function MultipleSelect() {
   const theme = useTheme();
   const [category, setcategory] = React.useState([])
+  const [categories, setCategories] = React.useState([])
 
-  const handleChange = (event) => {
+  useEffect( async () => {
+    const rs = await userBookService.categories();
+    console.log(rs)
+    if(rs){
+      setCategories(rs.data)
+    }
+  }, []);
+  
+  const handleChange = (event, key) => {
     const {
       target: { value }
     } = event;
     setcategory(
-      // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
   };
@@ -68,20 +64,23 @@ export default function MultipleSelect() {
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {categories.map((cate) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, category, theme)}
+              value={cate.id}
+              style={getStyles(cate, categories, theme)}
             >
-              {name}
+              {cate.name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
       <div className="category-item-list">
         {category.map((item) => {
-          return <span className="category-item">{item}</span>;
+          var cateName = ""
+          if(categories.find((cate) => cate.id == item)){
+            cateName = categories.find((cate) => cate.id == item).name
+          }
+          return <span className="category-item">{cateName}</span>;
         })}
       </div>
     </div>
