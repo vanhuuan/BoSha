@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid, Button } from "@mui/material";
+import { Typography, Grid, Button, InputLabel, OutlinedInput, InputAdornment } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ForumIcon from '@mui/icons-material/Forum';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -20,6 +20,19 @@ const BookInfo = () => {
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Tình trạng: </span>
                 <span>Truyện mới</span>
             </Typography>
+            <div sx={{ marginTop: '4px' }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Giá tiền</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-amount"
+                    startAdornment={<InputAdornment position="start">VND</InputAdornment>}
+                    label="Amount"
+                    InputProps={{
+                        readOnly: true
+                    }}
+                    defaultValue={"1000000"}
+                    fullWidth
+                />
+            </div>
             <Grid container>
                 <Grid item sm={3} xs={3}>
                     <div className='info-item'>

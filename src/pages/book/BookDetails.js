@@ -1,10 +1,12 @@
 import React, { useEffect } from "react"
 import { useParams } from 'react-router-dom'
-import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'
+import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, InputAdornment } from '@mui/material'
 import ListChapter from "../../components/ListChapter";
 import CommentList from "../../components/CommentList";
 import BookInfo from "../../components/BookInfo";
 import BottomInfo from "../../components/BottomInfo";
+import BookCategories from "../../components/book/BookCategories";
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 
 export default function BookDetail() {
     const { id } = useParams();
@@ -34,17 +36,17 @@ export default function BookDetail() {
                                     <Grid item md={9} sm={12} width="100%">
                                         <div style={{ marginTop: 2 + 'em' }}>
                                             <TextField
-                                                required
                                                 id="outlined-required"
-                                                label="Required"
+                                                label="Tên truyện"
                                                 defaultValue="Em tòn qua nhà trai"
                                                 className='input-text'
+                                                InputProps={{
+                                                    readOnly: true
+                                                }}
+                                                sx={{ marginBottom: '1em' }}
                                             />
                                         </div>
-                                        {/* <MultipleSelect></MultipleSelect> */}
-                                        <div sx={{ marginTop: '4px' }}>
-                                            {/* <RadioPrice></RadioPrice> */}
-                                        </div>
+                                        <BookCategories categories={[""]}></BookCategories>
                                         <BookInfo></BookInfo>
                                     </Grid>
                                 </Grid>
