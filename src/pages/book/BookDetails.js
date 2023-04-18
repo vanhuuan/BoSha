@@ -1,19 +1,23 @@
 import React, { useEffect } from "react"
-import { useParams } from 'react-router-dom'
-import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, InputAdornment } from '@mui/material'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
 import ListChapter from "../../components/ListChapter";
 import CommentList from "../../components/CommentList";
 import BookInfo from "../../components/BookInfo";
 import BottomInfo from "../../components/BottomInfo";
 import BookCategories from "../../components/book/BookCategories";
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function BookDetail() {
     const { id } = useParams();
 
+    let navigate = useNavigate();
+
     useEffect(() => {
         console.log(id);
     }, [id]);
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -23,8 +27,11 @@ export default function BookDetail() {
                     </Grid>
                     <Grid item xs={10}>
                         <div className='container'>
-                            <div className='container-header'>
+                            <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between'}}>
                                 <Typography variant='h5'> Thêm truyện mới </Typography>
+                                <IconButton onClick={() => { navigate('/book/edit/'+id) }}>
+                                    <EditIcon style={{ color: "#89D5C9"}}></EditIcon>
+                                </IconButton>
                             </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>

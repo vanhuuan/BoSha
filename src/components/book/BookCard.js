@@ -4,12 +4,11 @@ import axios from 'axios'
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-
+import { useNavigate } from 'react-router-dom';
 import '../../css/bookcard.css'
 
 const BookCard = (props) => {
-
-
+    let navigate = useNavigate()
     const mangaName = (name) => {
         const newName = []
         name.split(' ').forEach(item => {
@@ -18,9 +17,13 @@ const BookCard = (props) => {
         return(newName.join(' '))
     }
 
+    const handleChoseBook = (e) => {
+        navigate("/book/"+props.manga.id)
+    }
+
     return (
         <>
-            <div className='mangaCard'>
+            <div className='mangaCard' onClick={handleChoseBook}>
                 <img src={`${props.manga.image}`} alt={props.manga.name} />
                 <div className='name' style={{marginBottom: 5}}>
                     <div>
