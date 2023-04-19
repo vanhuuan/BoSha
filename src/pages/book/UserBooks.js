@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import BookCard from '../../components/book/BookCard'
 import { useNavigate } from 'react-router-dom';
-
+import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
 import { Button, Pagination } from '@mui/material';
 
@@ -30,15 +30,32 @@ var book = [{
 ]
 
 const UserBook = () => {
-
     const [searchInput, setSearchInput] = useState('')
     const [searchSent, setSearchSent] = useState(false)
     const [mangaList, setMangaList] = useState(book)
+    const [searchParams, setSearchParams] = useSearchParams();
+    let pageNumber = searchParams.get("pageNumber")
 
     let navigate = useNavigate();
 
-    useEffect(() => {
+    const onPageChange = (e, page) => {
+        console.log(page)
+        navigate("/book/UserBook", 
+        {
+            pageNumber: page
+        })
+    }
 
+    const load = async () => {
+        const rs = await userBookService.userBook(pageNumber, 10, "Name", " ", "CreateDate", "Desc");
+        console.log(rs)
+        if(rs){
+            setMangaList(rs.data)
+        }
+    }
+
+    useEffect(() => {
+        load()
     }, [])
 
     const onSearchInputChange = e => {
@@ -48,9 +65,6 @@ const UserBook = () => {
         }
     }
 
-    const addBook = () => {
-        navigate('/book/addBook')
-    }
     return (
         <div className='homePage container-fluid'>
 
@@ -72,15 +86,15 @@ const UserBook = () => {
                         <div className='row d-flex flex-row justify-content-between'>
                             <div className='col-lg-12 d-flex justify-content-center flex-wrap' style={{ paddingTop: '20px' }}>
                                 {
-                                    mangaList.map((item, index) => {
-                                        return <BookCard key={index} manga={{ name: item.name, id: item.id, image: item.image }} />
+                                    mangaList.data.map((item, index) => {
+                                        return <BookCard key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
                                     })
                                 }
                             </div>
                         </div>
                     </div>
                     <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
-                        <Pagination count={10} variant="outlined" shape="rounded" />
+                        <Pagination page={mangaList.pageIndex} count={mangaList.total} variant="outlined" shape="rounded" />
                     </div>
                 </div>
                 <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>

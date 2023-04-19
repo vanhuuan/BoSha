@@ -8,9 +8,22 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import "../css/ListChapter.css";
+import { chapterService } from '../services/chapter.services';
 
-export default function ListChapter() {
+export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
+  const [chapters, setChapters] = React.useState([])
+  const load = async () => {
+    const rs = await chapterService.chapters(props.book.id);
+    console.log(rs)
+    if(rs){
+      setChapters(rs.data)
+    }
+  }
+
+  React.useEffect(() => {
+    load()
+  }, [])
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -27,9 +40,8 @@ export default function ListChapter() {
 
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {[0, 1, 2, 3].map((value) => {
+      {chapters.map((value) => {
         const labelId = `checkbox-list-label-${value}`;
-
         return (
           <ListItem
             key={value}

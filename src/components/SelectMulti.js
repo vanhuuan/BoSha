@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Theme, useTheme } from "@mui/material/styles";
+import React, { useEffect } from 'react';
+import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import './../css/SelectMulti.css';
-import { userBookService } from '../services/userBook.service';
+import { userBookService } from '../services/userBook.services';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,13 +32,16 @@ export default function MultipleSelect() {
   const theme = useTheme();
   const [category, setcategory] = React.useState([])
   const [categories, setCategories] = React.useState([])
-
-  useEffect( async () => {
+  const load = async () => {
     const rs = await userBookService.categories();
     console.log(rs)
     if(rs){
       setCategories(rs.data)
     }
+  }
+
+  useEffect(() => {
+    load()
   }, []);
   
   const handleChange = (event, key) => {
@@ -77,8 +80,8 @@ export default function MultipleSelect() {
       <div className="category-item-list">
         {category.map((item) => {
           var cateName = ""
-          if(categories.find((cate) => cate.id == item)){
-            cateName = categories.find((cate) => cate.id == item).name
+          if(categories.find((cate) => cate.id === item)){
+            cateName = categories.find((cate) => cate.id === item).name
           }
           return <span className="category-item">{cateName}</span>;
         })}

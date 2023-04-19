@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
 import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
 import ListChapter from "../../components/ListChapter";
@@ -8,15 +8,26 @@ import BottomInfo from "../../components/BottomInfo";
 import BookCategories from "../../components/book/BookCategories";
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import EditIcon from '@mui/icons-material/Edit';
+import { userBookService } from "../../services/userBook.services";
 
 export default function BookDetail() {
     const { id } = useParams();
+    const [ book, setBook ] = useState({})
 
     let navigate = useNavigate();
 
+    const load = async () => {
+        const rs = await userBookService.bookDetail(id)
+        console.log(rs)
+        if(rs){
+            setBook(rs.data)
+        }
+    }
+
     useEffect(() => {
         console.log(id);
-    }, [id]);
+        load()
+    }, [id])
 
     return (
         <div>
@@ -28,7 +39,7 @@ export default function BookDetail() {
                     <Grid item xs={10}>
                         <div className='container'>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between'}}>
-                                <Typography variant='h5'> Thêm truyện mới </Typography>
+                                <Typography variant='h5'>{book.name} </Typography>
                                 <IconButton onClick={() => { navigate('/book/edit/'+id) }}>
                                     <EditIcon style={{ color: "#89D5C9"}}></EditIcon>
                                 </IconButton>
@@ -37,7 +48,7 @@ export default function BookDetail() {
                                 <Grid container spacing={2}>
                                     <Grid item md={3} sm={12}>
                                         <Box mt={2} textAlign="left">
-                                            <img src='https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/341263434_237177232146883_4137101451342149163_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oVBrUKg6yQAAX_9mUZ9&_nc_ht=scontent.fdad1-2.fna&oh=00_AfAJzvX02tdE1Ou2rQIg-OZ_oHkpF51x_iim68782kYIQg&oe=6440F313' alt='Default img' width="100%" />
+                                            <img src={book.cover} alt='Cover' width="100%" />
                                         </Box>
                                     </Grid>
                                     <Grid item md={9} sm={12} width="100%">
@@ -45,7 +56,7 @@ export default function BookDetail() {
                                             <TextField
                                                 id="outlined-required"
                                                 label="Tên truyện"
-                                                defaultValue="Em tòn qua nhà trai"
+                                                defaultValue={book.name}
                                                 className='input-text'
                                                 InputProps={{
                                                     readOnly: true
@@ -53,7 +64,7 @@ export default function BookDetail() {
                                                 sx={{ marginBottom: '1em' }}
                                             />
                                         </div>
-                                        <BookCategories categories={[""]}></BookCategories>
+                                        <BookCategories categories={book.categories}></BookCategories>
                                         <BookInfo></BookInfo>
                                     </Grid>
                                 </Grid>
@@ -68,7 +79,7 @@ export default function BookDetail() {
                                 <Typography variant='h6'> Danh sách tập </Typography>
                             </div>
                             <div className='container-body'>
-                                <ListChapter></ListChapter>
+                                <ListChapter book={{ id: book.id}}></ListChapter>
                             </div>
                         </div>
                         <div>
