@@ -14,6 +14,7 @@ export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
   const [chapters, setChapters] = React.useState([])
   const load = async () => {
+    console.log(props.book.id)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
     if(rs){
@@ -41,7 +42,7 @@ export default function ListChapter(props) {
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {chapters.map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
+        const labelId = `checkbox-list-label-${value.chapterNumber}`;
         return (
           <ListItem
             key={value}
@@ -51,8 +52,8 @@ export default function ListChapter(props) {
             disablePadding
             className='chapter-item'
           >
-            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-              <ListItemText id={labelId} primary={`Tập ${value + 1}`} />
+            <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
+              <ListItemText id={labelId} primary={value.chapterName} />
             </ListItemButton>
           </ListItem>
         );

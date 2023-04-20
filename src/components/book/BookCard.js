@@ -24,7 +24,7 @@ const BookCard = (props) => {
     return (
         <>
             <div className='mangaCard' onClick={handleChoseBook}>
-                <img src={`${props.manga.image}`} alt={props.manga.name} />
+                <img src={`${props.manga.image}`} alt={props.manga.name} style={{width: '5em', height: '7em'}}/>
                 <div className='name' style={{marginBottom: 5}}>
                     <div>
                         <FavoriteOutlinedIcon/> {100000} <RemoveRedEyeOutlinedIcon/> {1000000}

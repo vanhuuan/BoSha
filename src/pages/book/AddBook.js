@@ -31,7 +31,7 @@ const AddBook = () => {
               <div className='container-body'>
                 <Grid container spacing={2}>
                   <Grid item md={3} sm={12}>
-                    <FileInput></FileInput>
+                    <FileInput book={{ img: "https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=DzMGtcl13N8AX9qVnFt&_nc_ht=scontent.fdad1-3.fna&oh=00_AfCTbFjIJtxx95fbVv_a2YC3aqz-UnAsYygTnmr3920TrA&oe=644645D7" }}></FileInput>
                   </Grid>
                   <Grid item md={9} sm={12} width="100%">
                     <div style={{ marginTop: 2 + 'em' }}>

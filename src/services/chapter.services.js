@@ -1,8 +1,8 @@
 import api from "./api"; 
 const baseURL = "https://boshaapi.site";
 export const chapterService = {
-    chapters: async () => {
-        return await api.get(baseURL+'/Chapter/Chapters?bookId=')
+    chapters: async (bookId) => {
+        return await api.get(`${baseURL}/Chapter/Chapters?bookId=${bookId}`)
     },
     chapterDetail: async () => {
         return await api.get(baseURL+'/Chapter/ChapterDetail?chapterId=')

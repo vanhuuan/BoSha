@@ -5,10 +5,13 @@ export const userBookService = {
         return await api.get(baseURL+'/categories')
     },
     userBook: async (pageNumber, pageSize, queryType, queryString, sortBy, sortType) => {
-        return await api.get(`${baseURL}/GetUserBook?PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=${sortBy}&SortType=${sortType}`)
+        return await api.get(`${baseURL}/Book/GetUserBook?PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=${sortBy}&SortType=${sortType}&State=asdsd&MinPrice=1&MaxPrice=1`)
     },
     bookDetail: async (id) => {
-        return await api.get(baseURL+'/Book?id=id')
+        return await api.get(`${baseURL}/Book?id=${id}`)
+    },
+    addBook: async (body) => {
+        return await api.post(baseURL+'/Book/AddBook')
     },
 }
 
