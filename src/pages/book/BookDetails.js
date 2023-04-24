@@ -10,8 +10,6 @@ import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import EditIcon from '@mui/icons-material/Edit';
 import { userBookService } from "../../services/userBook.services";
 
-
-
 export default function BookDetail() {
     const { id } = useParams();
     const [book, setBook] = useState({
@@ -84,6 +82,9 @@ export default function BookDetail() {
                                     </div>
                                     <div className='container-bottom'>
                                         <BottomInfo book={{ bookDetail: book }}></BottomInfo>
+                                    </div>
+                                    <div className='container-bottom'>
+                                        <iframe width={"100%"} src="https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656848e27bd8b116546e9%2F643656868e27bd8b116546eb.html?alt=media&token=c30b3b69-47f7-487e-8410-1f3b0ec56b14"></iframe>
                                     </div>
                                 </div>
 

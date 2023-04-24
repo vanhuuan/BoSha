@@ -28,7 +28,7 @@ function getStyles(name, category, theme) {
   };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect(props) {
   const theme = useTheme();
   const [category, setcategory] = React.useState([])
   const [categories, setCategories] = React.useState([])
@@ -42,6 +42,10 @@ export default function MultipleSelect() {
 
   useEffect(() => {
     load()
+    try{
+      if(props.book.categories)
+        setcategory(props.book.categories)
+    }catch(err){};
   }, []);
   
   const handleChange = (event, key) => {

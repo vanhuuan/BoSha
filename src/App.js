@@ -21,6 +21,7 @@ import AddBook from './pages/book/AddBook';
 import BookDetail from './pages/book/BookDetails';
 import PageNotFound from './pages/NotFound';
 import EditBook from './pages/book/EditBook';
+import Chapter from './pages/chapter/Chapter';
 
 function App() {
   useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/book/addBook" element={<><Header/><AddBook/></>}></Route>
           <Route path="/book/:id" element={<><Header/><BookDetail /></>}></Route>
           <Route path="/book/edit/:id" element={<><Header/><EditBook/></>}></Route>
+          <Route path="/chapter/:id" element={<><Header/><Chapter/></>}></Route>
           <Route path='*' element={<><Header/><PageNotFound/></>} />
         </Routes>      
       </BrowserRouter>

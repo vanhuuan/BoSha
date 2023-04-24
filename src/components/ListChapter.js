@@ -9,10 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import "../css/ListChapter.css";
 import { chapterService } from '../services/chapter.services';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
   const [chapters, setChapters] = React.useState([])
+  let navigate = useNavigate()
   const load = async () => {
     console.log(props.book.id)
     const rs = await chapterService.chapters(props.book.id);
@@ -51,6 +53,7 @@ export default function ListChapter(props) {
             }
             disablePadding
             className='chapter-item'
+            onClick={(e) => {navigate(`/chapter/${value.chapterId}`)}}
           >
             <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
               <ListItemText id={labelId} primary={value.chapterName} />
