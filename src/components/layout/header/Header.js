@@ -18,6 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Grid } from "@mui/material";
 
 const pages = ['HOT', 'Đang theo dõi', 'Thể loại', 'Tìm truyện'];
 const settings = ['Tài khoản', 'Tác giả', 'Đăng xuất'];
@@ -27,6 +28,7 @@ function Header() {
     let isLogin = false;
     const userName = localStorage.getItem("Name")
     const ava = localStorage.getItem('Ava')
+    const [ isHover, setIsHover ] = useState(true)
 
     if (userName) {
         isLogin = true
@@ -151,15 +153,28 @@ function Header() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {pages.map((page) =>{ 
+                            if(page === "Thể loại")
+                                return (
+                                    <Button
+                                        key={page}
+                                        onClick={handleCloseNavMenu}
+                                        onMouseEnter={(e) => {setIsHover(!isHover);}}
+                                        sx={{ my: 2, color: 'white', display: 'block', marginRight: 3, fontSize: 16 }}
+                                    >
+                                        {page}
+                                    </Button>
+                                )
+                            return (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
+                                onMouseE
                                 sx={{ my: 2, color: 'white', display: 'block', marginRight: 3, fontSize: 16 }}
                             >
                                 {page}
                             </Button>
-                        ))}
+                        ) } ) }
                     </Box>
                     {isLogin ?
                         <Box sx={{ flexGrow: 0 }}>
@@ -200,6 +215,15 @@ function Header() {
                         </Box>
                     }
                 </Toolbar>
+                <div className='header__toolbar-hover' hidden={isHover}>
+                    <div className='header__toolbar-category-list-item'>Tất cả</div>
+                    <div className='header__toolbar-category-list-item'>Action</div>
+                    <div className='header__toolbar-category-list-item'>Adult</div>
+                    <div className='header__toolbar-category-list-item'>Adventure</div>
+                    <div className='header__toolbar-category-list-item'>Anime</div>
+                    <div className='header__toolbar-category-list-item'>Chuyển Sinh</div>
+                </div>
+
             </Container>
         </AppBar>
     );

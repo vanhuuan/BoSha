@@ -5,7 +5,7 @@ import BookCard from '../../components/book/BookCard'
 import { useNavigate } from 'react-router-dom';
 import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
-import { Button, Pagination } from '@mui/material';
+import { Button, InputLabel, NativeSelect, Pagination, MenuItem, Select } from '@mui/material';
 
 const UserBook = () => {
     const [searchInput, setSearchInput] = useState('')
@@ -31,7 +31,7 @@ const UserBook = () => {
             })
     }
 
-    
+
     useEffect(() => {
         const load = async () => {
             if (!pageNumber) {
@@ -44,7 +44,7 @@ const UserBook = () => {
                 setData(rs.data.data)
             }
         }
-    
+
         setIsLoading(true)
         load().catch(console.error)
         setIsLoading(false)
@@ -70,15 +70,38 @@ const UserBook = () => {
                     </form>
                 </div>
             </div>
-
+            <div className='row'>
+                <div className='col-lg-1'></div>
+                <div className='col-lg-2' style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+                    <span>
+                        <Button id="addBook" href="/book/addBook" variant="contained" sx={{display: 'inline'}}>Thêm truyện mới</Button> 
+                    </span>
+                    <span>
+                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-helper-label"
+                            id="demo-simple-select-helper"
+                            label="Sắp xếp"
+                        >
+                            <MenuItem value="" selected>
+                                <em>Mới nhất</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                    </span>
+                </div>
+                <div className='col-lg-1'></div>
+            </div>
             <div className='row d-flex flex-row justify-content-between'>
-                {/* <div className="col-lg-2"></div> */}
-                <div className='col-lg-8 container-fluid' >
+                <div className="col-lg-1"></div>
+                <div className='col-lg-10 container-fluid p-0 m-0' >
                     {isLoading == false ?
                         <div>
                             <div className='row'>
-                                <div className='row d-flex flex-row justify-content-between'>
-                                    <div className='col-lg-12 d-flex justify-content-center flex-wrap' style={{ paddingTop: '20px' }}>
+                                <div className='row d-flex flex-row'>
+                                    <div className='col-lg-12 d-flex flex-wrap' style={{ paddingTop: '10px' }}>
                                         {
                                             data.map((item, index) => {
                                                 return <BookCard key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
@@ -93,9 +116,8 @@ const UserBook = () => {
                         </div> : <></>
                     }
                 </div>
-                <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>
-                    <Button id="addBook" href="/book/addBook" variant="contained">Thêm truyện mới</Button>
-                </div>
+                <div className="col-lg-1"></div>
+
             </div>
         </div>
     )
