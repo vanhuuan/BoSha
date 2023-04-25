@@ -2,10 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Pagination, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Textarea from '@mui/joy/Textarea';
 
 import { Divider, Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
+import TextareaValidator from "./Comment";
 
 const imgLink =
     "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/341263434_237177232146883_4137101451342149163_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oVBrUKg6yQAAX8WzY_X&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBi2or8ZeYBWoubGayzCsvCNN5xr_CldVenzY8DGaB3jw&oe=6440F313";
@@ -14,11 +19,11 @@ const comments = [
     {
         "Name": "Toan",
         "Text": "Anh an 17cm"
-    }, 
+    },
     {
         "Name": "Toan",
         "Text": "Anh an 17cm"
-    }, 
+    },
     {
         "Name": "Toan",
         "Text": "Anh an 17cm"
@@ -29,7 +34,8 @@ function CommentList() {
 
     return (
         <div style={{ padding: 14 }} className="App">
-            <h1>Comments</h1>
+            <h1>Bình luận</h1>
+            <TextareaValidator></TextareaValidator>
             {comments.map((item, index) => (
                 <Paper style={{ padding: "40px 20px" }}>
                     <Grid container wrap="nowrap" spacing={2}>
@@ -57,7 +63,6 @@ function CommentList() {
             ))}
 
             <Pagination count={10} page={5} sx={{ marginTop: '2em' }} />
-            {/* // onChange={handleChange} /> */}
         </div>
     );
 }
