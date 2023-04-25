@@ -78,7 +78,17 @@ const Home = () => {
           <CircularProgress color="success" />
         </>
         }
-        <div className='col-1'></div>
+        <div className='col-1'>
+          <Grid container spacing={2}>
+            {
+              data.map((item, index) => {
+                return <Grid item xs={12}>
+                  <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+                </Grid>
+              })
+            }
+          </Grid>
+        </div>
       </div>
     </div>
   )
