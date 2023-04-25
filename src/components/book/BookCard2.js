@@ -25,7 +25,7 @@ const BookCard2 = (props) => {
 
     return (
         <>
-            <div class="bookcard2-group">
+            <div class="bookcard2-group" onClick={handleChoseBook}>
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">
