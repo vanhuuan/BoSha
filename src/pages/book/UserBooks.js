@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useSearchParams } from 'react-router-dom'
-import BookCard from '../../components/book/BookCard'
+import BookCard2 from '../../components/book/BookCard2'
 import { useNavigate } from 'react-router-dom';
 import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
-import { Button, Pagination } from '@mui/material';
+import { Button, Grid, Pagination } from '@mui/material';
 
 const UserBook = () => {
     const [searchInput, setSearchInput] = useState('')
@@ -31,7 +31,7 @@ const UserBook = () => {
             })
     }
 
-    
+
     useEffect(() => {
         const load = async () => {
             if (!pageNumber) {
@@ -44,7 +44,7 @@ const UserBook = () => {
                 setData(rs.data.data)
             }
         }
-    
+
         setIsLoading(true)
         load().catch(console.error)
         setIsLoading(false)
@@ -71,31 +71,29 @@ const UserBook = () => {
                 </div>
             </div>
 
-            <div className='row d-flex flex-row justify-content-between'>
-                {/* <div className="col-lg-2"></div> */}
-                <div className='col-lg-8 container-fluid' >
-                    {isLoading == false ?
-                        <div>
-                            <div className='row'>
-                                <div className='row d-flex flex-row justify-content-between'>
-                                    <div className='col-lg-12 d-flex justify-content-center flex-wrap' style={{ paddingTop: '20px' }}>
-                                        {
-                                            data.map((item, index) => {
-                                                return <BookCard key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
-                                <Pagination page={mangaList.pageIndex} count={mangaList.total} variant="outlined" shape="rounded" />
-                            </div>
-                        </div> : <></>
-                    }
-                </div>
-                <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>
-                    <Button id="addBook" href="/book/addBook" variant="contained">Thêm truyện mới</Button>
-                </div>
+            <div className='row d-flex flex-row'>
+                <div className='col-1'></div>
+                {isLoading == false ? <>
+                    <div className='col-10 position-relative'>
+                        <Grid container spacing={2}>
+                            
+                                {
+                                    data.map((item, index) => {
+                                        return <Grid item xs={6} sm={4} md={2}>
+                                                <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+                                            </Grid>
+                                    })
+                                }
+                            
+                        </Grid>
+                    </div>
+                    <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
+                        <Pagination page={mangaList.pageIndex} count={mangaList.total} variant="outlined" shape="rounded" />
+                    </div> </> : <></>
+                }
+            </div>
+            <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>
+                <Button id="addBook" href="/book/addBook" variant="contained">Thêm truyện mới</Button>
             </div>
         </div>
     )
