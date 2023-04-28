@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CommentList from "../../components/CommentList";
 import LinearProgress from '@mui/material/LinearProgress';
+import ChapterNav from "../../components/ChapterNav";
 import { chapterService } from "../../services/chapter.services";
 import { useParams } from "react-router-dom";
 
@@ -37,15 +38,17 @@ const Chapter = () => {
 
     return (
         <Box>
-            {isLoading == false ?
+            {isLoading === false ?
                 <div>
                     <Typography>Tên truyện</Typography>
                     <Typography>Tên chapter</Typography>
                     <Typography>Độ dài, cập nhật, bình luận</Typography>
+                    <ChapterNav></ChapterNav>
                     <iframe src={chap}
                         style={{ width: "100%", padding: "1em 2em"}}
                         scrolling="no"
-                        frameBorder="0"></iframe>
+                        frameBorder="0"
+                        title="chapter"></iframe>
                 </div> :
                 <>
                     <LinearProgress />
