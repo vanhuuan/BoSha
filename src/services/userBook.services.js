@@ -11,7 +11,10 @@ export const userBookService = {
         return await api.get(`${baseURL}/Book?id=${id}`)
     },
     addBook: async (body) => {
-        return await api.post(baseURL+'/Book/AddBook')
+        return await api.post(baseURL+'/Book/AddBook', body)
+    },
+    addChapter: async (body) => {
+        return await api.post(baseURL+'/Chapter/AddChapter', body)
     },
 }
 

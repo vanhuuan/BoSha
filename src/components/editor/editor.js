@@ -34,7 +34,7 @@ function uploadImageCallBack(file) {
     );
 }
 
-function EditorImage() {
+function EditorImage(props) {
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );

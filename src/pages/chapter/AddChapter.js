@@ -2,19 +2,39 @@ import React from "react";
 import { EditorImage } from "../../components/editor/editor";
 import { TextField, Box, Button, Grid, Typography } from "@mui/material";
 import { useLocation } from "react-router";
+import { userBookService } from "../../services/userBook.services";
+import { firebaseService } from "../../services/firebase.services";
+import { useNavigate } from "react-router-dom";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 const AddChapter = (props) => {
     const [name, setName] = React.useState('Tên chương');
     const [stt, setStt] = React.useState(0);
     const [chap, setChap] = React.useState("");
+    const [demo, setDemo] = React.useState('demo');
     const { state } = useLocation();
     const { bookId, bookName } = state;
-    console.log(bookName)
+
+    let navigate = useNavigate()
 
     const AddChapter = () => {
         const data = {
-            "bookId": bookId
+            "bookId": bookId,
+            "chapterName": name,
+            "chapterNumber": stt,
+            "isDemo": demo === 'demo'? true : false
         }
+        userBookService.addChapter(data).then((rs) => {
+            console.log(rs)
+            firebaseService.uploadChapter(bookId, rs.data.Id, chap).then((rs) => {
+                console.log(rs)
+                navigate(`/book/${bookId}`)
+            }).catch((err) => console.log(err))
+        }).catch((err) => console.log(err))
     }
 
     const callBackChap = (childData) => {
@@ -35,6 +55,7 @@ const AddChapter = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={1}></Grid>
                     <Grid item xs={10}>
+                    <FormControl>
                         <Typography variant="h5">Thêm chương mới cho truyện {bookName}</Typography>
                         <TextField
                             id="outlined-uncontrolled"
@@ -55,6 +76,17 @@ const AddChapter = (props) => {
                             }}
                             sx={{ width: "100%", margin: "1em" }}
                         />
+                        <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                        <RadioGroup
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                            value={demo}
+                            onChange={(e) => {setDemo(e.target.value)}}
+                        >
+                            <FormControlLabel value="demo" control={<Radio />} label="Demo" />
+                            <FormControlLabel value="cost" control={<Radio />} label="Cost" />
+                        </RadioGroup>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={1}></Grid>
                 </Grid>
@@ -63,7 +95,7 @@ const AddChapter = (props) => {
             </EditorImage>
             <div style={{ display: "flex", alignContent: "space-between" }}>
                 <Button variant="contained" color="success" onClick={AddChapter}>Thêm chương</Button>
-                <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0)}}>Reset</Button>
+                <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
             </div>
         </div>
     )
