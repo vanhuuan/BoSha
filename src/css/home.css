@@ -1,0 +1,17 @@
+h1.title {
+    font-size: 28px;
+    color: rgb(157, 23, 77);
+}
+
+.container-book {
+    border: 1px solid rgb(157, 23, 77);
+    border-radius: 12px;
+}
+
+.container-book [class*='col-']:not(:first-child) {
+    margin-left: 4px;
+}
+
+.container-book [class*='col-']:not(:last-child) {
+    margin-right: 4px;
+}

@@ -1,0 +1,42 @@
+.recently-bookcard-group {
+    width: 100%;
+    height: 30%;
+    padding: 4px 0;
+}
+
+.recently-bookcard-group__container {
+    display: flex;
+    align-items: left;
+}
+
+.recently-bookcard-group__img {
+    display: inline-block;
+    max-width: 20%;
+    height: 100%;
+}
+
+.recently-bookcard-group__info {
+    display: inline-block;
+    padding-left: 8px;
+}
+
+.recently-bookcard-group__info-name {
+    text-align: left !important; 
+    font-size: 16px;
+    font-weight: 500;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.recently-bookcard-group__info-chapter {
+    text-align: left !important; 
+    font-size: 12px;
+    font-weight: 400;
+    color: #AAA;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}

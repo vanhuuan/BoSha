@@ -8,11 +8,12 @@ import EditorImage from '../components/editor/editor';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BorderAll } from '@mui/icons-material';
 import { Grid } from '@mui/material';
-import BookCard2 from '../components/book/BookCard2';
-import { useSearchParams } from 'react-router-dom';
-import { userBookService } from '../services/userBook.services';
+import BookCard2 from '../components/book/BookCard2'
+import RecentlyBookCard from '../components/RecentlyBookCard';
+import "../css/home.css";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { userBookService } from '../services/userBook.services';
+import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   let navigate = useNavigate()
@@ -47,50 +48,72 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   let pageNumber = searchParams.get("pageNumber")
 
+
   return (
-    <div className='container'>
-      <div className='row'>
-        <Grid container spacing={2}>
-          {
-            data.map((item, index) => {
-              return <Grid item xs={3} sm={2} md={1}>
-                <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
-              </Grid>
-            })
-          }
-        </Grid>
-      </div>
-      <div className='row d-flex flex-row' style={{ marginTop: "2em" }}>
-        <div className='col-1'></div>
-        {isLoading === false ? <>
-          <div className='col-10 position-relative'>
-            <Grid container spacing={2}>
+    <>
+      <div className='container m-0 p-0' style={{ width: `100%`, border: `0px` }}>
+        <div className='row no-gutter'>
+          <div className='col-1'></div>
+          <div className='col-2' style={{ paddingRight: `4px`, flex: `1` }}>
+            <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
+              <div>
+                <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>ĐỌC GẦN ĐÂY</h1>
+              </div>
+              <div>
+                <div className='row no-gutter'>
+                  <RecentlyBookCard></RecentlyBookCard>
+                </div>
+                <div className='row no-gutter'>
+                  <RecentlyBookCard></RecentlyBookCard>
+                </div>
+                <div className='row no-gutter'>
+                  <RecentlyBookCard></RecentlyBookCard>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='col-8' style={{ paddingLeft: `4px` }}>
+            <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
+              <div>
+                <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>TRUYỆN HOT</h1>
+              </div>
+              <div className='row no-gutter' style={{flexWrap: `nowrap`, overflowX: `scroll`}}>
               {
-                data.map((item, index) => {
+                isLoading === false ? data.map((item, index) => {
+                  return <div className='col-lg-2 col-md-2 container-book__padding'>
+                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+                  </div>
+                }) : <CircularProgress/>
+              }
+              </div>
+            </div>
+          </div>
+          <div className='col-1'></div>
+        </div>
+
+        <div className='row no-gutter'>
+          <div className='col-1'></div>
+          <div className='col-10' style={{ marginRight: 0 }}>
+            <div className='row no-gutter d-flex flex-row'>
+              <h1 className='title' style={{ textAlign: 'left' }}>TRUYỆN MỚI NHẤT</h1>
+            </div>
+            <div>
+              <Grid container spacing={2}>
+              {
+                isLoading === false ? data.map((item, index) => {
                   return <Grid item xs={6} sm={4} md={2}>
                     <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
                   </Grid>
-                })
+                }) : <CircularProgress/>
               }
-            </Grid>
+              </Grid>
+            </div>
           </div>
-        </> : <>
-          <CircularProgress color="success" />
-        </>
-        }
-        <div className='col-1'>
-          <Grid container spacing={2}>
-            {
-              data.map((item, index) => {
-                return <Grid item xs={12}>
-                  <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
-                </Grid>
-              })
-            }
-          </Grid>
+          <div className='col-1'></div>
         </div>
       </div>
-    </div>
+    </>
+
   )
 }
 
