@@ -9,6 +9,8 @@ import BookCategories from "../../components/book/BookCategories";
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import EditIcon from '@mui/icons-material/Edit';
 import { userBookService } from "../../services/userBook.services";
+import ReviewList from "../../components/Review";
+import { Review } from "../../components/CommentReviewInput";
 
 export default function BookDetail() {
     const { id } = useParams();
@@ -97,7 +99,8 @@ export default function BookDetail() {
                                     </div>
                                 </div>
                                 <div>
-                                    <CommentList book={{ id: id }}></CommentList>
+                                    <Review book={{ bookId: id }}></Review>
+                                    <ReviewList book={{ bookId: id }}></ReviewList>
                                 </div>
                             </div> : <></>
                         }

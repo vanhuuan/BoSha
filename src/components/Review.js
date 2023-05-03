@@ -43,40 +43,39 @@ const imgLink =
 
 const comments = [
     {
-        "id": "6450c849b226be32c08b5dd5",
+        "id": "645117b7b226be32c08b5dd6",
         "userName": "An Văn",
         "userAva": "https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=38ZuJXyK0vQAX9RYvLL&_nc_ht=scontent.fdad1-3.fna&oh=00_AfCXNr9EbTsX8oP2I05PTXF9MNHOdExve243Cw2gK5-XkA&oe=64327F57",
-        "text": "very good",
+        "text": "hay lắm",
         "like": 0,
-        "creatDate": "2023-05-02T08:22:33.893Z"
+        "star": 5,
+        "creatDate": "2023-05-02T14:01:27.582Z"
     }
 ]
-function CommentList(props) {
+function ReviewList(props) {
     const [isLoading, setIsLoading] = useState(false)
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [total, setTotal] = useState(10);
     const [commentsList, setCommentsList] = useState(comments);
 
-    const id = props.chap.chapId
+    const id = props.book.bookId
     const handleChange = (e, p) => {
         setPage(p);
     };
 
     useEffect(() => {
         setIsLoading(true)
-        commentService.getChapterComment(id, page, 10).then((rs) => {
-            console.log(rs.data)
+        var rs = commentService.getReviewCommentBook(id, page, 10).then((rs) => {
+            console.log(rs)
             setCommentsList(rs.data.data)
             setTotal(rs.data.count)
             setIsLoading(false)
-        }).catch((err) => {
-            console.log(err)
-        })
+        }).catch((err) => { console.log(err)})
     }, [page])
 
     return (
         <div style={{ padding: 14 }} className="App">
-            <h1>Bình luận</h1>
+            <h1>Đánh giá</h1>
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
                     <Paper style={{ padding: "40px 20px" }}>
@@ -106,7 +105,7 @@ function CommentList(props) {
                     </Paper>
                 ))}
 
-                <Pagination count={total /10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                <Pagination count={total /10 + 1} page={page+1} sx={{ marginTop: '2em' }} onChange={handleChange} />
             </> :
                 <CircularProgress></CircularProgress>
             }
@@ -114,4 +113,4 @@ function CommentList(props) {
     );
 }
 
-export default CommentList
+export default ReviewList

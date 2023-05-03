@@ -4,8 +4,8 @@ export const chapterService = {
     chapters: async (bookId) => {
         return await api.get(`${baseURL}/Chapter/Chapters?bookId=${bookId}`)
     },
-    chapterDetail: async () => {
-        return await api.get(baseURL+'/Chapter/ChapterDetail?chapterId=')
+    chapterDetail: async (chapId) => {
+        return await api.get(`${baseURL}/Chapter/ChapterDetail?chapterId=${chapId}`)
     },
     addChapter: async () => {
         return await api.get(baseURL+'/categories')

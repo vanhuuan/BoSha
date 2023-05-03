@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, getDownloadURL  } from "firebase/storage";
 
 const firebaseConfig = {
     "type": "service_account",

@@ -19,10 +19,36 @@ export default function ListChapter(props) {
     console.log(props.book.id)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
-    if(rs){
+    if (rs) {
       setChapters(rs.data)
     }
   }
+
+  const moment = require('moment');
+  moment.updateLocale('vi', {
+    relativeTime: {
+      future: "%s",
+      past: "%s giây trước",
+      s: function (number, withoutSuffix, key, isFuture) {
+        return '00:' + (number < 10 ? '0' : '')
+          + number + ' phút trước';
+      },
+      m: "01:00 minutes",
+      mm: function (number, withoutSuffix, key, isFuture) {
+        return (number < 10 ? '0' : '')
+          + number + ':00' + ' phút trước]';
+      },
+      h: "một giờ trước",
+      hh: "%d giờ trước",
+      d: "một ngày trước",
+      dd: "%d ngày trước",
+      M: "một tháng trước",
+      MM: "%d tháng trước",
+      y: "một năm trước",
+      yy: "%d năm trước"
+    }
+  });
+  
 
   React.useEffect(() => {
     load()
@@ -45,15 +71,17 @@ export default function ListChapter(props) {
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {chapters.map((value) => {
         const labelId = `checkbox-list-label-${value.chapterNumber}`;
+        const date1 = new Date(value.updateDate);
+        let a = moment().from(date1);
         return (
           <ListItem
             key={value}
             secondaryAction={
-                <ListItemText primary={`1/1/2001`} />
+              <ListItemText primary={a} />
             }
             disablePadding
             className='chapter-item'
-            onClick={(e) => {navigate(`/chapter/${value.chapterId}`)}}
+            onClick={(e) => { navigate(`/chapter/${value.chapterId}`) }}
           >
             <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
               <ListItemText id={labelId} primary={value.chapterName} />
