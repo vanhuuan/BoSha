@@ -1,12 +1,9 @@
-import logo from './logo.svg';
 import React from "react";
 import './App.css';
 import {
   BrowserRouter,
   Route,
-  Routes,
-  Navigate,
-  // Link
+  Routes
 } from "react-router-dom";
 import 'bootstrap/dist/js/bootstrap.bundle'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +20,9 @@ import BookDetail from './pages/book/BookDetails';
 import PageNotFound from './pages/NotFound';
 import EditBook from './pages/book/EditBook';
 import Chapter from './pages/chapter/Chapter';
+import PaymentSuccess from './pages/payment/PaymentSuccess';
+import PaymentFaild from './pages/payment/PaymentFailed';
+import AddChapter from "./pages/chapter/AddChapter";
 
 function App() {
   useEffect(() => {
@@ -44,12 +44,14 @@ function App() {
           <Route path="/book/:id" element={<><Header/><BookDetail /></>}></Route>
           <Route path="/book/edit/:id" element={<><Header/><EditBook/></>}></Route>
           <Route path="/chapter/:id" element={<><Header/><Chapter/></>}></Route>
-          <Route path="/chapter/addChapter" element={<><Header/><Chapter/></>}></Route>
+          <Route path="/chapter/addChapter" element={<><Header/><AddChapter/></>}></Route>
           <Route path="/hot" element={<><Header/><Chapter/></>}></Route>
           <Route path="/user/info" element={<><Header/><Chapter/></>}></Route>
           <Route path="/user/favourite" element={<><Header/><Chapter/></>}></Route>
           <Route path="/user/buyBook" element={<><Header/><Chapter/></>}></Route>
           <Route path="/user/payPayPal" element={<><Header/><Chapter/></>}></Route>
+          <Route path='/notifySuccess' element={<><Header/><PaymentSuccess/></>}></Route>
+          <Route path='/notifyFailed' element={<><Header/><PaymentFaild/></>}></Route>  
           <Route path='*' element={<><Header/><PageNotFound/></>} />
         </Routes>      
       </BrowserRouter>

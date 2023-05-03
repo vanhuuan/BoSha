@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/SelectMulti.css';
 import { userBookService } from '../../services/userBook.services';
 
@@ -17,18 +17,18 @@ const BookCategories = (props) => {
                 setIsLoading(false)
             }
         }
-        console.log("Hello", props.categories.cate)
+
         load().catch(console.error)
     }, []);
 
     return (
         <div>
             <div className="category-item-list">
-                {isLoading == false ?
+                {isLoading === false ?
                     category.map((item) => {
                         var cateName = ""
-                        if (categories.find((cate) => cate.id == item)) {
-                            cateName = categories.find((cate) => cate.id == item).name
+                        if (categories.find((cate) => cate.id === item)) {
+                            cateName = categories.find((cate) => cate.id === item).name
                         }
                         return <span className="category-item">{cateName}</span>;
                     }) : <></>

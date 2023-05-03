@@ -38,7 +38,10 @@ const EditBook = () => {
         setIsLoading(true)
         userBookService.bookDetail(id).then(
             rs => setBook(rs.data)
-        ).catch(console.err)
+        ).catch((err) => {
+            console.log(err)
+            navigate("/notfound")
+        })
         setIsLoading(false)
     }, [id]);
 
@@ -50,7 +53,7 @@ const EditBook = () => {
                         {/* <div>xs=2</div> */}
                     </Grid>
                     <Grid item xs={10}>
-                        {isLoading == false ? <>
+                        {isLoading === false ? <>
                             <div className='container'>
                                 <div className='container-header'>
                                     <Typography variant='h5'> Cập nhật truyện </Typography>

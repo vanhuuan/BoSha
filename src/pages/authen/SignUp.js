@@ -197,7 +197,7 @@ const SignUp = () => {
           <GoogleOAuthProvider clientId={cleintId}>
             <GoogleLogin 
                     clientId={cleintId}
-                    buttonText="Đăng nhập với google"
+                    buttonText="Đăng ký với google"
                     onSuccess={ (rs) => { handleSignUpGoogle(rs) }}
                     onFailure={ (rs) => { console.log('Failed')}}
                     cookiePolicy={'single_host_origin'}    

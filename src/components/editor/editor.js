@@ -5,7 +5,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import DOMPurify from 'dompurify';
 import { convertToHTML } from 'draft-convert';
 import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
+import { Button, ButtonBase, Typography } from '@mui/material';
 
 function createMarkup(html) {
     return {
@@ -43,11 +43,17 @@ function EditorImage() {
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
+        sendData(html)
     }, [editorState]);
+
+    const sendData = (htmls) => {
+        props.parentCallback(htmls);
+    }
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={10}>
                 <Editor
                     editorState={editorState}
                     onEditorStateChange={setEditorState}
@@ -60,63 +66,64 @@ function EditorImage() {
                         link: { inDropdown: true },
                         history: { inDropdown: true },
                         image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
+                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
                     }}
+                    editorStyle={{ height: '30em' }}
                 />
             </Grid>
-            <Grid item xs={6}>
-                <div
-                    bg
-                    sx={{ padding: `1rem`, marginTop: `1rem`, backgroundColor: `gray` }}
-                    dangerouslySetInnerHTML={createMarkup(convertedContent)}>
-                </div>
-            </Grid>
+            <Grid item xs={1}></Grid>
         </Grid>
 
     );
 }
 
-function EditorDescription() {
+function EditorDescription(props) {
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
+    const [isPreview, setIsPreview] = useState(false)
     const [convertedContent, setConvertedContent] = useState(null);
+
+    const sendData = (htmls) => {
+        props.parentCallback(htmls);
+    }
 
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
+        sendData(html)
     }, [editorState]);
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <div style={{ marginTop: `1rem`, border: '1px solid gray', marginTop: `1rem` , borderRadius: '4px' }}>
-                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>Miêu tả</Typography>
-                    <Editor
-                        editorState={editorState}
-                        onEditorStateChange={setEditorState}
-                        wrapperClassName="TextEditor"
-                        editorClassName="TextEditor"
-                        toolbar={{
-                            inline: { inDropdown: true },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                            image: { uploadCallback: uploadImageCallBack, alt: { present: false, mandatory: false } },
-                        }}
-                        editorStyle={{ height: '20em' }}
-                    />
-                </div>
-            </Grid>
+
             <Grid item xs={12}>
                 <div style={{ marginTop: `1rem`, border: '1px solid gray', marginTop: `1rem`, borderRadius: '4px' }}>
-                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>Xem trước</Typography>
-                    <div
-                        bg
-                        sx={{ padding: `1rem`, marginTop: `1rem`, backgroundColor: `gray` }}
-                        style={{ overflow: `auto`, height: `20em` }}
-                        dangerouslySetInnerHTML={createMarkup(convertedContent)}>
-                    </div>
+                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em'}}>
+                        Miêu tả 
+                    </Typography>
+                    {isPreview === false ?
+                        <Editor
+                            editorState={editorState}
+                            onEditorStateChange={setEditorState}
+                            wrapperClassName="TextEditor"
+                            editorClassName="TextEditor"
+                            toolbar={{
+                                inline: { inDropdown: true },
+                                list: { inDropdown: true },
+                                textAlign: { inDropdown: true },
+                                options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+                            }}
+                            editorStyle={{ height: '20em' }}
+                        /> :
+                        <div
+                            bg
+                            sx={{ padding: `1rem`, marginTop: `1rem`, backgroundColor: `gray` }}
+                            style={{ overflow: `auto`, height: `20em` }}
+                            dangerouslySetInnerHTML={createMarkup(convertedContent)}>
+                        </div>
+                    }
+                    <Button onClick={(e) => {setIsPreview(!isPreview)}}>Xem trước</Button>
                 </div>
             </Grid>
         </Grid>

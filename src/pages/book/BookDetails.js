@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
+import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, IconButton } from '@mui/material'
 import ListChapter from "../../components/ListChapter";
 import CommentList from "../../components/CommentList";
 import BookInfo from "../../components/BookInfo";
@@ -18,6 +18,7 @@ export default function BookDetail() {
         "id": "643656a08e27bd8b1165478b",
         "name": "Overlord",
         "authorName": "An Văn",
+        "authorId": "00",
         "cover": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656a08e27bd8b1165478b%2Fcover.png?alt=media&token=20cfb7d8-6e42-4426-b026-c0443d8cb793",
         "preview": "",
         "numOfReview": 0,
@@ -28,17 +29,20 @@ export default function BookDetail() {
         "category": []
     })
     const [isLoading, setIsLoading] = useState(true)
-    console.log(isLoading)
+    const uid = localStorage.getItem("UserId");
 
     let navigate = useNavigate();
 
     useEffect(() => {
         setIsLoading(true)
         userBookService.bookDetail(id).then(
-            rs => setBook(rs.data)
-        ).catch(console.err)
-        setIsLoading(false)
-    }, [])
+            (rs) => {
+                console.log("Hello", rs.data)
+                setBook(rs.data)
+                setIsLoading(false)
+            }
+        ).catch((err) => console.log(err))
+    }, [id])
 
     return (
         <div>
@@ -48,14 +52,16 @@ export default function BookDetail() {
                         {/* <div>xs=2</div> */}
                     </Grid>
                     <Grid item xs={10}>
-                        {isLoading == false ?
+                        {isLoading === false ?
                             <div>
                                 <div className='container'>
                                     <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <Typography variant='h5'>{book.name} </Typography>
-                                        <IconButton onClick={() => { navigate('/book/edit/' + id) }}>
-                                            <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
-                                        </IconButton>
+                                        {book.authorId === uid ?
+                                            <IconButton onClick={() => { navigate('/book/edit/' + id) }}>
+                                                <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
+                                            </IconButton> : <></>
+                                        }
                                     </div>
                                     <div className='container-body'>
                                         <Grid container spacing={2}>
@@ -66,18 +72,9 @@ export default function BookDetail() {
                                             </Grid>
                                             <Grid item md={9} sm={12} width="100%">
                                                 <div style={{ marginTop: 2 + 'em' }}>
-                                                    <TextField
-                                                        id="outlined-required"
-                                                        label="Tên truyện"
-                                                        defaultValue={book.name}
-                                                        className='input-text'
-                                                        InputProps={{
-                                                            readOnly: true
-                                                        }}
-                                                        sx={{ marginBottom: '1em' }}
-                                                    />
+                                                    <Typography variant='h6'>{book.name} </Typography>
                                                 </div>
-                                                <BookCategories categories={{ cate: book.category}} />
+                                                <BookCategories categories={{ cate: book.category }} />
                                                 <BookInfo book={{ bookDetail: book }}></BookInfo>
                                             </Grid>
                                         </Grid>
@@ -86,13 +83,16 @@ export default function BookDetail() {
                                         <BottomInfo book={{ bookDetail: book }}></BottomInfo>
                                     </div>
                                     <div className='container-bottom'>
-                                        <iframe width={"100%"} src="https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656848e27bd8b116546e9%2F643656868e27bd8b116546eb.html?alt=media&token=c30b3b69-47f7-487e-8410-1f3b0ec56b14"></iframe>
+                                        <div dangerouslySetInnerHTML={{ __html: "<div>Good</div>" }}></div>
                                     </div>
                                 </div>
 
                                 <div className='container'>
-                                    <div className='container-header'>
+                                    <div className='container-header' style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Typography variant='h6'> Danh sách tập </Typography>
+                                        {book.authorId === uid ?
+                                            <Button><span style={{color: "black"}} onClick={(e) => navigate("/chapter/addChapter", { state: { bookId: book.id, bookName: book.name} })}>Thêm chương mới</span></Button> : <></>
+                                        }
                                     </div>
                                     <div className='container-body'>
                                         <ListChapter book={{ id: id }}></ListChapter>

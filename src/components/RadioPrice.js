@@ -31,7 +31,7 @@ export default function RadioPrice(props) {
     });
     React.useEffect(() => {
         if(price){
-            if(price == 0){
+            if(price === 0){
                 setSelectedValue(1)
             }else{
                 setSelectedValue(2)
@@ -73,6 +73,7 @@ export default function RadioPrice(props) {
                         startAdornment={<InputAdornment position="start">VND</InputAdornment>}
                         label="Amount"
                         onChange={handlePriceChange}
+                        type="number"
                     />
                 </FormControl> : <></>
             }

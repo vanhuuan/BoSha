@@ -55,7 +55,12 @@ export default function MultipleSelect(props) {
     setcategory(
       typeof value === "string" ? value.split(",") : value
     );
+    sendData(category)
   };
+
+  const sendData = (category) => {
+    props.parentCallback(category);
+  }
 
   return (
     <div>

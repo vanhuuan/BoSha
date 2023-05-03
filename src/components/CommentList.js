@@ -53,7 +53,7 @@ const comments = [
 ]
 function CommentList(props) {
     const [isLoading, setIsLoading] = useState(false)
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [total, setTotal] = useState(10);
     const [commentsList, setCommentsList] = useState(comments);
 
@@ -105,7 +105,6 @@ function CommentList(props) {
                         </Grid>
                     </Paper>
                 ))}
-
                 <Pagination count={total /10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
             </> :
                 <CircularProgress></CircularProgress>

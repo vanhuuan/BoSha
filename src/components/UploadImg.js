@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material";
 
 const FileInput = (props) => {
@@ -13,8 +11,13 @@ const FileInput = (props) => {
     useEffect(() => {
         if (selectedImage) {
             setImageUrl(URL.createObjectURL(selectedImage));
+            sendData(URL.createObjectURL(selectedImage))
         }
     }, [selectedImage]);
+
+    const sendData = (img) => {
+        props.parentCallback(img);
+    }
 
     return (
         <>
@@ -32,8 +35,8 @@ const FileInput = (props) => {
                 style={{ display: "none" }}
                 onChange={(e) => setSelectedImage(e.target.files[0])}
             />
-            <label htmlFor="select-image" style={{width: '100%'}}>
-                <Button variant="contained" color="primary" component="span" sx={{width:'100%', marginTop: '0.5em'}}>
+            <label htmlFor="select-image" style={{ width: '100%' }}>
+                <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
                     Upload Image
                 </Button>
             </label>
