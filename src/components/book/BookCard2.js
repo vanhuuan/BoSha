@@ -34,9 +34,9 @@ const BookCard2 = (props) => {
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">
                             <FavoriteIcon style={{ fontSize: `16px`, marginRight: `2px` }}></FavoriteIcon>
-                            <span style={{marginRight: `8px`}}>5</span>
+                            <span style={{marginRight: `8px`}}>{props.manga.star}</span>
                             <VisibilityIcon style={{ fontSize: `16px`, marginRight: `2px` }}></VisibilityIcon>
-                            <span>100</span>
+                            <span>{props.manga.view}</span>
                         </div>
                         <div className="bookcard2-group__bottom-name">
                             {mangaName(props.manga.name)}

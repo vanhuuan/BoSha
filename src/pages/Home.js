@@ -13,6 +13,7 @@ import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import { userBookService } from '../services/userBook.services';
+import { bookService } from '../services/books.services';
 import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
@@ -26,23 +27,28 @@ const Home = () => {
     "data": []
   })
   const [data, setData] = useState([])
+  const [dataHot, setDataHot] = useState([])
 
   useEffect(() => {
     const load = async () => {
       if (!pageNumber) {
         pageNumber = 1
       }
-      const rs = await userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc");
-      console.log(rs.data)
-      if (rs) {
+      const rs = bookService.booksNew(pageNumber, 12, "Name", "fghdf").then((rs) => {
+        console.log(rs.data)
         setMangaList(rs.data)
         setData(rs.data.data)
-      }
+      }).catch(console.error)
+
+      bookService.booksHotWeek(pageNumber, 12, "Name", "fghdf").then((rs) => {
+        console.log(rs.data.data)
+        setDataHot(rs.data.data)
+        setIsLoading(false)
+      })
     }
 
     setIsLoading(true)
     load().catch(console.error)
-    setIsLoading(false)
   }, [])
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -79,9 +85,9 @@ const Home = () => {
               </div>
               <div className='row no-gutter' style={{flexWrap: `nowrap`, overflowX: `scroll`}}>
               {
-                isLoading === false ? data.map((item, index) => {
+                isLoading === false ? dataHot.map((item, index) => {
                   return <div className='col-lg-2 col-md-2 container-book__padding'>
-                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
                   </div>
                 }) : <CircularProgress/>
               }
@@ -102,7 +108,7 @@ const Home = () => {
               {
                 isLoading === false ? data.map((item, index) => {
                   return <Grid item xs={6} sm={4} md={2}>
-                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
                   </Grid>
                 }) : <CircularProgress/>
               }

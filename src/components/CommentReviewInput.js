@@ -17,6 +17,7 @@ function Comment(props) {
     const [showEmojis, setShowEmojis] = useState(false);
     const [text, setText] = React.useState('');
     const [isCommented, setIsCommented] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [commentEd, setCommentEd] = useState({
         "id": "645117b7b226be32c08b5dd6",
         "userName": "An Văn",
@@ -39,10 +40,12 @@ function Comment(props) {
     }
 
     React.useEffect(() => {
+        setIsLoading(true)
         commentService.getUserChapterComment(id).then((rs) => {
             console.log("comment:", rs.data)
             setCommentEd(rs.data)
             setIsCommented(true)
+            setIsLoading(false)
         }).catch((err) => {
             setIsCommented(false)
             console.log(err)
@@ -75,9 +78,10 @@ function Comment(props) {
 
     return (
         <FormControl>
+            {isCommented === false ? <>
             <FormLabel>Bình luận của bạn</FormLabel>
-            {isCommented === false ?
-                <Textarea
+            
+             <Textarea
                     minRows={3}
                     value={text}
                     onChange={(event) => setInput(event.target.value)}
@@ -126,11 +130,12 @@ function Comment(props) {
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
                     }}
-                /> : <Textarea
+                /> </> : <> { isLoading === false ? <Textarea
                     minRows={3}
                     disabled
                     value={commentEd.text}>
-                </Textarea>
+                </Textarea> : <> </>
+                }</> 
             }
         </FormControl>
     );
