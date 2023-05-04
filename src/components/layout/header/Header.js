@@ -20,6 +20,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Grid } from "@mui/material";
 
+
+
 const pages = ['HOT', 'Đang theo dõi', 'Thể loại', 'Tìm truyện'];
 const settings = ['Tài khoản', 'Tác giả', 'Đăng xuất'];
 
@@ -75,8 +77,9 @@ function Header() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: "#89D5C9" }}>
-            <Container maxWidth="xl">
+        <>
+        <AppBar position="static" >
+            <Container maxWidth="xl" sx={{backgroundColor: "#89D5C9"}}>
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
@@ -223,9 +226,9 @@ function Header() {
                     <div className='header__toolbar-category-list-item'>Anime</div>
                     <div className='header__toolbar-category-list-item'>Chuyển Sinh</div>
                 </div>
-
             </Container>
         </AppBar>
+        </>
     );
 }
 
