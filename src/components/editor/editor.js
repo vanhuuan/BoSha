@@ -5,7 +5,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import DOMPurify from 'dompurify';
 import { convertToHTML } from 'draft-convert';
 import Grid from '@mui/material/Grid';
-import { Button, ButtonBase, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 function createMarkup(html) {
     return {
@@ -39,7 +39,13 @@ function EditorImage(props) {
         () => EditorState.createEmpty(),
     );
     const [convertedContent, setConvertedContent] = useState(null);
-
+    try{
+        const data = props.text
+        console.log(data)
+        if(data){
+            setConvertedContent(data)
+        }
+    }catch(err){}
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);

@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 const data = {
     "bookId": "643656848e27bd8b116546e9",
@@ -71,7 +72,8 @@ const Chapter = () => {
                 setDateUpdate(a)
                 setIsLoading(false)
             }
-        ).catch(() => {
+        ).catch((err) => {
+            console.log(err)
             navigate(-1);
         })
     }, [])

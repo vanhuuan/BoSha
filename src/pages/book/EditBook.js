@@ -58,7 +58,7 @@ const EditBook = () => {
             "categories": listCategory,
             "price": price
         }
-        userBookService.addBook(data).then((rs) => {
+        userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
                 firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
                     console.log(rs3)

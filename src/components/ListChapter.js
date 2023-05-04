@@ -10,6 +10,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import "../css/ListChapter.css";
 import { chapterService } from '../services/chapter.services';
 import { useNavigate } from 'react-router-dom';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
 
 export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
@@ -77,11 +78,17 @@ export default function ListChapter(props) {
           <ListItem
             key={value}
             secondaryAction={
-              <ListItemText primary={a} />
+              <div style={{display:"flex"}}>
+                {
+                  value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
+                }
+                
+                <ListItemText primary={a} sx={{marginLeft:"0.5em"}}/>
+              </div>
             }
             disablePadding
             className='chapter-item'
-            onClick={(e) => { navigate(`/chapter/${value.chapterId}`) }}
+            onClick={(e) => {  if(value.isDemo) navigate(`/chapter/${value.chapterId}`) }}
           >
             <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
               <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
