@@ -60,11 +60,6 @@ function EditorImage(props) {
                     wrapperClassName="TextEditor"
                     editorClassName="TextEditor"
                     toolbar={{
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        textAlign: { inDropdown: true },
-                        link: { inDropdown: true },
-                        history: { inDropdown: true },
                         image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
                         options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
                     }}
@@ -109,9 +104,6 @@ function EditorDescription(props) {
                             wrapperClassName="TextEditor"
                             editorClassName="TextEditor"
                             toolbar={{
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
                                 options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
                             }}
                             editorStyle={{ height: '20em' }}

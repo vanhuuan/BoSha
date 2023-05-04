@@ -37,11 +37,10 @@ const AddBook = () => {
       "price": price
     }
     userBookService.addBook(data).then((rs) => {
-      firebaseService.uploadPreview(rs.data.Id, desc).then((rs2) => {
-        console.log(rs2)
-        firebaseService.uploadCover(rs.data.Id, img).then((rs3) => {
+      firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
+        firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
           console.log(rs3)
-          navigate(`/book/${rs.data.Id}`)
+          navigate(`/book/${rs.data.id}`)
         }).catch((err) => console.log(err))
       }).catch((err) => console.log(err))
     }).catch((err) => {
@@ -66,7 +65,7 @@ const AddBook = () => {
 
   const callbackDesc = (childData) => {
     setDesc(childData)
-    console.log(childData)
+    console.log(desc)
   }
 
   const callbackImg = (childData) => {

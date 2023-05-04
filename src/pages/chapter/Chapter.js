@@ -7,6 +7,7 @@ import { chapterService } from "../../services/chapter.services";
 import { useParams } from "react-router-dom";
 import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
+import { useNavigate } from "react-router-dom";
 
 const data = {
     "bookId": "643656848e27bd8b116546e9",
@@ -24,7 +25,9 @@ const Chapter = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [chapterDetail, setChapterDetail] = useState(data)
     const [dateUpdate, setDateUpdate] = useState("")
+    const resultRef = useRef(null);
 
+    let navigate = useNavigate()
     const moment = require('moment');
     moment.updateLocale('vi', {
         relativeTime: {
@@ -63,12 +66,14 @@ const Chapter = () => {
                 setChapterDetail(rs.data)
                 setChap(rs.data.textLink)
                 firebaseService.getChapter(chapterDetail.bookId, chapterDetail.chapterId, setChapText)
+                const date1 = new Date(chapterDetail.updated);
+                let a = moment().from(date1);
+                setDateUpdate(a)
+                setIsLoading(false)
             }
-        ).catch(console.err)
-        const date1 = new Date(chapterDetail.updated);
-        let a = moment().from(date1);
-        setDateUpdate(a)
-        setIsLoading(false)
+        ).catch(() => {
+            navigate(-1);
+        })
     }, [])
 
     return (
@@ -77,8 +82,8 @@ const Chapter = () => {
                 <div style={{margin: "0 2em", textAlign: "center"}}>
                     <Typography>{`${chapterDetail.name}`}</Typography>
                     <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
-                    <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, ${dateUpdate}, bình luận`}</Typography>
-                    <ChapterNav></ChapterNav>
+                    <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
+                    <ChapterNav chapter={{book: chapterDetail.bookId, chap: id}} resultRef={resultRef}></ChapterNav>
                     <div dangerouslySetInnerHTML={{ __html: chap }} ></div>
                 </div> :
                 <>
@@ -86,7 +91,7 @@ const Chapter = () => {
                 </>
             }
             <Comment chap={{ chapId: id }}></Comment>
-            <CommentList chap={{ chapId: id }}></CommentList>
+            <CommentList chap={{ chapId: id }} ref={resultRef}></CommentList>
         </Box>
     )
 }

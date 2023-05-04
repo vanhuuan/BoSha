@@ -24,6 +24,7 @@ import PaymentSuccess from './pages/payment/PaymentSuccess';
 import PaymentFaild from './pages/payment/PaymentFailed';
 import AddChapter from "./pages/chapter/AddChapter";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import UpdateChapter from "./pages/chapter/UpdateChapter";
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/book/edit/:id" element={<><Header /><EditBook /></>}></Route>
           <Route path="/chapter/:id" element={<><Header /><Chapter /></>}></Route>
           <Route path="/chapter/addChapter" element={<><Header /><AddChapter /></>}></Route>
+          <Route path="/chapter/updateChapter" element={<><Header /><UpdateChapter /></>}></Route>
           <Route path="/hot" element={<><Header /><Chapter /></>}></Route>
           <Route path="/user/info" element={<><Header /><Chapter /></>}></Route>
           <Route path="/user/favourite" element={<><Header /><Chapter /></>}></Route>

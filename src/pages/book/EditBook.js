@@ -14,6 +14,7 @@ import {
 import '../../css/AddBook.css'
 import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
+import { firebaseService } from '../../services/firebase.services';
 
 const EditBook = () => {
     const { id } = useParams();
@@ -31,6 +32,11 @@ const EditBook = () => {
         "category": []
     })
     const [isLoading, setIsLoading] = useState(true)
+    const [name, setName] = useState("Tên truyện")
+    const [price, setPrice] = useState(0)
+    const [listCategory, setListCategory] = useState([])
+    const [desc, setDesc] = useState("")
+    const [img, setImg] = useState("")
 
     let navigate = useNavigate()
 
@@ -44,6 +50,45 @@ const EditBook = () => {
         })
         setIsLoading(false)
     }, [id]);
+
+    const updateBook = () => {
+        const data = {
+            "bookId": id,
+            "name": name,
+            "categories": listCategory,
+            "price": price
+        }
+        userBookService.addBook(data).then((rs) => {
+            firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
+                firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
+                    console.log(rs3)
+                    navigate(`/book/${rs.data.id}`)
+                }).catch((err) => console.log(err))
+            }).catch((err) => console.log(err))
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const callbackPrice = (childData) => {
+        setPrice(childData)
+        console.log(childData)
+    }
+
+    const callbackCategory = (childData) => {
+        setListCategory(childData)
+        console.log(childData)
+    }
+
+    const callbackDesc = (childData) => {
+        setDesc(childData)
+        console.log(desc)
+    }
+
+    const callbackImg = (childData) => {
+        setImg(childData)
+        console.log(childData)
+    }
 
     return (
         <div>
@@ -61,7 +106,7 @@ const EditBook = () => {
                                 <div className='container-body'>
                                     <Grid container spacing={2}>
                                         <Grid item md={3} sm={12}>
-                                            <FileInput book={{ img: book.cover }}></FileInput>
+                                            <FileInput book={{ img: book.cover }} parentCallback={callbackImg}></FileInput>
                                         </Grid>
                                         <Grid item md={9} sm={12} width="100%">
                                             <div style={{ marginTop: 2 + 'em' }}>
@@ -73,19 +118,19 @@ const EditBook = () => {
                                                     defaultValue={book.name}
                                                 />
                                             </div>
-                                            <MultipleSelect></MultipleSelect>
+                                            <MultipleSelect parentCallback={callbackCategory}></MultipleSelect>
                                             <div sx={{ marginTop: '4px' }}>
-                                                <RadioPrice book={{ price: book.price}}></RadioPrice>
+                                                <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
                                             </div>
                                         </Grid>
                                     </Grid>
                                 </div>
                             </div>
                             <div>
-                                <EditorDescription sx={{ margin: 100, border: '1px solid black' }} />
+                                <EditorDescription sx={{ margin: 100, border: '1px solid black' }} parentCallback={callbackDesc} />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
-                                <Button variant="contained" color='success' sx={{ width: '10em' }}>Cập nhật truyện</Button>
+                                <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>
                                 <Button variant="contained" color='error' sx={{ width: '10em' }}>Reset</Button>
                             </div> </> : <></>
                         }

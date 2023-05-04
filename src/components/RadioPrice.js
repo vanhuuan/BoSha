@@ -10,7 +10,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { OutlinedInput } from "@mui/material";
 
 export default function RadioPrice(props) {
-    const [selectedValue, setSelectedValue] = React.useState(1);
+    const [selectedValue, setSelectedValue] = React.useState("1");
     const [value, setValue] = React.useState("1000");
     const [radioDisabled, setRadioDisabled] = React.useState(false);
     const price = props.book.price
@@ -32,9 +32,9 @@ export default function RadioPrice(props) {
     React.useEffect(() => {
         if(price){
             if(price === 0){
-                setSelectedValue(1)
+                setSelectedValue("1")
             }else{
-                setSelectedValue(2)
+                setSelectedValue("2")
             }
             setRadioDisabled(true)
         }
@@ -50,12 +50,12 @@ export default function RadioPrice(props) {
                 name="radio-buttons-group"
                 margin="normal">
                 <FormControlLabel
-                    value="female"
+                    value="1"
                     control={<Radio {...controlProps("1")} size="small" />}
                     label="Miễn phí"
                 />
                 <FormControlLabel
-                    value="male"
+                    value="2"
                     control={
                         <Radio
                             {...controlProps("2")}
@@ -74,6 +74,7 @@ export default function RadioPrice(props) {
                         label="Amount"
                         onChange={handlePriceChange}
                         type="number"
+                        value={price}
                     />
                 </FormControl> : <></>
             }

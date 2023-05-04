@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import ReactDOM from "react-dom";
 import { CircularProgress, Pagination, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,7 +10,6 @@ import Textarea from '@mui/joy/Textarea';
 import { Divider, Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
-import TextareaValidator from "./CommentReviewInput";
 import { commentService } from "../services/comment.services";
 
 const moment = require('moment');
@@ -51,7 +50,7 @@ const comments = [
         "creatDate": "2023-05-02T08:22:33.893Z"
     }
 ]
-function CommentList(props) {
+const CommentList = forwardRef((props, ref) =>  {
     const [isLoading, setIsLoading] = useState(false)
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(10);
@@ -75,7 +74,7 @@ function CommentList(props) {
     }, [page])
 
     return (
-        <div style={{ padding: 14 }} className="App">
+        <div style={{ padding: 14 }} className="App" ref={ref}>
             <h1>Bình luận</h1>
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
@@ -111,6 +110,6 @@ function CommentList(props) {
             }
         </div>
     );
-}
+});
 
 export default CommentList

@@ -55,7 +55,7 @@ export default function MultipleSelect(props) {
     setcategory(
       typeof value === "string" ? value.split(",") : value
     );
-    sendData(category)
+    sendData(typeof value === "string" ? value.split(",") : value)
   };
 
   const sendData = (category) => {

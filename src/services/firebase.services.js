@@ -62,10 +62,12 @@ export const firebaseService = {
         const metadata = {
             contentType: 'text/html; charset=utf-8',
         };
-        const uploadTask = uploadBytesResumable(storageRef, text, metadata);
+        console.log(text)
+        const blob = new Blob([text], { type: 'plain/text' });
+        const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
         uploadTask.on("state_changed",
             (snapshot) => {
-
+                console.log("Uploading")
             },
             (error) => {
                 console.log("upload preview", error)
@@ -83,13 +85,15 @@ export const firebaseService = {
         const metadata = {
             contentType: 'text/html; charset=utf-8',
         };
-        const uploadTask = uploadBytesResumable(storageRef, text, metadata);
+        console.log(text)
+        const blob = new Blob([text], { type: 'plain/text' });
+        const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
         uploadTask.on("state_changed",
             (snapshot) => {
-
+                console.log("Uploading")
             },
             (error) => {
-                console.log("Upload chap", error)
+                console.log("upload chapter loi", error)
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -102,22 +106,40 @@ export const firebaseService = {
     uploadCover: async (bookId, img) => {
         if (img == null)
             return;
-        storage.ref(`book/${bookId}/cover.jpg`).put(img)
-            .on("state_changed",
+
+        getFileBlob(img, blob => {
+            const storageRef = ref(storage, `books/${bookId}/cover.png`);
+            const metadata = {
+                contentType: 'image/png',
+            };
+            const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+            uploadTask.on("state_changed",
                 (snapshot) => {
 
                 },
                 (error) => {
-                    console.log("Upload cover", error)
+                    console.log("Upload chap", error)
                 },
                 () => {
-                    getDownloadURL(ref(`book/${bookId}/cover.jpg`)).then((downloadURL) => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log(downloadURL)
                         return downloadURL
                     });
                 }
             );
+        })
+
     }
 }
+
+var getFileBlob = function (url, cb) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.addEventListener('load', function () {
+        cb(xhr.response);
+    });
+    xhr.send();
+};
 
 

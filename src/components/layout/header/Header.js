@@ -78,10 +78,10 @@ function Header() {
 
     return (
         <>
-        <AppBar position="static" >
-            <Container maxWidth="xl" sx={{backgroundColor: "#89D5C9"}}>
+        <AppBar position="static" sx={{backgroundColor: "#89D5C9"}}>
+            <Container maxWidth="xl" >
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={() => {navigate("/")}} />
                     <Typography
                         variant="h6"
                         noWrap

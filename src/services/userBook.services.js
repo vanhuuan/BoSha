@@ -13,8 +13,14 @@ export const userBookService = {
     addBook: async (body) => {
         return await api.post(baseURL+'/Book/AddBook', body)
     },
+    updateBook: async (body) => {
+        return await api.put(baseURL+'/Book/UpdateBook', body)
+    },
     addChapter: async (body) => {
         return await api.post(baseURL+'/Chapter/AddChapter', body)
+    },
+    updateChapter: async (body) => {
+        return await api.put(baseURL+'/Chapter/updateChapter', body)
     },
 }
 

@@ -44,6 +44,8 @@ export default function BookDetail() {
         ).catch((err) => console.log(err))
     }, [id])
 
+    const data = { bookId: book.id, bookName: book.name}
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -91,7 +93,7 @@ export default function BookDetail() {
                                     <div className='container-header' style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Typography variant='h6'> Danh sách tập </Typography>
                                         {book.authorId === uid ?
-                                            <Button><span style={{color: "black"}} onClick={(e) => navigate("/chapter/addChapter", { state: { bookId: book.id, bookName: book.name} })}>Thêm chương mới</span></Button> : <></>
+                                            <Button><span style={{color: "black"}} onClick={(e) => navigate("/chapter/addChapter", { state: data })}>Thêm chương mới</span></Button> : <></>
                                         }
                                     </div>
                                     <div className='container-body'>

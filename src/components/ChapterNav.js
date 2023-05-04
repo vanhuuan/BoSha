@@ -1,44 +1,87 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import ListIcon from '@mui/icons-material/List';
 import { Link } from 'react-router-dom';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import "../css/ChapterNav.css";
+import { useNavigate } from "react-router-dom";
+import { chapterService } from "../services/chapter.services";
 
 const ChapterNav = (props) => {
-    const [age, setAge] = React.useState("");
+
+    const [isLoading, setIsLoading] = useState(true)
+    const id = props.chapter.book;
+    const chapId = props.chapter.book;
+    const [age, setAge] = useState(id)
+    const [next, setNext] = React.useState(chapId);
+    const [pre, setPre] = React.useState(chapId)
     const handleChange = (e) => {
         setAge(e.target.value);
     };
+    const resultRef = props.resultRef
+    const [chapters, setChapters] = React.useState([])
+    let navigate = useNavigate()
+    const load = async () => {
+        console.log(id)
+        const rs = await chapterService.chapters(id);
+        console.log(rs)
+        if (rs) {
+            setChapters(rs.data)
+        }
+        for (var i = 0; i < chapters.length; i++) {
+            if (chapters[i].chapterId == chapId) {
+                if (i - 1 >= 0) {
+                    setPre(chapters[i - 1].chapterId)
+                }
+                if (i + 1 < chapters.length) {
+                    setPre(chapters[i + 1].chapterId)
+                }
+            }
+        }
+        setIsLoading(false)
+    }
+
+    useEffect(() => {
+        load().catch(console.error)
+    }, [])
+
     return (
         <div class="chapter-nav">
-            <Link to="/" className="chapter-nav__icon">
+            <Link to={`/book/${id}`} className="chapter-nav__icon">
                 <HomeIcon></HomeIcon>
             </Link>
-            <Link to="" className="chapter-nav__icon">
-                <ListIcon></ListIcon>
-            </Link>
-            <button className="chapter-nav__page">
-                &#8249;
-            </button>
+            {pre === chapId ?
+                <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
+                    &#8249;
+                </button> : <button className="chapter-nav__page" onClick={() => { navigate(`/chapter/${pre}`) }}>
+                    &#8249;
+                </button>
+                }
+
             <Select
-                value={age}
                 onChange={handleChange}
                 displayEmpty
                 className="chapter-nav__select-item"
             >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {isLoading === false ?
+                    chapters.map((item) => (
+                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId) }} selected={item.chapterId === chapId} key={item.chapterId}>
+                            {`${item.chapterNumber} - ${item.chapterName}`}
+                        </MenuItem>
+                    )) : <></>}
+
             </Select>
-            <button className="chapter-nav__page">&#8250;</button>
-            <button className="chapter-nav__comment">
+            {next === chapId ?
+                <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
+                    &#8249;
+                </button> : <button className="chapter-nav__page" onClick={() => { navigate(`/chapter/${next}`) }}>
+                    &#8249;
+                </button>
+                }
+            <button className="chapter-nav__comment" onClick={() => {resultRef.current.scrollIntoView({ behavior: "smooth" })}}>
                 <ChatBubbleIcon style={{ fontSize: `18px` }}></ChatBubbleIcon>
-                <span className="chapter-nav__comment-text">Comment</span>
+                <span className="chapter-nav__comment-text">Bình luận</span>
             </button>
         </div >
     );

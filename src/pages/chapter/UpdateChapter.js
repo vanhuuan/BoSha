@@ -11,26 +11,23 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-const AddChapter = (props) => {
+const UpdateChapter = (props) => {
     const [name, setName] = React.useState('Tên chương');
     const [stt, setStt] = React.useState(0);
     const [chap, setChap] = React.useState("");
     const [demo, setDemo] = React.useState('demo');
-    const location  = useLocation();
-    const data = location.state;
-    const bookId = data.data.bookId;
-    const bookName = data.data.bookName
-
-    console.log(data.data)
+    const [states, setStates] = React.useState(true);
+    const { state } = useLocation();
+    const { bookId, bookName } = state;
 
     let navigate = useNavigate()
 
-    const AddChapter = () => {
+    const UpdateChapter = (props) => {
         const data = {
             "bookId": bookId,
             "chapterName": name,
-            "chapterNumber": stt,
-            "isDemo": demo === 'demo'? true : false
+            "isDemo": demo === 'demo'? true : false,
+            "state": states
         }
         userBookService.addChapter(data).then((rs) => {
             console.log(rs)
@@ -98,11 +95,11 @@ const AddChapter = (props) => {
             <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} >
             </EditorImage>
             <div style={{ display: "flex", alignContent: "space-between" }}>
-                <Button variant="contained" color="success" onClick={AddChapter}>Thêm chương</Button>
+                <Button variant="contained" color="success" onClick={UpdateChapter}>Thêm chương</Button>
                 <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
             </div>
         </div>
     )
 }
 
-export default AddChapter
+export default UpdateChapter

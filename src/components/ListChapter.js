@@ -30,13 +30,13 @@ export default function ListChapter(props) {
       future: "%s",
       past: "%s giây trước",
       s: function (number, withoutSuffix, key, isFuture) {
-        return '00:' + (number < 10 ? '0' : '')
+        return (number < 10 ? '0' : '')
           + number + ' phút trước';
       },
-      m: "01:00 minutes",
+      m: "01:00 phút trước",
       mm: function (number, withoutSuffix, key, isFuture) {
         return (number < 10 ? '0' : '')
-          + number + ':00' + ' phút trước]';
+          + number + ' phút trước';
       },
       h: "một giờ trước",
       hh: "%d giờ trước",
@@ -84,7 +84,7 @@ export default function ListChapter(props) {
             onClick={(e) => { navigate(`/chapter/${value.chapterId}`) }}
           >
             <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
-              <ListItemText id={labelId} primary={value.chapterName} />
+              <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
             </ListItemButton>
           </ListItem>
         );
