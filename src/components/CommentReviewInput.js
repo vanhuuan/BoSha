@@ -102,7 +102,7 @@ function Comment(props) {
                                 </svg>
                             </button>
                             {showEmojis && (
-                                <div style={{ position: "relative", zIndex: 1 }}>
+                                <div style={{ position: "absolute", zIndex: 1, top: `100%`, width: `50%` }}>
                                     <Picker onEmojiClick={addEmoji} searchDisabled skinTonesDisabled emojiStyle={EmojiStyle.GOOGLE} suggestedEmojisMode={SuggestionMode.None}
                                         categories={[
                                             {
@@ -113,7 +113,7 @@ function Comment(props) {
                                             showPreview: false
                                         }}
                                         height={"10em"}
-                                        width={"40em"} />
+                                        width={"100%"} />
                                 </div>
                             )}
                             <Typography level="body3" color={"red"}>
@@ -133,7 +133,8 @@ function Comment(props) {
                 /> </> : <> { isLoading === false ? <Textarea
                     minRows={3}
                     disabled
-                    value={commentEd.text}>
+                    value={commentEd.text}
+                    style={{color: `black`}}>
                 </Textarea> : <> </>
                 }</> 
             }
@@ -238,7 +239,7 @@ function Review(props) {
                                 </svg>
                             </button>
                             {showEmojis && (
-                                <div style={{ position: "relative", zIndex: 1 }}>
+                                <div style={{ position: "absolute", zIndex: 1, top: `100%`, width: `50%` }}>
                                     <Picker onEmojiClick={addEmoji} searchDisabled skinTonesDisabled emojiStyle={EmojiStyle.GOOGLE} suggestedEmojisMode={SuggestionMode.None}
                                         categories={[
                                             {
@@ -249,7 +250,7 @@ function Review(props) {
                                             showPreview: false
                                         }}
                                         height={"10em"}
-                                        width={"40em"} />
+                                        width={"100%"} />
                                 </div>
                             )}
                             <Typography level="body3" color={"red"}>
@@ -280,7 +281,8 @@ function Review(props) {
                         name="simple-controlled"
                         value={review.star}
                         readOnly 
-                    />}>
+                    />} 
+                    style={{color: `black`}}>
                 </Textarea>}
         </FormControl>
     );

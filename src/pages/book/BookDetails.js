@@ -15,6 +15,11 @@ import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
 import { AddShoppingCart, AddShoppingCartOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ForumIcon from '@mui/icons-material/Forum';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ShareIcon from '@mui/icons-material/Share';
+import { NotificationManager } from 'react-notifications';
 
 export default function BookDetail() {
     const { id } = useParams();
@@ -44,6 +49,11 @@ export default function BookDetail() {
     const [showMore, setShowMore] = useState(false);
 
     let navigate = useNavigate();
+
+    const share = () =>{ 
+        NotificationManager.success(book.name, 'Đã sao chép', 1000);
+        navigator.clipboard.writeText(`/Book/${book.id}`);
+    }
 
     const setPreviewText = (data) => {
         setPreivew(data)
@@ -95,15 +105,15 @@ export default function BookDetail() {
                                             </Grid>
                                             <Grid item md={9} sm={12} width="100%">
                                                 <div style={{ marginTop: 2 + 'em' }}>
-                                                    <Typography variant='h6'>{book.name} </Typography>
+                                                    <Typography variant='h4'>{book.name} </Typography>
                                                 </div>
                                                 <BookCategories categories={{ cate: book.category }} />
-                                                <BookInfo book={{ bookDetail: book }}></BookInfo>
-                                                <Typography variant='h7'>Giá tiền: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                                                                .format(book.price)} </Typography>
-                                                <div>
+                                                <div style={{margin: `1em 0`}}>
+                                                    <BookInfo book={{ bookDetail: book }}></BookInfo>
+                                                </div>
+                                                <div style={{marginBottom: `2em`}}>
                                                     {book.authorId !== uid ? <>
-                                                        <Button variant="outlined" startIcon={<StarIcon style={{ color: "yellow" }} />}>
+                                                        <Button variant="outlined" startIcon={<StarIcon style={{ color: "yellow" }} />} style={{ marginRight: `1em` }}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
                                                         <Button variant="contained" startIcon={<AddShoppingCartOutlined />}>
@@ -111,6 +121,36 @@ export default function BookDetail() {
                                                         </Button> </> : <></>
                                                     }
                                                 </div>
+                                                <Grid container>
+                                                    <Grid item sm={3} xs={3}>
+                                                        <div className='info-item'>
+                                                            <div><FavoriteBorderIcon style={{ color: 'rgb(226,37,144)' }} /></div>
+                                                            <div><b>{book.numOfStar / (book.numOfReview + 1)}</b></div>
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item sm={3} xs={3}>
+                                                        <div className='info-item'>
+                                                            <a href="#chapter-list">
+                                                                <div><FormatListBulletedIcon /></div>
+                                                                <div><b>Mục lục</b></div>
+                                                            </a>
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item sm={3} xs={3}>
+                                                        <div className='info-item'>
+                                                            <a href="#review">
+                                                                <div><ForumIcon /></div>
+                                                                <div><b>Đánh giá</b></div>
+                                                            </a>
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item sm={3} xs={3}>
+                                                        <div className='info-item' onClick={share}>
+                                                            <div><ShareIcon /></div>
+                                                            <div><b>Chia sẻ</b></div>
+                                                        </div>
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </div>
@@ -118,17 +158,17 @@ export default function BookDetail() {
                                         <BottomInfo book={{ bookDetail: book }}></BottomInfo>
                                     </div>
                                     <div className='container-bottom'>
-                                        { showMore ?
-                                        <div dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div> 
-                                        : <div dangerouslySetInnerHTML={{ __html: preview }}></div> 
+                                        {showMore ?
+                                            <div dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div>
+                                            : <div dangerouslySetInnerHTML={{ __html: preview }}></div>
                                         }
-                                        { preview.length < 250 ? <></> : 
-                                        <button className="btn" onClick={() => setShowMore(!showMore)}>{ showMore ? "Ít hơn" : "Mở rộng"}</button>
-                                    }
+                                        {preview.length < 250 ? <></> :
+                                            <button className="btn" onClick={() => setShowMore(!showMore)}>{showMore ? "Ít hơn" : "Mở rộng"}</button>
+                                        }
                                     </div>
                                 </div>
 
-                                <div className='container'>
+                                <div id='chapter-list' className='container'>
                                     <div className='container-header' style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Typography variant='h6'> Danh sách tập </Typography>
                                         {book.authorId === uid ?
@@ -139,7 +179,7 @@ export default function BookDetail() {
                                         <ListChapter book={{ id: id, canEdit: status.canEdit, canBuyed: status.buyed }}></ListChapter>
                                     </div>
                                 </div>
-                                <div>
+                                <div id='review'>
                                     <Review book={{ bookId: id }}></Review>
                                     <ReviewList book={{ bookId: id }}></ReviewList>
                                 </div>

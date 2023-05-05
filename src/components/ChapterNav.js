@@ -12,7 +12,7 @@ const ChapterNav = (props) => {
 
     const [isLoading, setIsLoading] = useState(true)
     const id = props.chapter.book;
-    const chapId = props.chapter.book;
+    const chapId = props.chapter.chap;
     const [age, setAge] = useState(id)
     const [next, setNext] = React.useState(chapId);
     const [pre, setPre] = React.useState(chapId)
@@ -26,16 +26,17 @@ const ChapterNav = (props) => {
         console.log(id)
         const rs = await chapterService.chapters(id);
         console.log(rs)
-        if (rs) {
+        if (rs.data) {
             setChapters(rs.data)
         }
-        for (var i = 0; i < chapters.length; i++) {
-            if (chapters[i].chapterId == chapId) {
+        for (var i = 0; i < rs.data.length; i++) {
+
+            if (rs.data[i].chapterId === chapId) {
                 if (i - 1 >= 0) {
-                    setPre(chapters[i - 1].chapterId)
+                    setPre(rs.data[i - 1].chapterId)
                 }
-                if (i + 1 < chapters.length) {
-                    setPre(chapters[i + 1].chapterId)
+                if (i + 1 < rs.data.length) {
+                    setNext(rs.data[i + 1].chapterId)
                 }
             }
         }
@@ -43,7 +44,7 @@ const ChapterNav = (props) => {
     }
 
     useEffect(() => {
-        load().catch(console.error)
+        load()
     }, [])
 
     return (
@@ -63,10 +64,11 @@ const ChapterNav = (props) => {
                 onChange={handleChange}
                 displayEmpty
                 className="chapter-nav__select-item"
+                value={chapId}
             >
                 {isLoading === false ?
                     chapters.map((item) => (
-                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId) }} selected={item.chapterId === chapId} key={item.chapterId}>
+                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId) }} value={item.chapterId} key={item.chapterId}>
                             {`${item.chapterNumber} - ${item.chapterName}`}
                         </MenuItem>
                     )) : <></>}

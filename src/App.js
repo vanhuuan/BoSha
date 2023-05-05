@@ -25,6 +25,7 @@ import PaymentFaild from './pages/payment/PaymentFailed';
 import AddChapter from "./pages/chapter/AddChapter";
 import { NotificationContainer } from 'react-notifications';
 import UpdateChapter from "./pages/chapter/UpdateChapter";
+import BuyBook from "./pages/payment/BuyBook";
 
 function App() {
   useEffect(() => {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/user/payPayPal" element={<><Header /><Chapter /></>}></Route>
           <Route path='/notifySuccess' element={<><Header /><PaymentSuccess /></>}></Route>
           <Route path='/notifyFailed' element={<><Header /><PaymentFaild /></>}></Route>
+          <Route path='/BuyBook' element={<><Header /> <BuyBook/></>}></Route>
           <Route path='*' element={<><Header /><PageNotFound /></>} />
         </Routes>
       </BrowserRouter>

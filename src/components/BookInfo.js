@@ -16,44 +16,19 @@ const BookInfo = (props) => {
     }
     return (
         <>
-            <Typography>
+            <Typography style={{marginBottom: `0.5em`}}>
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Tác giả: </span>
                 <span>{book.authorName}</span>
             </Typography>
-            <Typography>
+            <Typography style={{marginBottom: `0.5em`}}>
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Giá tiền: </span>
-                <span>{book.price}</span>
+                <span>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                    .format(book.price)} </span>
             </Typography>
-            <Typography>
+            <Typography style={{marginBottom: `0.5em`}}>
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Tình trạng: </span>
                 <span>{book.name}</span>
             </Typography>
-            <Grid container>
-                <Grid item sm={3} xs={3}>
-                    <div className='info-item'>
-                        <div><FavoriteBorderIcon style={{ color: 'rgb(226,37,144)' }} /></div>
-                        <div><b>{book.numOfStar / (book.numOfReview + 1)}</b></div>
-                    </div>
-                </Grid>
-                <Grid item sm={3} xs={3}>
-                    <div className='info-item'>
-                        <div><FormatListBulletedIcon /></div>
-                        <div><b>Mục lục</b></div>
-                    </div>
-                </Grid>
-                <Grid item sm={3} xs={3}>
-                    <div className='info-item'>
-                        <div><ForumIcon /></div>
-                        <div><b>Đánh giá</b></div>
-                    </div>
-                </Grid>
-                <Grid item sm={3} xs={3}>
-                    <div className='info-item' onClick={share}>
-                        <div><ShareIcon /></div>
-                        <div><b>Chia sẻ</b></div>
-                    </div>
-                </Grid>
-            </Grid>
         </>
     );
 }

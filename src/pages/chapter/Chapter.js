@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CommentList from "../../components/CommentList";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -31,7 +31,7 @@ const Chapter = () => {
         "buyed": false,
         "liked": false,
         "canEdit": false
-      })
+    })
     const resultRef = useRef(null);
 
     let navigate = useNavigate()
@@ -89,23 +89,30 @@ const Chapter = () => {
     }, [])
 
     return (
-        <Box>
-            {isLoading === false ?
-                <div style={{margin: "0 2em", textAlign: "center"}}>
-                    <Typography>{`${chapterDetail.name}`}</Typography>
-                    <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
-                    <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
-                    <ChapterNav chapter={{book: chapterDetail.bookId, chap: id}} resultRef={resultRef}></ChapterNav>
-                    <div dangerouslySetInnerHTML={{ __html: chap }} ></div>
-                </div> :
-                <>
-                    <LinearProgress />
-                </>
-            }
-            <Comment chap={{ chapId: id }}></Comment>
-            <CommentList chap={{ chapId: id }} ref={resultRef}></CommentList>
+        <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
+            <Grid container spacing={2}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                    {isLoading === false ?
+                        <div style={{ margin: "0 2em", textAlign: "center" }}>
+                            <Typography>{`${chapterDetail.name}`}</Typography>
+                            <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
+                            <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
+                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} resultRef={resultRef}></ChapterNav>
+                            <div dangerouslySetInnerHTML={{ __html: chap }} ></div>
+                        </div> :
+                        <>
+                            <LinearProgress />
+                        </>
+                    }
+                    <Comment chap={{ chapId: id }}></Comment>
+                    <CommentList chap={{ chapId: id }} ref={resultRef}></CommentList>
+                </Grid>
+                <Grid item xs={1}></Grid>
+            </Grid>
         </Box>
     )
 }
 
 export default Chapter
+
