@@ -11,17 +11,23 @@ import { OutlinedInput } from "@mui/material";
 
 export default function RadioPrice(props) {
     const [selectedValue, setSelectedValue] = React.useState("1");
-    const [value, setValue] = React.useState("1000");
+    const [value, setValue] = React.useState(1000);
     const [radioDisabled, setRadioDisabled] = React.useState(false);
-    const price = props.book.price
+   
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
         console.log(selectedValue)
     };
     const handlePriceChange = (event) => {
+        if(event.target.value <= 1000){
+            setValue(1000);
+            sendData(1000)
+            return;
+        }
         setValue(event.target.value);
-        console.log(value)
+        sendData(event.target.value)
     };
+
     const controlProps = (item) => ({
         checked: selectedValue === item,
         onChange: handleChange,
@@ -29,12 +35,20 @@ export default function RadioPrice(props) {
         name: "size-radio-button-demo",
         inputProps: { "aria-label": item },
     });
+
+    const sendData = (htmls) => {
+        props.parentCallback(htmls);
+    }
+
     React.useEffect(() => {
+        const price = props.book.price
         if(price){
             if(price === 0){
                 setSelectedValue("1")
             }else{
                 setSelectedValue("2")
+                if(price < 1000)
+                setValue(1000)
             }
             setRadioDisabled(true)
         }
@@ -70,11 +84,12 @@ export default function RadioPrice(props) {
                     <InputLabel htmlFor="outlined-adornment-amount">Giá tiền</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-amount"
-                        startAdornment={<InputAdornment position="start">VND</InputAdornment>}
-                        label="Amount"
+                        inputProps={{min: 1000, style: { textAlign: 'right' }}}
+                        endAdornment={<InputAdornment position="start">VND</InputAdornment>}
+                        label="Giá tiền"
                         onChange={handlePriceChange}
                         type="number"
-                        value={price}
+                        value={value}
                     />
                 </FormControl> : <></>
             }

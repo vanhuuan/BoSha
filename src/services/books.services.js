@@ -9,7 +9,10 @@ export const bookService = {
     },
     bookDetail: async (id) => {
         return await api.get(`${baseURL}/Book?id=${id}`)
-    }
+    },
+    bookStatus: async (id) => {
+        return await api.get(`${baseURL}/Book/Status?id=${id}`)
+    },
 }
 
 

@@ -4,6 +4,10 @@ import { Grid, Typography, TextField, Box, Button } from '@mui/material';
 import RadioPrice from '../../components/RadioPrice';
 import MultipleSelect from '../../components/SelectMulti';
 import EditorImage, { EditorDescription } from '../../components/editor/editor';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { useParams } from 'react-router-dom';
 import {
     NavLink,
@@ -15,6 +19,26 @@ import '../../css/AddBook.css'
 import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
+
+function getStyles(name, personName, theme) {
+    return {
+        fontWeight:
+            personName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const EditBook = () => {
     const { id } = useParams();
@@ -29,7 +53,8 @@ const EditBook = () => {
         "numOfChapter": 0,
         "publishDate": "2023-04-12T06:58:40.676Z",
         "updateDate": "2023-04-12T06:58:40.742Z",
-        "category": []
+        "category": [],
+        "price": 1000
     })
     const [isLoading, setIsLoading] = useState(true)
     const [name, setName] = useState("Tên truyện")
@@ -37,18 +62,23 @@ const EditBook = () => {
     const [listCategory, setListCategory] = useState([])
     const [desc, setDesc] = useState("")
     const [img, setImg] = useState("")
-
+    const [imgChange, setImgChange] = useState(false)
+    const [state, setState] = useState("Unfinish")
     let navigate = useNavigate()
 
     useEffect(() => {
         setIsLoading(true)
         userBookService.bookDetail(id).then(
-            rs => setBook(rs.data)
+            rs => {
+                console.log(rs.data)
+                setBook(rs.data)
+                firebaseService.gerPreview(id, (rs2) => { setDesc(rs2); setIsLoading(false) })
+            }
         ).catch((err) => {
             console.log(err)
             navigate("/notfound")
         })
-        setIsLoading(false)
+
     }, [id]);
 
     const updateBook = () => {
@@ -56,14 +86,19 @@ const EditBook = () => {
             "bookId": id,
             "name": name,
             "categories": listCategory,
-            "price": price
+            "price": price,
+            "state": "Unfinish"
         }
         userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
-                firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
-                    console.log(rs3)
+                if (imgChange) {
+                    firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
+                        console.log(rs3)
+                        navigate(`/book/${rs.data.id}`)
+                    }).catch((err) => console.log(err))
+                }else{
                     navigate(`/book/${rs.data.id}`)
-                }).catch((err) => console.log(err))
+                }
             }).catch((err) => console.log(err))
         }).catch((err) => {
             console.log(err)
@@ -87,6 +122,7 @@ const EditBook = () => {
 
     const callbackImg = (childData) => {
         setImg(childData)
+        setImgChange(true)
         console.log(childData)
     }
 
@@ -118,16 +154,19 @@ const EditBook = () => {
                                                     defaultValue={book.name}
                                                 />
                                             </div>
-                                            <MultipleSelect parentCallback={callbackCategory}></MultipleSelect>
+                                            <MultipleSelect book={{ categories: book.category }} parentCallback={callbackCategory}></MultipleSelect>
                                             <div sx={{ marginTop: '4px' }}>
                                                 <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
+                                            </div>
+                                            <div>
+
                                             </div>
                                         </Grid>
                                     </Grid>
                                 </div>
                             </div>
                             <div>
-                                <EditorDescription sx={{ margin: 100, border: '1px solid black' }} parentCallback={callbackDesc} />
+                                <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: desc }} parentCallback={callbackDesc} />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
                                 <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>

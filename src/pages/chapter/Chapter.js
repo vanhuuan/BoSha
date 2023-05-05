@@ -9,6 +9,7 @@ import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
 import { ConstructionOutlined } from "@mui/icons-material";
+import { bookService } from "../../services/books.services";
 
 const data = {
     "bookId": "643656848e27bd8b116546e9",
@@ -26,6 +27,11 @@ const Chapter = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [chapterDetail, setChapterDetail] = useState(data)
     const [dateUpdate, setDateUpdate] = useState("")
+    const [status, setStatus] = useState({
+        "buyed": false,
+        "liked": false,
+        "canEdit": false
+      })
     const resultRef = useRef(null);
 
     let navigate = useNavigate()
@@ -66,10 +72,14 @@ const Chapter = () => {
                 console.log(rs.data)
                 setChapterDetail(rs.data)
                 setChap(rs.data.textLink)
-                firebaseService.getChapter(chapterDetail.bookId, chapterDetail.chapterId, setChapText)
+                firebaseService.getChapter(rs.data.bookId, rs.data.chapterId, setChapText)
                 const date1 = new Date(chapterDetail.updated);
                 let a = moment().from(date1);
                 setDateUpdate(a)
+                bookService.bookStatus(rs.data.bookId).then((rs) => {
+                    console.log(rs)
+                    setStatus(rs)
+                }).catch(console.error)
                 setIsLoading(false)
             }
         ).catch((err) => {

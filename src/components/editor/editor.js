@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import DOMPurify from 'dompurify';
 import { convertToHTML } from 'draft-convert';
@@ -38,14 +38,19 @@ function EditorImage(props) {
     const [editorState, setEditorState] = useState(
         () => EditorState.createEmpty(),
     );
+    const maxLength = "15000"
     const [convertedContent, setConvertedContent] = useState(null);
-    try{
+    try {
         const data = props.text
-        console.log(data)
-        if(data){
+        if (data) {
             setConvertedContent(data)
+            setEditorState(EditorState.createWithContent(
+                ContentState.createFromBlockArray(
+                    convertFromHTML(data)
+                )
+            ))
         }
-    }catch(err){}
+    } catch (err) { }
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
@@ -70,7 +75,19 @@ function EditorImage(props) {
                         options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
                     }}
                     editorStyle={{ height: '30em' }}
+                    handleBeforeInput={val => {
+                        const textLength = editorState.getCurrentContent().getPlainText().length;
+                        if (val && textLength >= maxLength) {
+                            return 'handled';
+                        }
+                        return 'not-handled';
+                    }}
+                    handlePastedText={val => {
+                        const textLength = editorState.getCurrentContent().getPlainText().length;
+                        return ((val.length + textLength) >= maxLength);
+                    }}
                 />
+                <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / { maxLength} ký tự</Typography>
             </Grid>
             <Grid item xs={1}></Grid>
         </Grid>
@@ -79,15 +96,17 @@ function EditorImage(props) {
 }
 
 function EditorDescription(props) {
-    const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty(),
-    );
+    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(
+        ContentState.createFromBlockArray(convertFromHTML(props.book.text))))
+
     const [isPreview, setIsPreview] = useState(false)
     const [convertedContent, setConvertedContent] = useState(null);
 
     const sendData = (htmls) => {
         props.parentCallback(htmls);
     }
+
+    const maxLength = 3000;
 
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
@@ -100,10 +119,10 @@ function EditorDescription(props) {
 
             <Grid item xs={12}>
                 <div style={{ marginTop: `1rem`, border: '1px solid gray', marginTop: `1rem`, borderRadius: '4px' }}>
-                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em'}}>
-                        Miêu tả 
+                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>
+                        Miêu tả
                     </Typography>
-                    {isPreview === false ?
+                    {isPreview === false ?<>
                         <Editor
                             editorState={editorState}
                             onEditorStateChange={setEditorState}
@@ -113,7 +132,19 @@ function EditorDescription(props) {
                                 options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
                             }}
                             editorStyle={{ height: '20em' }}
-                        /> :
+                            handleBeforeInput={val => {
+                                const textLength = editorState.getCurrentContent().getPlainText().length;
+                                if (val && textLength >= maxLength) {
+                                    return 'handled';
+                                }
+                                return 'not-handled';
+                            }}
+                            handlePastedText={val => {
+                                const textLength = editorState.getCurrentContent().getPlainText().length;
+                                return ((val.length + textLength) >= maxLength);
+                            }}
+                        />  <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / { maxLength} ký tự</Typography>
+                        </>:
                         <div
                             bg
                             sx={{ padding: `1rem`, marginTop: `1rem`, backgroundColor: `gray` }}
@@ -121,7 +152,7 @@ function EditorDescription(props) {
                             dangerouslySetInnerHTML={createMarkup(convertedContent)}>
                         </div>
                     }
-                    <Button onClick={(e) => {setIsPreview(!isPreview)}}>Xem trước</Button>
+                    <Button onClick={(e) => { setIsPreview(!isPreview) }}>Xem trước</Button>
                 </div>
             </Grid>
         </Grid>

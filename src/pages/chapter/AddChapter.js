@@ -47,17 +47,15 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 
-const AddChapter = (props) => {
+const AddChapter = () => {
     const [name, setName] = React.useState('Tên chương');
     const [stt, setStt] = React.useState(0);
     const [chap, setChap] = React.useState("");
     const [demo, setDemo] = React.useState(true);
     const location = useLocation();
     const data = location.state;
-    const bookId = data.data.bookId;
-    const bookName = data.data.bookName
-
-    console.log(data.data)
+    const bookId = data.bookId;
+    const bookName = data.bookName
 
     let navigate = useNavigate()
 
@@ -70,7 +68,7 @@ const AddChapter = (props) => {
         }
         userBookService.addChapter(data).then((rs) => {
             console.log(rs)
-            firebaseService.uploadChapter(bookId, rs.data.id, chap).then((rs) => {
+            firebaseService.uploadChapter(bookId, rs.data.chapterId, chap).then((rs) => {
                 console.log(rs)
                 navigate(`/book/${bookId}`)
             }).catch((err) => console.log(err))
@@ -116,7 +114,6 @@ const AddChapter = (props) => {
                                 }}
                                 sx={{ width: "100%", margin: "1em" }}
                             />
-                            <FormLabel id="demo-controlled-radio-buttons-group">Loại chương</FormLabel>
                             <FormControlLabel
                                 control={<Android12Switch checked={demo} onChange={(e) => setDemo(e.target.checked)} />}
                                 label="Xem thử"

@@ -15,15 +15,17 @@ import { styled } from '@mui/material/styles';
 import { chapterService } from "../../services/chapter.services";
 
 const data = {
-    "bookId": "643656848e27bd8b116546e9",
-    "chapterId": "643656888e27bd8b116546fa",
-    "name": "Tập 17",
-    "chapterNumber": 17,
-    "created": "2023-04-12T06:58:16.574Z",
-    "updated": "2023-04-12T06:58:16.574Z",
-    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656848e27bd8b116546e9%2F643656888e27bd8b116546fa.html?alt=media&token=776995dd-485f-48ed-ac04-8dcff7984a92"
+    "bookId": "645368d5eb07b12be11f0271",
+    "chapterId": "64536d07eb07b12be11f0272",
+    "canEdit": false,
+    "name": "Ngày đầu đi phỏng vấn VNG",
+    "chapterNumber": 1,
+    "created": "2023-05-04T08:29:59.548Z",
+    "updated": "2023-05-04T08:29:59.548Z",
+    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F645368d5eb07b12be11f0271%2F64536d07eb07b12be11f0272.html?alt=media&token=042d99ef-cecb-43cd-913d-7827ab963965",
+    "isDemo": true,
+    "state": true
 }
-
 const Android12Switch = styled(Switch)(({ theme }) => ({
     padding: 8,
     '& .MuiSwitch-track': {

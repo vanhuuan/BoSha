@@ -1,6 +1,28 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
+const intToString = num => {
+    num = num.toString().replace(/[^0-9.]/g, '');
+    if (num < 1000) {
+        return num;
+    }
+    let si = [
+      {v: 1E3, s: "K"},
+      {v: 1E6, s: "M"},
+      {v: 1E9, s: "B"},
+      {v: 1E12, s: "T"},
+      {v: 1E15, s: "P"},
+      {v: 1E18, s: "E"}
+      ];
+    let index;
+    for (index = si.length - 1; index > 0; index--) {
+        if (num >= si[index].v) {
+            break;
+        }
+    }
+    return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s;
+};
+
 const BottomInfo = (props) => {
     const book = props.book.bookDetail
     const date1 = new Date(book.updateDate);
@@ -55,11 +77,11 @@ const BottomInfo = (props) => {
             <Grid item sm={3} xs={3}>
                 <div className='info-item'>
                     <div>Lượt xem</div>
-                    <div><b>1 ngày</b></div>
+                    <div><b>{intToString(1)}</b></div>
                 </div>
             </Grid>
         </Grid>
     );
 }
 
-export default  BottomInfo;
+export default BottomInfo;

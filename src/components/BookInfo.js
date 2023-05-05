@@ -24,7 +24,7 @@ const BookInfo = (props) => {
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Giá tiền: </span>
                 <span>{book.price}</span>
             </Typography>
-            <Typography>''
+            <Typography>
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Tình trạng: </span>
                 <span>{book.name}</span>
             </Typography>
@@ -32,7 +32,7 @@ const BookInfo = (props) => {
                 <Grid item sm={3} xs={3}>
                     <div className='info-item'>
                         <div><FavoriteBorderIcon style={{ color: 'rgb(226,37,144)' }} /></div>
-                        <div><b>{book.numOfStar}</b></div>
+                        <div><b>{book.numOfStar / (book.numOfReview + 1)}</b></div>
                     </div>
                 </Grid>
                 <Grid item sm={3} xs={3}>

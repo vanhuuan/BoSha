@@ -114,7 +114,7 @@ const AddBook = () => {
               </div>
             </div>
             <div>
-              <EditorDescription sx={{ margin: 100, border: '1px solid black' }} parentCallback={callbackDesc}/>
+              <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: "<p></p>" }} parentCallback={callbackDesc}/>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
               <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={addBook}>Thêm truyện</Button>

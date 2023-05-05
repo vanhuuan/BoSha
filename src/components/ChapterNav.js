@@ -74,9 +74,9 @@ const ChapterNav = (props) => {
             </Select>
             {next === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
-                    &#8249;
+                    &#8250;
                 </button> : <button className="chapter-nav__page" onClick={() => { navigate(`/chapter/${next}`) }}>
-                    &#8249;
+                    &#8250;
                 </button>
                 }
             <button className="chapter-nav__comment" onClick={() => {resultRef.current.scrollIntoView({ behavior: "smooth" })}}>

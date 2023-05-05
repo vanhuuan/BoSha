@@ -11,13 +11,18 @@ import "../css/ListChapter.css";
 import { chapterService } from '../services/chapter.services';
 import { useNavigate } from 'react-router-dom';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
   const [chapters, setChapters] = React.useState([])
+  const [canEdit, setCanEdit] = React.useState(false)
+  const [canBuyed, setBuyed] = React.useState(false)
   let navigate = useNavigate()
   const load = async () => {
     console.log(props.book.id)
+    console.log(props.book.canEdit)
+    console.log(props.book.canBuyed)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
     if (rs) {
@@ -80,10 +85,13 @@ export default function ListChapter(props) {
             secondaryAction={
               <div style={{display:"flex"}}>
                 {
-                  value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
+                  canBuyed || value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
                 }
-                
                 <ListItemText primary={a} sx={{marginLeft:"0.5em"}}/>
+
+                {
+                  canEdit ? <BorderColorIcon onClick={(e) => { navigate(``) }}> </BorderColorIcon> : <></>
+                }
               </div>
             }
             disablePadding

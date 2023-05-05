@@ -11,6 +11,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { userBookService } from "../../services/userBook.services";
 import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
+import { bookService } from "../../services/books.services";
+import { firebaseService } from "../../services/firebase.services";
+import { AddShoppingCart, AddShoppingCartOutlined } from "@mui/icons-material";
+import StarIcon from '@mui/icons-material/Star';
 
 export default function BookDetail() {
     const { id } = useParams();
@@ -26,25 +30,42 @@ export default function BookDetail() {
         "numOfChapter": 0,
         "publishDate": "2023-04-12T06:58:40.676Z",
         "updateDate": "2023-04-12T06:58:40.742Z",
-        "category": []
+        "category": [],
+        "price": 1000
     })
+    const [status, setStatus] = useState({
+        "buyed": false,
+        "liked": false,
+        "canEdit": false
+    })
+    const [preview, setPreivew] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const uid = localStorage.getItem("UserId");
+    const [showMore, setShowMore] = useState(false);
 
     let navigate = useNavigate();
+
+    const setPreviewText = (data) => {
+        setPreivew(data)
+        setIsLoading(false)
+    }
 
     useEffect(() => {
         setIsLoading(true)
         userBookService.bookDetail(id).then(
             (rs) => {
-                console.log("Hello", rs.data)
+                firebaseService.gerPreview(id, setPreviewText)
                 setBook(rs.data)
-                setIsLoading(false)
+                bookService.bookStatus(id).then((rs) => {
+                    console.log(rs)
+                    setStatus(rs.data)
+                    setIsLoading(false)
+                }).catch(console.error)
             }
         ).catch((err) => console.log(err))
     }, [id])
 
-    const data = { bookId: book.id, bookName: book.name}
+    const data = { bookId: book.id, bookName: book.name }
 
     return (
         <div>
@@ -59,7 +80,7 @@ export default function BookDetail() {
                                 <div className='container'>
                                     <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <Typography variant='h5'>{book.name} </Typography>
-                                        {book.authorId === uid ?
+                                        {status.canEdit ?
                                             <IconButton onClick={() => { navigate('/book/edit/' + id) }}>
                                                 <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
                                             </IconButton> : <></>
@@ -78,6 +99,18 @@ export default function BookDetail() {
                                                 </div>
                                                 <BookCategories categories={{ cate: book.category }} />
                                                 <BookInfo book={{ bookDetail: book }}></BookInfo>
+                                                <Typography variant='h7'>Giá tiền: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                                .format(book.price)} </Typography>
+                                                <div>
+                                                    {book.authorId !== uid ? <>
+                                                        <Button variant="outlined" startIcon={<StarIcon style={{ color: "yellow" }} />}>
+                                                            {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
+                                                        </Button>
+                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />}>
+                                                            {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
+                                                        </Button> </> : <></>
+                                                    }
+                                                </div>
                                             </Grid>
                                         </Grid>
                                     </div>
@@ -85,7 +118,13 @@ export default function BookDetail() {
                                         <BottomInfo book={{ bookDetail: book }}></BottomInfo>
                                     </div>
                                     <div className='container-bottom'>
-                                        <div dangerouslySetInnerHTML={{ __html: "<div>Good</div>" }}></div>
+                                        { showMore ?
+                                        <div dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div> 
+                                        : <div dangerouslySetInnerHTML={{ __html: preview }}></div> 
+                                        }
+                                        { preview.length < 250 ? <></> : 
+                                        <button className="btn" onClick={() => setShowMore(!showMore)}>{ showMore ? "Ít hơn" : "Mở rộng"}</button>
+                                    }
                                     </div>
                                 </div>
 
@@ -93,11 +132,11 @@ export default function BookDetail() {
                                     <div className='container-header' style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Typography variant='h6'> Danh sách tập </Typography>
                                         {book.authorId === uid ?
-                                            <Button><span style={{color: "black"}} onClick={(e) => navigate("/chapter/addChapter", { state: data })}>Thêm chương mới</span></Button> : <></>
+                                            <Button><span style={{ color: "black" }} onClick={(e) => navigate("/chapter/addChapter", { state: data })}>Thêm chương mới</span></Button> : <></>
                                         }
                                     </div>
                                     <div className='container-body'>
-                                        <ListChapter book={{ id: id }}></ListChapter>
+                                        <ListChapter book={{ id: id, canEdit: status.canEdit, canBuyed: status.buyed }}></ListChapter>
                                     </div>
                                 </div>
                                 <div>

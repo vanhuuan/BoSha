@@ -13,7 +13,7 @@ export const firebaseService = {
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         console.log("Helo", xhr)
-                        callback(`<div>" ${xhr.responseText} </div>`)
+                        callback(`<div>${xhr.responseText} </div>`)
                     }
                 }
                 xhr.open('GET', url, true);
@@ -25,7 +25,7 @@ export const firebaseService = {
             });
     },
     gerPreview: async (bookId, callback) => {
-        getDownloadURL(ref(storage, `book/${bookId}/preview.html`))
+        getDownloadURL(ref(storage, `books/${bookId}/preview.html`))
             .then((url) => {
                 const xhr = new XMLHttpRequest();
                 xhr.responseType = 'text/html';
@@ -34,8 +34,7 @@ export const firebaseService = {
                 };
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
-                        console.log("Helo", xhr)
-                        callback(`<div>" ${xhr.responseText} </div>`)
+                        callback(`<div> ${xhr.responseText} </div>`)
                     }
                 }
                 xhr.open('GET', url);
@@ -43,11 +42,11 @@ export const firebaseService = {
             })
             .catch((error) => {
                 console.log(error)
-                return `<div>Đây là một bộ truyện khá hay nhưng tác giả chưa miêu tả cho nó.</div>`
+                callback(`<div>Đây là một bộ truyện khá hay nhưng tác giả chưa miêu tả cho nó.</div>`)
             });
     },
     getCover: async (bookId) => {
-        getDownloadURL(ref(storage, `book/${bookId}/cover.jpg`))
+        getDownloadURL(ref(storage, `books/${bookId}/cover.jpg`))
             .then((url) => {
                 ;
                 return url;
@@ -81,7 +80,7 @@ export const firebaseService = {
         );
     },
     uploadChapter: async (bookId, chapterId, text) => {
-        const storageRef = ref(storage, `book/${bookId}/${chapterId}.html`);
+        const storageRef = ref(storage, `books/${bookId}/${chapterId}.html`);
         const metadata = {
             contentType: 'text/html; charset=utf-8',
         };
