@@ -92,10 +92,8 @@ const BuyBook = () => {
 
     const [checkoutInfo, setCheckoutInfo] = useState()
     const [buyLink, setBuyLink] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState(" Phương thức thanh toán")
 
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
 
     const handleBuyBook = () => {
         const data = {
@@ -105,6 +103,7 @@ const BuyBook = () => {
         setIsLoading(true)
         buyBookService.buyBook(data).then((rs) => {
             setIsLoading(false)
+            handleNext()
             window.open(rs.data, '_top', 'noopener,noreferrer');
             setBuyLink(rs.data)
             setActiveStep(activeStep - 1);
@@ -124,10 +123,11 @@ const BuyBook = () => {
         buyBookService.checkOut(bookId).then((rs) => {
             console.log(rs)
             setCheckoutInfo(rs.data)
-            setIsLoading(false)
-            if (rs.data.buyLimk) {
+            
+            if (rs.data.buyLink) {
                 window.open(rs.data.buyLink, '_top', 'noopener,noreferrer');
             }
+            setIsLoading(false)
         }).catch((e) => {
             console.log(e)
             navigate(-1)
@@ -195,7 +195,7 @@ const BuyBook = () => {
                                                         endIcon={<KeyboardArrowDownIcon />}
                                                     >
                                                         <PaymentOutlined />
-                                                        Phương thức thanh toán
+                                                        {paymentMethod}
                                                     </Button>
                                                     <StyledMenu
                                                         id="demo-customized-menu"
@@ -206,16 +206,16 @@ const BuyBook = () => {
                                                         open={open}
                                                         onClose={handleClose}
                                                     >
-                                                        <MenuItem onClick={handleClose} disableRipple selected={true}>
-                                                            <EditIcon />
+                                                        <MenuItem onClick={handleClose} disableRipple selected={true} onClickCapture={(e) => { setPaymentMethod(" Paypal")}}>
+                                                            <PaymentOutlined />
                                                             Paypal
                                                         </MenuItem>
                                                         <MenuItem onClick={handleClose} disableRipple disabled={true}>
-                                                            <FileCopyIcon />
+                                                            <PaymentOutlined />
                                                             VNPay
                                                         </MenuItem>
                                                         <MenuItem onClick={handleClose} disableRipple disabled={true}>
-                                                            <ArchiveIcon />
+                                                            <PaymentOutlined />
                                                             Momo
                                                         </MenuItem>
                                                     </StyledMenu>
