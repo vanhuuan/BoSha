@@ -24,13 +24,17 @@ export const bookService = {
             textCate = "?Categories="
             console.log(textCate)
         }
-        
+
         const url = `${baseURL}/Books${textCate}&Name=${name}&State=${state}&NotState=Susspend&MinPrice=${min}&MaxPrice=${max}&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=fgsdgsdfgdfg&QueryString=sdfgsdfgdfg&SortBy=${sort}&SortType=Desc`
         console.log(url)
         return await api.get(url)
     },
     searchBook: async (queryString) => {
-        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=1&PageSize=5&QueryType=fghrfhrt&QueryString=rhrthrth&SortBy=Newest&SortType=Desc`)
+        if (queryString) {
+            return await api.get(`${baseURL}/Books?Categories=&Name=${queryString}&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=1&PageSize=5&QueryType=fghrfhrt&QueryString=rhrthrth&SortBy=Newest&SortType=Desc`)
+        } else {
+            return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=1&PageSize=5&QueryType=fghrfhrt&QueryString=rhrthrth&SortBy=Newest&SortType=Desc`)
+        }
     },
 }
 

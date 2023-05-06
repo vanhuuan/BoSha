@@ -38,12 +38,18 @@ function Header() {
     const [isLoading, setIsLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState('')
     const [categories, setCategories] = React.useState([])
-    const [data, setDate] = useState([])
+    const [data, setData] = useState([])
 
     const search = (search) => {
         setSearchTerm(search)
         const delayDebounceFn = setTimeout(() => {
-            console.log(search)
+            if(search.length > 5){
+                setIsLoading(true)
+                bookService.findBook(search).then((rs) => {
+                    setData(rs.data.data)
+                    setIsLoading(false)
+                })
+            }
         }, 3000)
         return () => clearTimeout(delayDebounceFn)
     }
