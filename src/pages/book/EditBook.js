@@ -19,6 +19,7 @@ import '../../css/AddBook.css'
 import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
+import AlertRoot from '../../components/notification/AlertRoot';
 
 function getStyles(name, personName, theme) {
     return {
@@ -32,12 +33,12 @@ function getStyles(name, personName, theme) {
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
     },
-  },
 };
 
 const EditBook = () => {
@@ -54,7 +55,8 @@ const EditBook = () => {
         "publishDate": "2023-04-12T06:58:40.676Z",
         "updateDate": "2023-04-12T06:58:40.742Z",
         "category": [],
-        "price": 1000
+        "price": 1000,
+        "state": "Unfinish"
     })
     const [isLoading, setIsLoading] = useState(true)
     const [name, setName] = useState("Tên truyện")
@@ -64,6 +66,9 @@ const EditBook = () => {
     const [img, setImg] = useState("")
     const [imgChange, setImgChange] = useState(false)
     const [state, setState] = useState("Unfinish")
+    const [messageText, setMessageText] = useState("")
+    const [titleText, setTitleText] = useState("Sai dữ liêu đầu vào")
+    const [open, setOpen] = useState(false)
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -72,22 +77,37 @@ const EditBook = () => {
             rs => {
                 console.log(rs.data)
                 setBook(rs.data)
+                setState(rs.data.state)
                 firebaseService.gerPreview(id, (rs2) => { setDesc(rs2); setIsLoading(false) })
             }
         ).catch((err) => {
             console.log(err)
             navigate("/notfound")
         })
-
     }, [id]);
 
     const updateBook = () => {
+        if (price < 0 || (price > 0 && price < 1000) || (price > 1000000)) {
+            setMessageText('Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND')
+            setOpen(true)
+            return;
+        }
+        if (name.length < 5 || name.length > 100) {
+            setMessageText('Tên truyện phải chứa từ 5 đến 100 ký tự')
+            setOpen(true)
+            return;
+        }
+        if (desc.length > 50 || desc.length > 3000) {
+            setMessageText('Miêu tả phải chứa từ 50 đến 3000 ký tự')
+            setOpen(true)
+            return;
+        }
         const data = {
             "bookId": id,
             "name": name,
             "categories": listCategory,
             "price": price,
-            "state": "Unfinish"
+            "state": state
         }
         userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
@@ -96,7 +116,7 @@ const EditBook = () => {
                         console.log(rs3)
                         navigate(`/book/${rs.data.id}`)
                     }).catch((err) => console.log(err))
-                }else{
+                } else {
                     navigate(`/book/${rs.data.id}`)
                 }
             }).catch((err) => console.log(err))
@@ -107,27 +127,28 @@ const EditBook = () => {
 
     const callbackPrice = (childData) => {
         setPrice(childData)
-        console.log(childData)
+        setMessageText("")
     }
 
     const callbackCategory = (childData) => {
         setListCategory(childData)
-        console.log(childData)
+        setMessageText("")
     }
 
     const callbackDesc = (childData) => {
         setDesc(childData)
-        console.log(desc)
+        setMessageText("")
     }
 
     const callbackImg = (childData) => {
         setImg(childData)
         setImgChange(true)
-        console.log(childData)
+        setMessageText("")
     }
 
     return (
         <div>
+            {messageText.length > 0 ? <AlertRoot message={messageText} title={titleText} openDialog={open}></AlertRoot> : <></>}
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={1}>
@@ -152,6 +173,7 @@ const EditBook = () => {
                                                     label="Tên truyện"
                                                     className='input-text'
                                                     defaultValue={book.name}
+                                                    onChange={(e) => { setName(e.target.value); setMessageText("") }}
                                                 />
                                             </div>
                                             <MultipleSelect book={{ categories: book.category }} parentCallback={callbackCategory}></MultipleSelect>
@@ -159,7 +181,20 @@ const EditBook = () => {
                                                 <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
                                             </div>
                                             <div>
-
+                                                {state === "Suspend" ? <></> : <>
+                                                    <InputLabel id="demo-select-small-label">Tình trạng</InputLabel>
+                                                    <Select
+                                                        labelId="demo-select-small-label"
+                                                        id="demo-select-small"
+                                                        value={state}
+                                                        label="Tình trạng"
+                                                        onChange={(e) => setState(e.target.value)}
+                                                    >
+                                                        <MenuItem value={"Unfinish"}>Chưa hoàn thành</MenuItem>
+                                                        <MenuItem value={"Finish"}>Đã hoàn thành</MenuItem>
+                                                    </Select>
+                                                </>
+                                                }
                                             </div>
                                         </Grid>
                                     </Grid>

@@ -8,23 +8,27 @@ import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import { OutlinedInput } from "@mui/material";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function RadioPrice(props) {
     const [selectedValue, setSelectedValue] = React.useState("1");
     const [value, setValue] = React.useState(1000);
     const [radioDisabled, setRadioDisabled] = React.useState(false);
+    const [helpText, setHelpText] = useState("")
    
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
-        console.log(selectedValue)
+        setValue(0);
+        sendData(0)
     };
     const handlePriceChange = (event) => {
-        if(event.target.value <= 1000){
-            setValue(1000);
-            sendData(1000)
+        setValue(event.target.value);
+        if(event.target.value < 1000){
+            setHelpText("Giá trij tối thiểu phải là 1.000 VND hoặc là miễn phí 0 VND")
             return;
         }
-        setValue(event.target.value);
+        setHelpText("")
         sendData(event.target.value)
     };
 
@@ -40,15 +44,16 @@ export default function RadioPrice(props) {
         props.parentCallback(htmls);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const price = props.book.price
+        console.log('gia', price)
         if(price){
-            if(price === 0){
+            if(price < 1000){
                 setSelectedValue("1")
+                setValue(0)
             }else{
                 setSelectedValue("2")
-                if(price < 1000)
-                setValue(1000)
+                setValue(price)
             }
             setRadioDisabled(true)
         }
@@ -90,6 +95,8 @@ export default function RadioPrice(props) {
                         onChange={handlePriceChange}
                         type="number"
                         value={value}
+                        helperText={helpText}
+                        error={helpText.length > 0 ? true : false}
                     />
                 </FormControl> : <></>
             }

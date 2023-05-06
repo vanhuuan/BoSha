@@ -36,7 +36,8 @@ export default function BookDetail() {
         "publishDate": "2023-04-12T06:58:40.676Z",
         "updateDate": "2023-04-12T06:58:40.742Z",
         "category": [],
-        "price": 1000
+        "price": 1000,
+        "state": "Unfinish"
     })
     const [status, setStatus] = useState({
         "buyed": false,

@@ -87,7 +87,7 @@ function EditorImage(props) {
                         return ((val.length + textLength) >= maxLength);
                     }}
                 />
-                <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / { maxLength} ký tự</Typography>
+                <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / {maxLength} ký tự</Typography>
             </Grid>
             <Grid item xs={1}></Grid>
         </Grid>
@@ -122,40 +122,30 @@ function EditorDescription(props) {
                     <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>
                         Miêu tả
                     </Typography>
-                    {isPreview === false ?<>
-                        <Editor
-                            editorState={editorState}
-                            onEditorStateChange={setEditorState}
-                            wrapperClassName="TextEditor"
-                            editorClassName="TextEditor"
-                            toolbar={{
-                                options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
-                            }}
-                            editorStyle={{ height: '20em' }}
-                            handleBeforeInput={val => {
-                                const textLength = editorState.getCurrentContent().getPlainText().length;
-                                if (val && textLength >= maxLength) {
-                                    return 'handled';
-                                }
-                                return 'not-handled';
-                            }}
-                            handlePastedText={val => {
-                                const textLength = editorState.getCurrentContent().getPlainText().length;
-                                return ((val.length + textLength) >= maxLength);
-                            }}
-                        />  <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / { maxLength} ký tự</Typography>
-                        </>:
-                        <div
-                            bg
-                            sx={{ padding: `1rem`, marginTop: `1rem`, backgroundColor: `gray` }}
-                            style={{ overflow: `auto`, height: `20em` }}
-                            dangerouslySetInnerHTML={createMarkup(convertedContent)}>
-                        </div>
-                    }
-                    <Button onClick={(e) => { setIsPreview(!isPreview) }}>Xem trước</Button>
+                    <Editor
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        wrapperClassName="TextEditor"
+                        editorClassName="TextEditor"
+                        toolbar={{
+                            options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+                        }}
+                        editorStyle={{ height: '20em' }}
+                        handleBeforeInput={val => {
+                            const textLength = editorState.getCurrentContent().getPlainText().length;
+                            if (val && textLength >= maxLength) {
+                                return 'handled';
+                            }
+                            return 'not-handled';
+                        }}
+                        handlePastedText={val => {
+                            const textLength = editorState.getCurrentContent().getPlainText().length;
+                            return ((val.length + textLength) >= maxLength);
+                        }}
+                    />  <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / {maxLength} ký tự</Typography>
                 </div>
             </Grid>
-        </Grid>
+        </Grid >
 
     );
 }

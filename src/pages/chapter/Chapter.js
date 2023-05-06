@@ -48,7 +48,7 @@ const Chapter = () => {
             m: "01:00 minutes",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
-                    + number + ':00' + ' phút trước';
+                    + number + ' phút trước';
             },
             h: "một giờ trước",
             hh: "%d giờ trước",
