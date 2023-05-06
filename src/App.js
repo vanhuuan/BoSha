@@ -27,6 +27,7 @@ import { NotificationContainer } from 'react-notifications';
 import UpdateChapter from "./pages/chapter/UpdateChapter";
 import BuyBook from "./pages/payment/BuyBook";
 import 'react-notifications/lib/notifications.css';
+import SearchBook from "./pages/book/SearchBook";
 
 function App() {
   useEffect(() => {
@@ -46,10 +47,10 @@ function App() {
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route path="/changePass" element={<ChangePassword />}></Route>
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
-          <Route path="/book/search" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header /><AddBook /></>}></Route>
           <Route path="/book/:id" element={<><Header /><BookDetail /></>}></Route>
           <Route path="/book/edit/:id" element={<><Header /><EditBook /></>}></Route>
+          <Route path="/book/search" element={<><Header /><SearchBook/></>}></Route>
           <Route path="/chapter/:id" element={<><Header /><Chapter /></>}></Route>
           <Route path="/chapter/addChapter" element={<><Header /><AddChapter /></>}></Route>
           <Route path="/chapter/updateChapter/:id" element={<><Header /><UpdateChapter /></>}></Route>
