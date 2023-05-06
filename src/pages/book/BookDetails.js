@@ -77,6 +77,12 @@ export default function BookDetail() {
 
     const data = { bookId: book.id, bookName: book.name }
 
+    const buyBook = (e) => {
+        if(status.buyed == false){
+            navigate("/BuyBook", { state: data } )
+        }
+    }
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -116,7 +122,7 @@ export default function BookDetail() {
                                                         <Button variant="outlined" startIcon={<StarIcon style={{ color: "yellow" }} />} style={{ marginRight: `1em` }}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
-                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />}>
+                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook}>
                                                             {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
                                                         </Button> </> : <></>
                                                     }

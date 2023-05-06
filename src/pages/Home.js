@@ -61,7 +61,7 @@ const Home = () => {
         <div className='row no-gutter'>
           <div className='col-1'></div>
           <div className='col-2' style={{ paddingRight: `4px`, flex: `1` }}>
-            <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
+            {/* <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>ĐỌC GẦN ĐÂY</h1>
               </div>
@@ -76,7 +76,7 @@ const Home = () => {
                   <RecentlyBookCard></RecentlyBookCard>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className='col-8' style={{ paddingLeft: `4px` }}>
             <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>

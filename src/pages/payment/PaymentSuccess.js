@@ -1,15 +1,18 @@
 import * as React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-// import { orderService } from '../../services/order.services';
+import { buyBookService } from '../../services/buybook.services';
+
 const PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
-    const orderId = searchParams.get('orderId')
-    const orderId2 = searchParams.get('token')
+    const orderId2 = searchParams.get('validToken')
+    let navigate = useNavigate()
     useEffect(() => {
-        // orderService.notifySuccess(orderId, orderId2);
+        buyBookService.notifySuccess(orderId2).then((rs) => {
+            navigate("/book/"+rs.data)
+        }).catch((e) => { navigate("/")})
     }, []);
     return (
         <>
