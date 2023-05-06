@@ -19,12 +19,12 @@ moment.updateLocale('vi', {
         past: "%s giây trước",
         s: function (number, withoutSuffix, key, isFuture) {
             return '00:' + (number < 10 ? '0' : '')
-                + number + ' phút trước';
+                + number + ' giây trước';
         },
         m: "01:00 minutes",
         mm: function (number, withoutSuffix, key, isFuture) {
             return (number < 10 ? '0' : '')
-                + number + ':00' + ' phút trước';
+                + number + ' phút trước';
         },
         h: "một giờ trước",
         hh: "%d giờ trước",
@@ -36,9 +36,6 @@ moment.updateLocale('vi', {
         yy: "%d năm trước"
     }
 });
-
-const imgLink =
-    "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/341263434_237177232146883_4137101451342149163_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oVBrUKg6yQAAX8WzY_X&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBi2or8ZeYBWoubGayzCsvCNN5xr_CldVenzY8DGaB3jw&oe=6440F313";
 
 const comments = [
     {

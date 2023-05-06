@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { chapterService } from "../services/chapter.services";
 
 const ChapterNav = (props) => {
-
     const [isLoading, setIsLoading] = useState(true)
     const id = props.chapter.book;
     const chapId = props.chapter.chap;
@@ -43,6 +42,10 @@ const ChapterNav = (props) => {
         setIsLoading(false)
     }
 
+    const onChange = (chap) => {
+        props.parentCallback(chap)
+    }
+
     useEffect(() => {
         load()
     }, [])
@@ -55,7 +58,7 @@ const ChapterNav = (props) => {
             {pre === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8249;
-                </button> : <button className="chapter-nav__page" onClick={() => { navigate(`/chapter/${pre}`) }}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${pre}`); onChange(pre)}}>
                     &#8249;
                 </button>
                 }
@@ -68,7 +71,7 @@ const ChapterNav = (props) => {
             >
                 {isLoading === false ?
                     chapters.map((item) => (
-                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId) }} value={item.chapterId} key={item.chapterId}>
+                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId); onChange(item.chapterId) }} value={item.chapterId} key={item.chapterId}>
                             {`${item.chapterNumber} - ${item.chapterName}`}
                         </MenuItem>
                     )) : <></>}
@@ -77,7 +80,7 @@ const ChapterNav = (props) => {
             {next === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8250;
-                </button> : <button className="chapter-nav__page" onClick={() => { navigate(`/chapter/${next}`) }}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${next}`); onChange(next)}}>
                     &#8250;
                 </button>
                 }

@@ -34,7 +34,7 @@ function Comment(props) {
         if (texts.length < 301) {
             setText(texts)
         }
-        if(texts.length > 5){
+        if (texts.length > 5) {
             setMessage("")
         }
     }
@@ -61,7 +61,7 @@ function Comment(props) {
     };
 
     const sendComment = () => {
-        if(text.length < 5) {
+        if (text.length < 5) {
             setMessage("Độ dài tối thiểu 5 ký tự")
             return
         }
@@ -70,7 +70,14 @@ function Comment(props) {
             "text": text
         }
         commentService.commentChapter(data).then(() => {
-
+            setIsLoading(true)
+            commentService.getUserChapterComment(id).then((rs) => {
+                console.log("comment:", rs.data)
+                setCommentEd(rs.data)
+                setIsCommented(true)
+                setIsLoading(false)
+            }
+            )
         }).catch((err) => {
             console.log(err)
         })
@@ -79,9 +86,9 @@ function Comment(props) {
     return (
         <FormControl>
             {isCommented === false ? <>
-            <FormLabel>Bình luận của bạn</FormLabel>
-            
-             <Textarea
+                <FormLabel>Bình luận của bạn</FormLabel>
+
+                <Textarea
                     minRows={3}
                     value={text}
                     onChange={(event) => setInput(event.target.value)}
@@ -112,7 +119,7 @@ function Comment(props) {
                                         previewConfig={{
                                             showPreview: false
                                         }}
-                                        height={"10em"}
+                                        height={"20em"}
                                         width={"100%"} />
                                 </div>
                             )}
@@ -130,13 +137,13 @@ function Comment(props) {
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
                     }}
-                /> </> : <> { isLoading === false ? <Textarea
+                /> </> : <> {isLoading === false ? <Textarea
                     minRows={3}
                     disabled
                     value={commentEd.text}
-                    style={{color: `black`}}>
+                    style={{ color: `black` }}>
                 </Textarea> : <> </>
-                }</> 
+                }</>
             }
         </FormControl>
     );
@@ -166,7 +173,7 @@ function Review(props) {
         if (texts.length < 1001) {
             setText(texts)
         }
-        if(texts.length > 5){
+        if (texts.length > 5) {
             setMessage("")
         }
     }
@@ -183,7 +190,7 @@ function Review(props) {
     }, [])
 
     const sendReview = () => {
-        if(text.length < 5) {
+        if (text.length < 5) {
             setMessage("Độ dài tối thiểu 5 ký tự");
             return
         }
@@ -193,7 +200,7 @@ function Review(props) {
             "star": star
         }
         commentService.reviewBook(data).then((rs) => {
-            commentService.getUserChapterComment(id).then((rs) => {
+            commentService.getUserBookReview(id).then((rs) => {
                 console.log("comment:", rs.data)
                 setReview(rs.data)
                 setIsReviewed(true)
@@ -280,9 +287,9 @@ function Review(props) {
                     endDecorator={<Rating
                         name="simple-controlled"
                         value={review.star}
-                        readOnly 
-                    />} 
-                    style={{color: `black`}}>
+                        readOnly
+                    />}
+                    style={{ color: `black` }}>
                 </Textarea>}
         </FormControl>
     );

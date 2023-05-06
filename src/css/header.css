@@ -56,12 +56,11 @@ button {
 }
 
 .nav__links li a:hover {
-    color: #0088a9;
 }
 
 button {
     padding: 9px 25px;
-    background-color: rgba(0, 136, 169, 1);
+    background-color: rgb(150, 212, 228);
     border: none;
     border-radius: 50px;
     cursor: pointer;

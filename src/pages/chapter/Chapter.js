@@ -33,6 +33,7 @@ const Chapter = () => {
         "canEdit": false
     })
     const resultRef = useRef(null);
+    const [chapterId, setChapterId] = useState(id)
 
     let navigate = useNavigate()
     const moment = require('moment');
@@ -47,7 +48,7 @@ const Chapter = () => {
             m: "01:00 minutes",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
-                    + number + ':00' + ' phút trước]';
+                    + number + ':00' + ' phút trước';
             },
             h: "một giờ trước",
             hh: "%d giờ trước",
@@ -64,10 +65,14 @@ const Chapter = () => {
         setChap(data)
     }
 
+    const changeChapter = (chap) => {
+        setChapterId(chap)
+    }
+
     useEffect(() => {
-        console.log(id)
+        console.log(chapterId)
         setIsLoading(true)
-        chapterService.chapterDetail(id).then(
+        chapterService.chapterDetail(chapterId).then(
             (rs) => {
                 console.log(rs.data)
                 setChapterDetail(rs.data)
@@ -86,27 +91,28 @@ const Chapter = () => {
             console.log(err)
             navigate(-1);
         })
-    }, [])
+    }, [chapterId])
 
     return (
         <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
-                    {isLoading === false ?
+                    {isLoading === false ? <>
                         <div style={{ margin: "0 2em", textAlign: "center" }}>
                             <Typography>{`${chapterDetail.name}`}</Typography>
                             <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
-                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} resultRef={resultRef}></ChapterNav>
+                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             <div dangerouslySetInnerHTML={{ __html: chap }} ></div>
-                        </div> :
+                        </div>
+
+                        <Comment chap={{ chapId: chapterId }}></Comment>
+                        <CommentList chap={{ chapId: chapterId }} ref={resultRef}></CommentList> </> :
                         <>
                             <LinearProgress />
                         </>
                     }
-                    <Comment chap={{ chapId: id }}></Comment>
-                    <CommentList chap={{ chapId: id }} ref={resultRef}></CommentList>
                 </Grid>
                 <Grid item xs={1}></Grid>
             </Grid>
