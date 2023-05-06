@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { userBookService } from "../../services/userBook.services";
@@ -6,14 +6,17 @@ import { useEffect } from "react";
 import { bookService } from "../../services/books.services";
 import BookCard2 from "../../components/book/BookCard2";
 import { CircularProgress } from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 export default function SearchBook() {
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState([])
     const [sortBy, setSortBy] = useState("New")
-    const [state, setState] = useState("ALl")
+    const [state, setState] = useState("All")
     const [data, setData] = useState([])
+    const [searchInput, setSearchInput] = useState('')
+    const [searchSent, setSearchSent] = useState(false)
     const [pageNumber, setPageNumber] = useState(1)
 
     const load = async () => {
@@ -36,22 +39,29 @@ export default function SearchBook() {
         load()
     }, [])
 
+    const onSearchInputChange = e => {
+        setSearchInput(e.target.value)
+        if (e.target.value.length === 0) {
+            setSearchSent(false)
+        }
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
-                    <div style={{ margin:"1em 0"}}>
+                    <div style={{ margin: "1em 0" }}>
                         <Typography>Thể loại</Typography>
                         <FormGroup>
-                            {isLoadingCate === false ? <div className='header__toolbar-hover'>
+                            {isLoadingCate === false ? <div>
                                 {categories.map((cate) => (
-                                    <FormControlLabel control={<Checkbox />} label={cate.name} sx={{width:"5em"}}/>
+                                    <FormControlLabel control={<Checkbox />} label={cate.name} sx={{ width: "8em" }} />
                                 ))}
                             </div> : <></>}
                         </FormGroup>
                     </div>
-                    <div style={{ margin:"1em 0"}}>
+                    <div style={{ margin: "1em 0" }}>
                         <Grid container spacing={2}>
                             <Grid item xs={2}>
                                 <InputLabel id="demo-simple-select-helper-label">Xắp xếp theo</InputLabel>
@@ -63,6 +73,7 @@ export default function SearchBook() {
                                     value={sortBy}
                                     label="Xắp sếp theo"
                                     onChange={(e) => { setSortBy(e.target.value) }}
+                                    sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"New"}>Cập nhất mới</MenuItem>
                                     <MenuItem value={"HotAll"}>Xem nhiều nhất</MenuItem>
@@ -84,6 +95,7 @@ export default function SearchBook() {
                                     value={state}
                                     label="Xắp sếp theo"
                                     onChange={(e) => { setState(e.target.value) }}
+                                    sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"All"}>Tất cả</MenuItem>
                                     <MenuItem value={"Unfinish"}>Chưa hoàn thành</MenuItem>
@@ -92,7 +104,18 @@ export default function SearchBook() {
                             </Grid>
                         </Grid>
                     </div>
-                    <div style={{ margin:"1em 0"}}>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                setSearchSent(true)
+                            }}>
+                                <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên sách' className='searchManga' />
+                                <IconButton> <Search></Search> Tìm kiếm</IconButton>
+                            </form>
+                        </div>
+                    </div>
+                    <div style={{ margin: "1em 0" }}>
                         <Grid container spacing={2}>
                             {
                                 isLoading === false ? data.map((item, index) => {

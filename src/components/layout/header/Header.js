@@ -21,6 +21,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Grid } from "@mui/material";
 import { userBookService } from '../../../services/userBook.services';
 import { useEffect } from 'react';
+import zIndex from '@mui/material/styles/zIndex';
 
 
 const pages = ['HOT', 'Đang theo dõi', 'Thể loại', 'Tìm truyện'];
@@ -237,12 +238,11 @@ function Header() {
                             </Box>
                         }
                     </Toolbar>
-                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} onMouseLeave={() => { setIsHover(!isHover); }}>
+                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{zIndex: 1}} onMouseLeave={() => { setIsHover(!isHover); }}>
                         {categories.map((cate) => (
                             <div className='header__toolbar-category-list-item' onClick={(e) => { navigate("/book/search") }}>{cate.name}</div>
                         ))}
                     </div> : <></>}
-
                 </Container>
             </AppBar>
         </>

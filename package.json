@@ -38,6 +38,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-dropzone": "^14.2.3",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-notifications": "^1.7.4",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^2.1.3",

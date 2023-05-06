@@ -7,7 +7,7 @@ import {
 import EditorImage from '../components/editor/editor';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BorderAll } from '@mui/icons-material';
-import { Grid } from '@mui/material';
+import { Grid, LinearProgress } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
 import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
@@ -15,6 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { userBookService } from '../services/userBook.services';
 import { bookService } from '../services/books.services';
 import { useSearchParams } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Home = () => {
   let navigate = useNavigate()
@@ -28,6 +29,7 @@ const Home = () => {
   })
   const [data, setData] = useState([])
   const [dataHot, setDataHot] = useState([])
+  const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
     const load = async () => {
@@ -51,9 +53,14 @@ const Home = () => {
     load().catch(console.error)
   }, [])
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  let pageNumber = searchParams.get("pageNumber")
-
+  const fetchData = () => {
+    setPageNumber(pageNumber + 1)
+      console.log("Load more", pageNumber + 1)
+      bookService.booksNew(pageNumber + 1, 12, "Name", "fghdf").then((rs) => {
+        console.log("data new", rs.data.data);
+        setData(old => old.concat(rs.data.data))
+      }).catch(console.error)
+  }
 
   return (
     <>
@@ -83,14 +90,14 @@ const Home = () => {
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>TRUYỆN HOT</h1>
               </div>
-              <div className='row no-gutter' style={{flexWrap: `nowrap`, overflowX: `scroll`}}>
-              {
-                isLoading === false ? dataHot.map((item, index) => {
-                  return <div className='col-lg-2 col-md-2 container-book__padding'>
-                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
-                  </div>
-                }) : <CircularProgress/>
-              }
+              <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
+                {
+                  isLoading === false ? dataHot.map((item, index) => {
+                    return <div className='col-lg-2 col-md-2 container-book__padding'>
+                      <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                    </div>
+                  }) : <CircularProgress />
+                }
               </div>
             </div>
           </div>
@@ -104,15 +111,32 @@ const Home = () => {
               <h1 className='title' style={{ textAlign: 'left' }}>TRUYỆN MỚI NHẤT</h1>
             </div>
             <div>
-              <Grid container spacing={2}>
-              {
-                isLoading === false ? data.map((item, index) => {
-                  return <Grid item xs={6} sm={4} md={2}>
-                    <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
-                  </Grid>
-                }) : <CircularProgress/>
-              }
-              </Grid>
+              <InfiniteScroll
+                dataLength={data.length} //This is important field to render the next data
+                next={fetchData}
+                hasMore={data.length !== mangaList.total}
+                loader={<LinearProgress />}
+              >
+                <Grid container spacing={2}>
+                  {
+                    data.map((item, index) => {
+                      return <Grid item xs={6} sm={4} md={2}>
+                        <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                      </Grid>
+                    })
+                  }
+                </Grid>
+              </InfiniteScroll>
+
+              {/* <Grid container spacing={2}>
+                {
+                  isLoading === false ? data.map((item, index) => {
+                    return <Grid item xs={6} sm={4} md={2}>
+                      <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                    </Grid>
+                  }) : <CircularProgress />
+                }
+              </Grid> */}
             </div>
           </div>
           <div className='col-1'></div>
