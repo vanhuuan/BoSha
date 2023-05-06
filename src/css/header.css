@@ -94,3 +94,117 @@ button {
 #id:hover ~ #categories .header__toolbar-hover{
     display: block;
 }
+
+.header__toolbar-search {
+    position: relative;
+    flex: 1;
+    height: 40px;
+    background-color: white;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    margin-right: 4em;
+}
+
+.header__toolbar-search-input-wrap {
+    flex: 1;
+    height: 100%;
+    position: relative;
+}
+
+.header__toolbar-search-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #ccc;
+    padding: 0 16px;
+    border-radius: 2px;
+}
+
+.header__toolbar-search-btn {
+    font-size: 1.4rem;
+    background-color: rgb(137,213,201);
+    border: none;
+    outline: none;
+    width: 50px;
+    height: 34px;
+    border-radius: 2px;
+    margin-right: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.header__toolbar-search-btn:hover {
+    background-color: rgb(104, 190, 177);
+}
+
+.header__toolbar-search-btn-icon {
+    font-size: 1.4rem;
+    color: white;
+}
+
+.header__toolbar-search-history {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    width: calc(100%);
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 5px #e0e0e0;
+    overflow: hidden;
+    display: block;
+    z-index: 2;
+}
+
+.header__toolbar-search-history-list {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.header__toolbar-search-history-item {
+   padding: 0.25em 0.5em;
+}
+
+.header__toolbar-search-history-item:hover {
+    background-color: rgb(237, 244, 241);
+}
+
+.header__toolbar-search-history-item a {
+    display: flex;
+}
+
+.header__toolbar-search-history-item img {
+    display: inline-block;
+    min-width: 40px;
+    max-width: 40px;
+    aspect-ratio: 10/16;
+    object-fit: contain;
+    border: none;
+}
+
+.header__toolbar-search-item-info {
+    display: inline-block;
+    color: black;
+    margin-left: 4px;
+}
+
+.header__toolbar-search-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.header__toolbar-search-item-chapter {
+    font-size: 13px;
+    font-weight: 400;
+}

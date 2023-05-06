@@ -1,4 +1,4 @@
-import api from "./api"; 
+import api from "./api";
 const baseURL = "https://boshaapi.site";
 export const bookService = {
     booksNew: async (pageNumber, pageSize, queryType, queryString) => {
@@ -12,6 +12,25 @@ export const bookService = {
     },
     bookStatus: async (id) => {
         return await api.get(`${baseURL}/Book/Status?id=${id}`)
+    },
+    findBook: async (pageNumber, pageSize, name, categories, state, min, max, sort) => {
+        var textCate = ""
+        if (categories && categories.length > 0) {
+            categories.forEach(element => {
+                textCate = textCate.concat("?Categories=" + element.id)
+            });
+            console.log(textCate)
+        } else {
+            textCate = "?Categories="
+            console.log(textCate)
+        }
+        
+        const url = `${baseURL}/Books${textCate}&Name=${name}&State=${state}&NotState=Susspend&MinPrice=${min}&MaxPrice=${max}&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=fgsdgsdfgdfg&QueryString=sdfgsdfgdfg&SortBy=${sort}&SortType=Desc`
+        console.log(url)
+        return await api.get(url)
+    },
+    searchBook: async (queryString) => {
+        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=1&PageSize=5&QueryType=fghrfhrt&QueryString=rhrthrth&SortBy=Newest&SortType=Desc`)
     },
 }
 
