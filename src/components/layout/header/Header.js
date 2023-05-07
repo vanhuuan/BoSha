@@ -25,7 +25,7 @@ import zIndex from '@mui/material/styles/zIndex';
 import SearchIcon from '@mui/icons-material/Search';
 import { bookService } from '../../../services/books.services';
 
-const pages = ['HOT', 'Đang theo dõi', 'Thể loại', 'Tìm truyện'];
+const pages = ['HOT', 'Đang theo dõi', 'Thể loại'];
 const settings = ['Tài khoản', 'Tác giả', 'Đăng xuất'];
 
 function Header() {
@@ -45,7 +45,7 @@ function Header() {
         const delayDebounceFn = setTimeout(() => {
             if(search.length > 5){
                 setIsLoading(true)
-                bookService.findBook(search).then((rs) => {
+                bookService.searchBook(search).then((rs) => {
                     setData(rs.data.data)
                     setIsLoading(false)
                 })
@@ -100,7 +100,7 @@ function Header() {
         switch (setting) {
             case 'Đăng xuất': logout()
                 break;
-            case 'Tài khoản': navigate('/')
+            case 'Tài khoản': navigate('/user/userInfo')
                 break;
             case 'Tác giả': navigate('/book/userBook')
                 break;

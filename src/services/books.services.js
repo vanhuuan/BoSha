@@ -30,6 +30,7 @@ export const bookService = {
         return await api.get(url)
     },
     searchBook: async (queryString) => {
+        console.log("search", queryString)
         if (queryString) {
             return await api.get(`${baseURL}/Books?Categories=&Name=${queryString}&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=1&PageSize=5&QueryType=fghrfhrt&QueryString=rhrthrth&SortBy=Newest&SortType=Desc`)
         } else {

@@ -28,6 +28,9 @@ import UpdateChapter from "./pages/chapter/UpdateChapter";
 import BuyBook from "./pages/payment/BuyBook";
 import 'react-notifications/lib/notifications.css';
 import SearchBook from "./pages/book/SearchBook";
+import UserInfo from "./pages/user/UserInfo";
+import EditUser from "./pages/user/EditUser";
+import UserStatistic from "./pages/user/Statistic";
 
 function App() {
   useEffect(() => {
@@ -36,9 +39,6 @@ function App() {
 
   return (
     <>
-      <div style={{ zIndex: '100 !important', position: 'absolute', right: '1em', top: '3em', }} className="page-transition-animation">
-        <NotificationContainer enterTimeout={800} leaveTimeout={500} />
-      </div>
       <BrowserRouter>
         <Routes>
           <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
@@ -46,6 +46,10 @@ function App() {
           <Route path="/signUp" element={<><Header /><SignUp /></>}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route path="/changePass" element={<ChangePassword />}></Route>
+          <Route path="/user/userInfo" element={<><Header /><UserInfo /></>}></Route>
+          <Route path="/user/userEdit" element={<><Header /><EditUser /></>}></Route>
+          <Route path="/user/statistic" element={<><Header /><UserStatistic /></>}></Route>
+          <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header /><AddBook /></>}></Route>
           <Route path="/book/:id" element={<><Header /><BookDetail /></>}></Route>
