@@ -1,12 +1,12 @@
 import { EditLocation } from "@mui/icons-material";
-import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography } from "@mui/material";
+import { Avatar, Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect } from "react";
-import Avatar from 'react-avatar-edit'
 import { userService } from "../../services/userServices";
 import { useNavigate } from "react-router-dom";
+import { firebaseService } from "../../services/firebase.services";
 
 export default function UserInfo() {
     const [userInfo, setUserInfo] = useState({
@@ -25,6 +25,7 @@ export default function UserInfo() {
         preview: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05",
         src: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05"
     })
+    const [ava, setAva] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
     function onClose() {
@@ -37,11 +38,16 @@ export default function UserInfo() {
 
     let navigate = useNavigate()
 
+    const getAva = (avaUrl) => {
+        setAva(avaUrl)
+    }
+
     useEffect(() => {
         setIsLoading(true)
         userService.getUserInfo().then((rs) => {
             console.log(rs.data)
             setUserInfo(rs.data)
+            firebaseService.getAva(rs.data.id, getAva)
             setIsLoading(false)
         })
     }, [])
@@ -58,6 +64,13 @@ export default function UserInfo() {
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography variant='h5'>Thông tin tài khoản </Typography>
                                 <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện </Typography>
+                            </div>
+                            <div className='container-body' style={{ display: "flex", alignItems: "center" }}>
+                                {ava ?
+                                    <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name} src={ava} />
+                                    :
+                                    <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name}>{userInfo.name[0]}</Avatar>
+                                }
                             </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>

@@ -1,13 +1,13 @@
 import React from "react";
-import { CheckCircle, EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined, SupervisedUserCircle } from "@mui/icons-material";
-import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, styled } from "@mui/material";
+import { Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
+import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, styled, Badge, Avatar } from "@mui/material";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect } from "react";
-import Avatar from 'react-avatar-edit'
 import { userService } from "../../services/userServices";
 import { useNavigate } from "react-router-dom";
 import { NotificationManager } from 'react-notifications';
+import { firebaseService } from "../../services/firebase.services";
 
 export default function EditUser() {
     const [userInfo, setUserInfo] = useState({
@@ -28,38 +28,85 @@ export default function EditUser() {
         preview: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05",
         src: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05"
     })
+    const [ava, setAva] = useState(avaState.src)
     const [isLoading, setIsLoading] = useState(true)
+    const [imageUrl, setImageUrl] = useState(null);
 
-    function onClose() {
-        setAvaState({ preview: null })
+    const [nameHelp, setNameHelp] = useState("")
+
+    const validPhone = (phone) => {
+        if (isVietnamesePhoneNumberValid(phone)) {
+            console.log(phone)
+            setUserInfo(prevState => ({
+                ...prevState, "phone": phone
+            })
+            )
+            setPhoneHelp("")
+        } else {
+            setPhoneHelp("Không đúng định dạng số điện thoại")
+        }
     }
 
-    function onCrop(preview) {
-        setAvaState({ preview })
+    function isVietnamesePhoneNumberValid(number) {
+        return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number);
     }
+
+    const validName = (name) => {
+        if (name.length < 5 || name.length > 30) {
+            setNameHelp("Tên phải có chiều dài từ 5 đến 30 ký tự")
+        } else {
+            setUserInfo(prevState => ({
+                ...prevState, "name": name
+            })
+            )
+            setNameHelp("")
+        }
+    }
+
+    const [phoneHelp, setPhoneHelp] = useState("")
 
     useEffect(() => {
         setIsLoading(true)
         userService.getUserInfo().then((rs) => {
             console.log(rs.data)
             setUserInfo(rs.data)
+            firebaseService.getAva(rs.data.id, getAva)
             setIsLoading(false)
         })
     }, [])
 
-    const update = () => {
+    const update = async () => {
+        if (nameHelp.length > 0) {
+            NotificationManager.error("Tên", 'không đúng định dạng', 1000);
+        }
+        if (phoneHelp.length > 0) {
+            NotificationManager.error("Số điện thoại", 'không đúng định dạng', 1000);
+        }
         const data = {
             "name": userInfo.name,
             "phoneNumber": userInfo.phone
         }
 
-        userService.updateUserInfo(data).then((e) => {
-            NotificationManager.suscess("Cập nhật", 'thành công', 1000);
-            navigate("/user/userInfo")
+        console.log(userInfo)
+
+        userService.updateUserInfo(data).then((rs) => {
+            firebaseService.uploadAva(userInfo.id, imageUrl).then((rs) => {
+                NotificationManager.success("Cập nhật", 'thành công', 1000);
+                navigate("/user/userInfo")
+            }).catch((e) => {
+                console.log(e)
+                NotificationManager.error("Cập nhật", 'Thất bại', 1000);
+                navigate("/user/userInfo")
+            })
         }).catch((e) => {
-            NotificationManager.error("Cập nhật", 'thất bại', 1000);
+            console.log(e)
+            NotificationManager.error("Cập nhật", 'Thất bại', 1000);
             navigate("/user/userInfo")
         })
+    }
+
+    const getAva = (avaUrl) => {
+        setAva(avaUrl)
     }
 
     return (
@@ -75,6 +122,43 @@ export default function EditUser() {
                                 <Typography variant='h5'>Thông tin tài khoản </Typography>
                                 <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }}>Thống kê truyện </Typography>
                             </div>
+                            <div className='container-body' style={{ display: "flex", alignItems: "center" }}>
+                                {ava ?
+                                    <Badge
+                                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                        badgeContent={
+                                            <IconButton color="primary" aria-label="upload picture" component="label">
+                                                <input hidden accept="image/*" type="file" onChange={(e) => {
+                                                    if (e.target.files[0]) {
+                                                        setImageUrl(URL.createObjectURL(e.target.files[0]));
+                                                        setAva(URL.createObjectURL(e.target.files[0]))
+                                                    }
+                                                }} />
+                                                <PhotoCamera />
+                                            </IconButton>
+                                        }>
+                                        <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name} src={ava} />
+                                    </Badge>
+                                    :
+                                    <Badge
+                                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                        badgeContent={
+                                            <IconButton color="primary" aria-label="upload picture" component="label">
+                                                <input hidden accept="image/*" type="file" onChange={(e) => {
+                                                    if (e.target.files[0]) {
+                                                        setImageUrl(URL.createObjectURL(e.target.files[0]));
+                                                        setAva(URL.createObjectURL(e.target.files[0]))
+                                                    }
+                                                }} />
+                                                <PhotoCamera />
+                                            </IconButton>
+                                        }>
+                                        <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name}>
+                                            {userInfo.name[0] ? userInfo.name[0] : "P"}
+                                        </Avatar>
+                                    </Badge>
+                                }
+                            </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>
                                     <Grid md="4">
@@ -89,9 +173,11 @@ export default function EditUser() {
                                                 id="outlined-adornment-amount"
                                                 startAdornment={<InputAdornment position="start"><Person2 /></InputAdornment>}
                                                 required
-                                                value={userInfo.name}
+                                                // value={userInfo.name}
                                                 defaultValue={userInfo.name}
-                                                onChange={(e) => { setUserInfo({ "name": e.target.value }) }}
+                                                onChange={(e) => { validName(e.target.value) }}
+                                                helperText={nameHelp}
+                                                error={nameHelp.length > 0}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -120,9 +206,10 @@ export default function EditUser() {
                                                 id="outlined-adornment-amount"
                                                 startAdornment={<InputAdornment position="start"><PhoneAndroidOutlined /></InputAdornment>}
                                                 required
-                                                value={userInfo.phone}
+                                                // value={userInfo.phone}
                                                 defaultValue={userInfo.phone}
-                                                onChange={(e) => { setUserInfo({ "phone": e.target.value }) }}
+                                                onChange={(e) => { validPhone(e.target.value) }}
+                                                error={phoneHelp.length > 0}
                                             />
                                         </FormControl>
                                     </Grid>

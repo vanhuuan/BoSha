@@ -45,10 +45,23 @@ export const firebaseService = {
                 callback(`<div>Đây là một bộ truyện khá hay nhưng tác giả chưa miêu tả cho nó.</div>`)
             });
     },
-    getCover: async (bookId) => {
+    getCover: async (bookId, callback) => {
         getDownloadURL(ref(storage, `books/${bookId}/cover.jpg`))
             .then((url) => {
-                ;
+                callback(url)
+                return url;
+            })
+            .catch((error) => {
+                console.log(error)
+                return `https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656a08e27bd8b1165478b%2Fcover.png?alt=media&token=20cfb7d8-6e42-4426-b026-c0443d8cb793`
+            });
+    },
+    getAva: async (uid, callback) => {
+        console.log( `users/ava/${uid}.jpg`)
+        getDownloadURL(ref(storage, `users/ava/${uid}.jpg`))
+            .then((url) => {
+                callback(url)
+                console.log("Rs url", url)
                 return url;
             })
             .catch((error) => {
@@ -118,6 +131,33 @@ export const firebaseService = {
                 },
                 (error) => {
                     console.log("Upload chap", error)
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log(downloadURL)
+                        return downloadURL
+                    });
+                }
+            );
+        })
+
+    },
+    uploadAva: async (uid, img) => {
+        if (img == null)
+            return;
+
+        getFileBlob(img, blob => {
+            const storageRef = ref(storage, `users/ava/${uid}.jpg`);
+            const metadata = {
+                contentType: 'image/jpeg',
+            };
+            const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+            uploadTask.on("state_changed",
+                (snapshot) => {
+
+                },
+                (error) => {
+                    console.log("Upload ava", error)
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

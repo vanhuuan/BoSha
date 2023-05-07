@@ -46,6 +46,7 @@ function Header() {
             if(search.length > 5){
                 setIsLoading(true)
                 bookService.searchBook(search).then((rs) => {
+                    console.log(rs.data)
                     setData(rs.data.data)
                     setIsLoading(false)
                 })
