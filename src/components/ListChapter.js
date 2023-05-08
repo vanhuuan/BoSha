@@ -12,16 +12,20 @@ import { chapterService } from '../services/chapter.services';
 import { useNavigate } from 'react-router-dom';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import { useState } from 'react';
 
 export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
   const [chapters, setChapters] = React.useState([])
   const [canEdit, setCanEdit] = React.useState(false)
   const [canBuyed, setBuyed] = React.useState(false)
+
   let navigate = useNavigate()
   const load = async () => {
     console.log(props.book.id)
-    console.log(props.book.canEdit)
+    console.log("canedit", props.book.canEdit)
+    setBuyed(props.book.canBuyed)
+    setCanEdit(props.book.canEdit)
     console.log(props.book.canBuyed)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
@@ -54,7 +58,7 @@ export default function ListChapter(props) {
       yy: "%d năm trước"
     }
   });
-  
+
 
   React.useEffect(() => {
     load()
@@ -63,7 +67,6 @@ export default function ListChapter(props) {
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
-
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
@@ -83,22 +86,28 @@ export default function ListChapter(props) {
           <ListItem
             key={value}
             secondaryAction={
-              <div style={{display:"flex"}}>
+              <div style={{ display: "flex" }}>
                 {
-                  canBuyed || value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
+                  canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
                 }
-                <ListItemText primary={a} sx={{marginLeft:"0.5em"}}/>
-
+                <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
                 {
-                  canEdit ? <BorderColorIcon onClick={(e) => { navigate(``) }}> </BorderColorIcon> : <></>
+                  canEdit === true ? <IconButton color='primary' onClick={(e) => {
+                    e.preventDefault();
+                    var data = {
+                      bookId: props.book.id,
+                      chapterId: value.chapterId
+                    }
+                    navigate(`/chapter/updateChapter`, { state: data })
+                  }}> <BorderColorIcon /> </IconButton> : <></>
                 }
               </div>
             }
             disablePadding
             className='chapter-item'
-            onClick={(e) => {  if(value.isDemo) navigate(`/chapter/${value.chapterId}`) }}
+            
           >
-            <ListItemButton role={undefined} onClick={handleToggle(value.chapterId)} dense>
+            <ListItemButton role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit ) navigate(`/chapter/${value.chapterId}`) }}>
               <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
             </ListItemButton>
           </ListItem>

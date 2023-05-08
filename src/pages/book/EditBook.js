@@ -20,6 +20,7 @@ import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
 import AlertRoot from '../../components/notification/AlertRoot';
+import { NotificationManager } from 'react-notifications';
 
 function getStyles(name, personName, theme) {
     return {
@@ -77,6 +78,8 @@ const EditBook = () => {
             rs => {
                 console.log(rs.data)
                 setBook(rs.data)
+                setPrice(rs.data.price)
+                setListCategory(rs.data.category)
                 setState(rs.data.state)
                 firebaseService.gerPreview(id, (rs2) => { setDesc(rs2); setIsLoading(false) })
             }
@@ -88,17 +91,17 @@ const EditBook = () => {
 
     const updateBook = () => {
         if (price < 0 || (price > 0 && price < 1000) || (price > 1000000)) {
-            setMessageText('Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND')
+            NotificationManager.error(book.name, 'Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND', 1000);
             setOpen(true)
             return;
         }
         if (name.length < 5 || name.length > 100) {
-            setMessageText('Tên truyện phải chứa từ 5 đến 100 ký tự')
+            NotificationManager.error(book.name, 'Tên truyện phải chứa từ 5 đến 100 ký tự', 1000);
             setOpen(true)
             return;
         }
-        if (desc.length > 50 || desc.length > 3000) {
-            setMessageText('Miêu tả phải chứa từ 50 đến 3000 ký tự')
+        if (desc.length < 50 || desc.length > 3000) {
+            NotificationManager.error(book.name, 'Miêu tả phải chứa từ 50 đến 3000 ký tự', 1000);
             setOpen(true)
             return;
         }

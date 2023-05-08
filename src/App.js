@@ -57,7 +57,7 @@ function App() {
           <Route path="/book/search/:isSimple" element={<><Header /><SearchBook/></>}></Route>
           <Route path="/chapter/:id" element={<><Header /><Chapter /></>}></Route>
           <Route path="/chapter/addChapter" element={<><Header /><AddChapter /></>}></Route>
-          <Route path="/chapter/updateChapter/:id" element={<><Header /><UpdateChapter /></>}></Route>
+          <Route path="/chapter/updateChapter" element={<><Header /><UpdateChapter /></>}></Route>
           <Route path="/hot" element={<><Header /><Chapter /></>}></Route>
           <Route path="/user/info" element={<><Header /><Chapter /></>}></Route>
           <Route path="/user/favourite" element={<><Header /><Chapter /></>}></Route>

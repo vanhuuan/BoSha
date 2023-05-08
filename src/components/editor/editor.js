@@ -35,23 +35,14 @@ function uploadImageCallBack(file) {
 }
 
 function EditorImage(props) {
-    const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty(),
-    );
+    const [editorState, setEditorState] = useState(() => EditorState.createWithContent(
+        ContentState.createFromBlockArray(convertFromHTML(props.chap.text))))
+
     const maxLength = "15000"
     const [convertedContent, setConvertedContent] = useState(null);
-    try {
-        const data = props.text
-        if (data) {
-            setConvertedContent(data)
-            setEditorState(EditorState.createWithContent(
-                ContentState.createFromBlockArray(
-                    convertFromHTML(data)
-                )
-            ))
-        }
-    } catch (err) { }
+
     useEffect(() => {
+        console.log(props.chap.text)
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
         sendData(html)
@@ -62,7 +53,7 @@ function EditorImage(props) {
     }
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} border={'1px solid #ccc;'}>
             <Grid item xs={1}></Grid>
             <Grid item xs={10}>
                 <Editor
@@ -72,7 +63,7 @@ function EditorImage(props) {
                     editorClassName="TextEditor"
                     toolbar={{
                         image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
-                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
+                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
                     }}
                     editorStyle={{ height: '30em' }}
                     handleBeforeInput={val => {

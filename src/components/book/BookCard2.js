@@ -29,7 +29,7 @@ const BookCard2 = (props) => {
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">
-                        {props.manga.index}
+                        Tập {props.manga.index}
                     </div>
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">

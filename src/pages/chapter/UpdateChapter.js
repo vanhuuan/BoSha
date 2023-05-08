@@ -13,6 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { chapterService } from "../../services/chapter.services";
+import { NotificationManager } from 'react-notifications';
 
 const data = {
     "bookId": "645368d5eb07b12be11f0271",
@@ -69,47 +70,52 @@ const UpdateChapter = () => {
     const [isLoading, setIsLoading] = useState(true)
     const location = useLocation();
     const data = location.state;
-    const bookId = data.data.bookId;
-    const chapterId = data.data.chapterId
+    // const bookId = data.bookId;
+    // const chapterId = data.chapterId
 
     let navigate = useNavigate()
 
     const UpdateChapter = (props) => {
         const data = {
-            "bookId": bookId,
+            "bookId": chapterDetail.bookId,
             "chapterName": name,
             "isDemo": demo,
-            "state": states
+            "state": states,
+            "chapterId": chapterDetail.chapterId,
         }
         userBookService.updateChapter(data).then((rs) => {
             console.log(rs)
-            firebaseService.uploadChapter(bookId, rs.data.id, chap).then((rs) => {
+            firebaseService.uploadChapter(data.bookId, chapterDetail.chapterId, chap).then((rs) => {
                 console.log(rs)
-                navigate(`/book/${bookId}`)
+                NotificationManager.success("Cập nhật thành công", name, 1000)
+                navigate(`/book/${data.bookId}`)
             }).catch((err) => console.log(err))
         }).catch((err) => console.log(err))
     }
 
     const setChapText = (data) => {
+        console.log(data)
         setChap(data)
+        setIsLoading(false)
     }
 
     useEffect(() => {
         setIsLoading(true)
 
-        chapterService.chapterDetail(chapterId).then(
+        chapterService.chapterDetail(data.chapterId).then(
             (rs) => {
                 console.log(rs.data)
                 setChapterDetail(rs.data)
+                setStt(rs.data.chapterNumber)
                 setChap(rs.data.textLink)
-                firebaseService.getChapter(chapterDetail.bookId, chapterDetail.chapterId, setChapText)
-                setDemo(chapterDetail.isDemo)
-                setStates(chapterDetail.states)
-                setName(chapterDetail.name)
-                setIsLoading(false)
+                setDemo(rs.data.isDemo)
+                setStates(rs.data.state)
+                setName(rs.data.name)
+                firebaseService.getChapter(data.bookId, data.chapterId, setChapText)
             }
-        ).catch(() => {
-            navigate(-1);
+        ).catch((err) => {
+            console.log(err)
+            // navigate(-1);
         })
     }, [])
 
@@ -127,24 +133,21 @@ const UpdateChapter = () => {
                 }}
                 autoComplete="off"
             >
-
                 <Grid container spacing={2}>
                     <Grid item xs={1}>
-                        <Button></Button>
+                       
                     </Grid>
                     <Grid item xs={10}>
                         {isLoading === false ?
-                            <FormControl>
+                            <FormControl fullWidth>
                                 <Typography variant="h5">Cập nhật chương {chapterDetail.name}</Typography>
                                 <TextField
                                     id="outlined-uncontrolled"
                                     label="Số thứ tự truyện"
                                     value={stt}
-                                    onChange={(event) => {
-                                        setStt(event.target.value);
-                                    }}
                                     type="number"
                                     sx={{ width: "100%", margin: "1em" }}
+                                    disabled
                                 />
                                 <TextField
                                     id="outlined-controlled"
@@ -160,18 +163,23 @@ const UpdateChapter = () => {
                                     control={<Android12Switch checked={demo} onChange={(e) => setDemo(e.target.checked)} />}
                                     label="Xem thử"
                                 />
+                                <FormControlLabel
+                                    control={<Android12Switch checked={states} onChange={(e) => setStates(e.target.checked)} />}
+                                    label="Ẩn truyện"
+                                />
+                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} chap={{ text: chap }} >
+                                </EditorImage>
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
+                                    <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
+                                </div>
                             </FormControl>
                             : <CircularProgress></CircularProgress>}
                     </Grid>
                     <Grid item xs={1}></Grid>
                 </Grid>
             </Box>
-            <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} props={{ text: data }} >
-            </EditorImage>
-            <div style={{ display: "flex", alignContent: "space-between" }}>
-                <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
-                <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
-            </div>
+
         </div>
     )
 }

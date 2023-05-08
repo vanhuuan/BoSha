@@ -89,7 +89,7 @@ const Chapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            navigate(-1);
+            // navigate(-1);
         })
     }, [chapterId])
 
@@ -104,7 +104,7 @@ const Chapter = () => {
                             <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
-                            <div dangerouslySetInnerHTML={{ __html: chap }} ></div>
+                            <div dangerouslySetInnerHTML={{ __html: chap }} style={{textAlign: "left"}}></div>
                         </div>
 
                         <Comment chap={{ chapId: chapterId }}></Comment>

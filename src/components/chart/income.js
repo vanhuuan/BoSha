@@ -4,13 +4,15 @@ import { CircularProgress, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import moment from 'moment'
 import ReactApexChart from 'react-apexcharts'
-import { storeServices } from '../../services/stores.services'
-import { userServices } from '../../services/users.services';
-export default function Income({chartsData}) {
-  const [isLoading, setLoading] = useState(true)
+import abbrNum from '../../services/numberHelper';
+
+export default function Income({chartsData, title, label}) {
+  const [isLoading, setLoading] = useState(false)
+  const [lbText, setLbText] = useState(label)
   const [data, setData] = useState()
   const [revenueList, setRevenueList] = useState([65, 59, 80, 81, 56, 65, 59, 80, 81, 56, 22, 22])
-  const monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const listManga = ["truyện 1", "truyện 2",  "truyện 3",  "truyện 4dfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfsdfgdfgdsfgdfg",  "truyện 5",  "truyện 6",  "truyện 7",  "truyện 8",  "truyện 9",  "truyện 10",  "truyện 11",  "truyện 12"]
+  var labelText = ''
   useEffect(() => {
     console.log(chartsData)
     if (chartsData) {
@@ -23,12 +25,13 @@ export default function Income({chartsData}) {
       }
       setLoading(false)
     }
-  
+    console.log(label)
+    labelText = label.toString()
   }, [])
   
   const c = {
     series: [{
-      name: 'Doanh thu',
+      name: `${label}`,
       data: revenueList
     },],
     options: {
@@ -52,16 +55,20 @@ export default function Income({chartsData}) {
         colors: ['transparent']
       },
       xaxis: {
-        categories: monthList,
+        labels: {
+          rotate: -45,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+        categories: listManga,
       },
       yaxis: {
         title: {
-          text: '(VND)'
+          text: `${label}`
         },
         labels: {
           formatter: function (value) {
-            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-              .format(value);
+            return  abbrNum(value);
           }
         },
       },
@@ -70,9 +77,8 @@ export default function Income({chartsData}) {
       },
       tooltip: {
         y: {
-          formatter: function (val) {
-            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-              .format(val)             //format gia tien
+          formatter: function (value) {
+            return abbrNum(value);
           }
         }
       }
@@ -83,11 +89,11 @@ export default function Income({chartsData}) {
       flexDirection={'column'}
       justifyContent={'center'}
       sx={{ backgroundColor: 'white', boxShadow: '0px 0px 3px grey' }}>
-      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>Thống kê doanh thu cả năm</Typography>
+      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>{title}</Typography>
 
       {
         isLoading ? <CircularProgress sx={{ alignSelf: 'center' }} /> :
-          <ReactApexChart options={c.options} series={c.series} type="bar" />
+          <ReactApexChart options={c.options} series={c.series} type="bar"  width={'100%'} height={"200%"}/>
       }
     </Box>
   );

@@ -123,7 +123,7 @@ const AddChapter = () => {
                     <Grid item xs={1}></Grid>
                 </Grid>
             </Box>
-            <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} >
+            <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} chap={{ text: "<p> </p>" }} >
             </EditorImage>
             <div style={{ display: "flex", alignContent: "space-between" }}>
                 <Button variant="contained" color="success" onClick={AddChapter}>Thêm chương</Button>
