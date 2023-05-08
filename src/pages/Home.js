@@ -94,7 +94,7 @@ const Home = () => {
                 {
                   isLoading === false ? dataHot.map((item, index) => {
                     return <div className='col-lg-2 col-md-2 container-book__padding'>
-                      <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                      <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
                     </div>
                   }) : <CircularProgress />
                 }
@@ -121,7 +121,7 @@ const Home = () => {
                   {
                     data.map((item, index) => {
                       return <Grid item xs={6} sm={4} md={2}>
-                        <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                        <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
                       </Grid>
                     })
                   }

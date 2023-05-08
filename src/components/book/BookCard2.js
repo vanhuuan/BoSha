@@ -16,11 +16,11 @@ const BookCard2 = (props) => {
         name.split(' ').forEach(item => {
             newName.push(item.charAt(0).toUpperCase() + item.slice(1))
         })
-        return(newName.join(' '))
+        return (newName.join(' '))
     }
 
     const handleChoseBook = (e) => {
-        navigate("/book/"+props.manga.id)
+        navigate("/book/" + props.manga.id)
     }
 
     return (
@@ -29,12 +29,12 @@ const BookCard2 = (props) => {
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">
-                        Chapter 297
+                        {props.manga.index}
                     </div>
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">
                             <FavoriteIcon style={{ fontSize: `16px`, marginRight: `2px` }}></FavoriteIcon>
-                            <span style={{marginRight: `8px`}}>{props.manga.star}</span>
+                            <span style={{ marginRight: `8px` }}>{props.manga.star}</span>
                             <VisibilityIcon style={{ fontSize: `16px`, marginRight: `2px` }}></VisibilityIcon>
                             <span>{props.manga.view}</span>
                         </div>
