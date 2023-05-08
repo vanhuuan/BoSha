@@ -1,22 +1,14 @@
-import { makeStyles } from "@mui/material";
 import { Card, CardContent, Typography, Divider } from "@mui/material";
 import React from "react";
-
-const useStyles = makeStyles(() => ({
-  header: {
-    textTransform: "uppercase"
-  }
-}));
+import { makeStyles } from "@mui/material";
 
 function CardSummary({ title, value, footer }) {
-  const classes = useStyles();
   return (
     <>
       <Card>
         <CardContent>
           <Typography
             gutterBottom
-            className={classes.header}
             color="textPrimary"
           >
             {title}
@@ -33,14 +25,12 @@ function CardSummary({ title, value, footer }) {
 }
 
 function CardBookSummary({ title, value, footer }) {
-    const classes = useStyles();
     return (
       <>
         <Card>
           <CardContent>
             <Typography
               gutterBottom
-              className={classes.header}
               color="textPrimary"
             >
               {title}
