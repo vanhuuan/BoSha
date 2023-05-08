@@ -13,7 +13,7 @@ import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCart, AddShoppingCartOutlined } from "@mui/icons-material";
+import { AddShoppingCart, AddShoppingCartOutlined, FavoriteBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -84,6 +84,15 @@ export default function BookDetail() {
         }
     }
 
+    const likeBook = () => {
+        userBookService.likeBook(id).then(() => {
+            const liked = status.liked;
+            setStatus(prevState => ({
+                ...prevState, "liked": !liked
+            }))
+        })
+    }
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -120,7 +129,7 @@ export default function BookDetail() {
                                                 </div>
                                                 <div style={{marginBottom: `2em`}}>
                                                     {book.authorId !== uid ? <>
-                                                        <Button variant="outlined" startIcon={<StarIcon style={{ color: "yellow" }} />} style={{ marginRight: `1em` }}>
+                                                        <Button variant="outlined" startIcon={ status.liked ? <FavoriteBorderIcon style={{ color: "pink" }} /> : <FavoriteBorderOutlined style={{ color: "pink" }} />} style={{ marginRight: `1em` }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
                                                         <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook}>

@@ -99,6 +99,19 @@ function Header() {
         setAnchorElUser(null);
     };
 
+    const handleChoseNav = (event, setting) =>{
+        switch (setting) {
+            case 'HOT': navigate('/book/search/true')
+                break;
+            case 'Đang theo dõi': navigate('/book/likeBook')
+                break;
+            case 'Thể loại': navigate('/book/search/true')
+                break;
+            default: navigate('/')
+        }
+        handleCloseNavMenu()
+    }
+
     const handleAvaMenuClick = (event, setting) => {
         switch (setting) {
             case 'Đăng xuất': logout()
@@ -181,7 +194,7 @@ function Header() {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page} id={page} onClick={handleCloseNavMenu}>
+                                    <MenuItem key={page} id={page} onClick={(e) => handleChoseNav(e, page)}>
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
                                 ))}
@@ -212,7 +225,7 @@ function Header() {
                                     return (
                                         <Button
                                             key={page}
-                                            onClick={handleCloseNavMenu}
+                                            onClick={(e) => handleChoseNav(e, page)}
                                             onMouseEnter={(e) => { setIsHover(!isHover); }}
                                             sx={{ my: 2, color: 'white', display: 'block', marginRight: 3, fontSize: 16 }}
                                         >
@@ -222,7 +235,7 @@ function Header() {
                                 return (
                                     <Button
                                         key={page}
-                                        onClick={handleCloseNavMenu}
+                                        onClick={(e) => handleChoseNav(e, page)}
                                         onMouseE
                                         sx={{ my: 2, color: 'white', display: 'block', marginRight: 3, fontSize: 16 }}
                                     >

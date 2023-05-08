@@ -22,6 +22,15 @@ export const userBookService = {
     updateChapter: async (body) => {
         return await api.put(baseURL+'/Chapter/updateChapter', body)
     },
+    likeBook: async (bookid) => {
+        return await api.get(baseURL+'/Book/LikeBook?bookid='+bookid)
+    },
+    getUserLikeBook: async (pageIndex, pageSize) => {
+        return await api.get(baseURL+'/Book/GetLikeBook?PageIndex='+pageIndex+"&PageSize="+pageSize)
+    },
+    getUserBuyBook: async (pageIndex, pageSize) => {
+        return await api.get(baseURL+'/Book/GetBuyBookPaging?PageIndex='+pageIndex+"&PageSize="+pageSize)
+    },
 }
 
 

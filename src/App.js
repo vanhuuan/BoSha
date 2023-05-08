@@ -31,6 +31,7 @@ import SearchBook from "./pages/book/SearchBook";
 import UserInfo from "./pages/user/UserInfo";
 import EditUser from "./pages/user/EditUser";
 import UserStatistic from "./pages/user/Statistic";
+import LikeBook from "./pages/book/LikeBook";
 
 function App() {
   useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header /><AddBook /></>}></Route>
+          <Route path="/book/likeBook" element={<><Header /><LikeBook /></>}></Route>
           <Route path="/book/:id" element={<><Header /><BookDetail /></>}></Route>
           <Route path="/book/edit/:id" element={<><Header /><EditBook /></>}></Route>
           <Route path="/book/search/:isSimple" element={<><Header /><SearchBook/></>}></Route>

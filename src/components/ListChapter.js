@@ -13,12 +13,15 @@ import { useNavigate } from 'react-router-dom';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { useState } from 'react';
+import { FlashOnOutlined } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 
 export default function ListChapter(props) {
   const [checked, setChecked] = React.useState([0]);
   const [chapters, setChapters] = React.useState([])
   const [canEdit, setCanEdit] = React.useState(false)
   const [canBuyed, setBuyed] = React.useState(false)
+  const [showMore, setShowMore] = useState(false)
 
   let navigate = useNavigate()
   const load = async () => {
@@ -31,6 +34,11 @@ export default function ListChapter(props) {
     console.log(rs)
     if (rs) {
       setChapters(rs.data)
+      if (rs.data.length > 10) {
+        setShowMore(true)
+      } else {
+        setShowMore(false)
+      }
     }
   }
 
@@ -78,41 +86,82 @@ export default function ListChapter(props) {
 
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {chapters.map((value) => {
-        const labelId = `checkbox-list-label-${value.chapterNumber}`;
-        const date1 = new Date(value.updateDate);
-        let a = moment().from(date1);
-        return (
-          <ListItem
-            key={value}
-            secondaryAction={
-              <div style={{ display: "flex" }}>
-                {
-                  canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
-                }
-                <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
-                {
-                  canEdit === true ? <IconButton color='primary' onClick={(e) => {
-                    e.preventDefault();
-                    var data = {
-                      bookId: props.book.id,
-                      chapterId: value.chapterId
-                    }
-                    navigate(`/chapter/updateChapter`, { state: data })
-                  }}> <BorderColorIcon /> </IconButton> : <></>
-                }
-              </div>
-            }
-            disablePadding
-            className='chapter-item'
-            
-          >
-            <ListItemButton role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit ) navigate(`/chapter/${value.chapterId}`) }}>
-              <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
+      {showMore === true ?
+        chapters.slice(0, 10).map((value) => {
+          const labelId = `checkbox-list-label-${value.chapterNumber}`;
+          const date1 = new Date(value.updateDate);
+          let a = moment().from(date1);
+          return (
+            <ListItem
+              key={value}
+              secondaryAction={
+                <div style={{ display: "flex" }}>
+                  {
+                    canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
+                  }
+                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
+                  {
+                    canEdit === true ? <IconButton color='primary' onClick={(e) => {
+                      e.preventDefault();
+                      var data = {
+                        bookId: props.book.id,
+                        chapterId: value.chapterId
+                      }
+                      navigate(`/chapter/updateChapter`, { state: data })
+                    }}> <BorderColorIcon /> </IconButton> : <></>
+                  }
+                </div>
+              }
+              disablePadding
+              className='chapter-item'
+
+            >
+              <ListItemButton role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+                <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })
+        :
+        chapters.map((value) => {
+          const labelId = `checkbox-list-label-${value.chapterNumber}`;
+          const date1 = new Date(value.updateDate);
+          let a = moment().from(date1);
+          return (
+            <ListItem
+              key={value}
+              secondaryAction={
+                <div style={{ display: "flex" }}>
+                  {
+                    canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
+                  }
+                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
+                  {
+                    canEdit === true ? <IconButton color='primary' onClick={(e) => {
+                      e.preventDefault();
+                      var data = {
+                        bookId: props.book.id,
+                        chapterId: value.chapterId
+                      }
+                      navigate(`/chapter/updateChapter`, { state: data })
+                    }}> <BorderColorIcon /> </IconButton> : <></>
+                  }
+                </div>
+              }
+              disablePadding
+              className='chapter-item'
+
+            >
+              <ListItemButton role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+                <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })
+      }
+      {chapters.length < 10 ? <></> :
+        <Typography textAlign={"center"} mt={"1em"} onClick={() => { setShowMore(!showMore)}}> { showMore === false ? "Bớt": "Xem thêm" }</Typography>
+      }
     </List>
   );
 }
