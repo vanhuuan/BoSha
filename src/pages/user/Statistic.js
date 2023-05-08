@@ -10,6 +10,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { SkipNext, SkipPrevious } from "@mui/icons-material";
 import abbrNum from "../../services/numberHelper";
 import { useEffect } from "react";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -33,18 +34,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const columns = [
     { id: 'name', label: 'Name', minWidth: 170 },
     {
-      id: 'Lượt xem',
-      label: 'Population',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
+        id: 'Lượt xem',
+        label: 'Population',
+        minWidth: 170,
+        align: 'right',
+        format: (value) => value.toLocaleString('en-US'),
     },
     {
-      id: 'Doanh thu',
-      label: 'Size\u00a0(km\u00b2)',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
+        id: 'Doanh thu',
+        label: 'Size\u00a0(km\u00b2)',
+        minWidth: 170,
+        align: 'right',
+        format: (value) => value.toLocaleString('en-US'),
     },
     {
         id: 'Đánh giá',
@@ -52,26 +53,58 @@ const columns = [
         minWidth: 170,
         align: 'right',
         format: (value) => value.toLocaleString('en-US'),
-      },
+    },
     {
         id: 'Số đánh giá',
         label: 'Size\u00a0(km\u00b2)',
         minWidth: 170,
         align: 'right',
         format: (value) => value.toLocaleString('en-US'),
-      },
-      {
+    },
+    {
         id: 'Số chương',
         label: 'Size\u00a0(km\u00b2)',
         minWidth: 170,
         align: 'right',
         format: (value) => value.toLocaleString('en-US'),
-      },
-  ];
+    },
+];
 
 function createData(name, view, price, review, numOfReview, numOfChapter) {
     return { name, view, price, review, numOfReview, numOfChapter };
 }
+
+const gregorian_en_lowercase = {
+    name: "gregorian_en_lowercase",
+    months: [
+      ["january", "jan"],
+      ["february", "feb"],
+      ["march", "mar"],
+      ["april", "apr"],
+      ["may", "may"],
+      ["june", "jun"],
+      ["july", "jul"],
+      ["august", "aug"],
+      ["september", "sep"],
+      ["october", "oct"],
+      ["november", "nov"],
+      ["december", "dec"],
+    ],
+    weekDays: [
+      ["saturday", "sat"],
+      ["sunday", "sun"],
+      ["monday", "mon"],
+      ["tuesday", "tue"],
+      ["wednesday", "wed"],
+      ["thursday", "thu"],
+      ["friday", "fri"],
+    ],
+    digits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    meridiems: [
+      ["AM", "am"],
+      ["PM", "pm"],
+    ],
+  };
 
 const rows = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 0),
@@ -96,6 +129,11 @@ export default function UserStatistic() {
     const [isLoading, setIsLoading] = useState(true)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const [values, setValues] = useState([
+        new DateObject().subtract(4, "days"),
+        new DateObject().add(4, "days")
+    ])
 
     let navigate = useNavigate()
 
@@ -132,43 +170,14 @@ export default function UserStatistic() {
                             </div>
                             <Grid container spacing={3}>
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                        <span style={{ display: "flex" }} onClick={(e) => {
-                                            if (month === 1) {
-                                                setMonth(12)
-                                                setYear(year - 1)
-                                            }
-                                            else {
-                                                setMonth(month - 1)
-                                            }
-                                        }}>
-                                            <IconButton color="info" size="large"> <SkipPrevious /></IconButton>
-                                            {month === 1 ? <Typography variant="h5">{`${12}/${year - 1}`}</Typography>
-                                                :
-                                                <Typography variant="h5">{`${month - 1}/${year}`}</Typography>
-                                            }
-                                        </span>
-                                        <Typography variant="h5" textAlign={'center'}>{`Thống kê của tháng ${month}/${year}`}</Typography>
-                                        <span style={{ display: "flex" }} onClick={(e) => {
-                                            var dateObj = new Date();
-                                            var m = dateObj.getUTCMonth() + 1
-                                            var y = dateObj.getUTCFullYear()
-                                            if( y === year && month+1 >= m){
-                                                return ;
-                                            }
-                                            if (month === 12) {
-                                                setMonth(1)
-                                                setYear(year + 1)
-                                            }
-                                            else {
-                                                setMonth(month + 1)
-                                            }
-                                        }}>
-                                            {month === 12 ? <Typography variant="h5">{`${1}/${year + 1}`}</Typography>
-                                                : <Typography variant="h5">{`${month + 1}/${year}`}</Typography>
-                                            }
-                                            <IconButton color="info" size="large"> <SkipNext /></IconButton>
-                                        </span>
+                                    <div>
+                                        <DatePicker
+                                            value={values}
+                                            onChange={setValues}
+                                            range
+                                            dateSeparator=" đến " 
+                                            style={{ width: '10em'}}
+                                        />
                                     </div>
                                 </Grid>
                                 <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
@@ -250,7 +259,7 @@ export default function UserStatistic() {
                                     </Grid>
                                     : <></>}
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12} sx={{ textAlign: "center" }}>
-                                    <Typography variant="h7" textAlign={'center'} style={{ textAlign: "center"}} width={'100%'} onClick={(e) => setShowMore(!showMore)}>{showMore ? "Ẩn bớt" : "Xem thống kê chi tiết"}</Typography>
+                                    <Typography variant="h7" textAlign={'center'} style={{ textAlign: "center" }} width={'100%'} onClick={(e) => setShowMore(!showMore)}>{showMore ? "Ẩn bớt" : "Xem thống kê chi tiết"}</Typography>
                                 </Grid>
                             </Grid>
                         </div>
