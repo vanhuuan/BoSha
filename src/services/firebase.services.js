@@ -66,6 +66,7 @@ export const firebaseService = {
             })
             .catch((error) => {
                 console.log(error)
+                callback("")
                 return `https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656a08e27bd8b1165478b%2Fcover.png?alt=media&token=20cfb7d8-6e42-4426-b026-c0443d8cb793`
             });
     },

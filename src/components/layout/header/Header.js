@@ -33,7 +33,7 @@ function Header() {
     let navigate = useNavigate()
     let isLogin = false;
     const userName = localStorage.getItem("Name")
-    const [ava, setAva] = useState(localStorage.getItem('Ava'))
+    const [ava, setAva] = useState("")
     const [isHover, setIsHover] = useState(true)
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [isLoadingAva, setIsLoadingAva] = useState(true)
@@ -122,6 +122,8 @@ function Header() {
         load()
         if (localStorage.getItem("UserId")) {
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
+        }else{
+            setIsLoadingAva(false)
         }
     }, [])
 

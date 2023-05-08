@@ -34,12 +34,12 @@ const BottomInfo = (props) => {
             past: "%s giây trước",
             s: function (number, withoutSuffix, key, isFuture) {
                 return '00:' + (number < 10 ? '0' : '')
-                    + number + ' phút trước';
+                    + number + ' giây trước';
             },
-            m: "01:00 minutes",
+            m: "01 phút trước",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
-                    + number + ':00' + ' phút trước';
+                    + number + ' phút trước';
             },
             h: "một giờ trước",
             hh: "%d giờ trước",
