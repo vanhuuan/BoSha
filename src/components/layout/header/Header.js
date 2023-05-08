@@ -24,6 +24,7 @@ import { useEffect } from 'react';
 import zIndex from '@mui/material/styles/zIndex';
 import SearchIcon from '@mui/icons-material/Search';
 import { bookService } from '../../../services/books.services';
+import { firebaseService } from '../../../services/firebase.services';
 
 const pages = ['HOT', 'Đang theo dõi', 'Thể loại'];
 const settings = ['Tài khoản', 'Tác giả', 'Đăng xuất'];
@@ -32,9 +33,10 @@ function Header() {
     let navigate = useNavigate()
     let isLogin = false;
     const userName = localStorage.getItem("Name")
-    const ava = localStorage.getItem('Ava')
+    const [ava, setAva] = useState(localStorage.getItem('Ava'))
     const [isHover, setIsHover] = useState(true)
     const [isLoadingCate, setIsLoadingCate] = useState(true)
+    const [isLoadingAva, setIsLoadingAva] = useState(true)
     const [isLoading, setIsLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState('')
     const [categories, setCategories] = React.useState([])
@@ -43,7 +45,7 @@ function Header() {
     const search = (search) => {
         setSearchTerm(search)
         const delayDebounceFn = setTimeout(() => {
-            if(search.length > 5){
+            if (search.length > 5) {
                 setIsLoading(true)
                 bookService.searchBook(search).then((rs) => {
                     console.log(rs.data)
@@ -110,8 +112,17 @@ function Header() {
         handleCloseUserMenu()
     };
 
+    const setAvaImg = (rs) => {
+        setAva(rs)
+        setIsLoadingAva(false);
+    }
+
+
     useEffect(() => {
         load()
+        if (localStorage.getItem("UserId")) {
+            firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
+        }
     }, [])
 
     return (
@@ -256,7 +267,9 @@ function Header() {
                             <Box sx={{ flexGrow: 0 }}>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                        <Avatar alt={userName} src={ava} />
+                                        {isLoadingAva === false ?
+                                            <Avatar alt={userName} src={ava} />
+                                            : <></>}
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
