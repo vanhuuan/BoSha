@@ -74,37 +74,37 @@ function createData(name, view, price, review, numOfReview, numOfChapter) {
     return { name, view, price, review, numOfReview, numOfChapter };
 }
 
-const gregorian_en_lowercase = {
+const vn_en_lowercase = {
     name: "gregorian_en_lowercase",
     months: [
-      ["january", ""],
-      ["february", ""],
-      ["march", ""],
-      ["april", ""],
-      ["may", ""],
-      ["june", ""],
-      ["july", ""],
-      ["august", ""],
-      ["september", ""],
-      ["october", ""],
-      ["november", ""],
-      ["december", ""],
+        ["january", "Tháng 1"],
+        ["february", "Tháng 2"],
+        ["march", "Tháng 3"],
+        ["april", "Tháng 4"],
+        ["may", "Tháng 5"],
+        ["june", "Tháng 6"],
+        ["july", "Tháng 7"],
+        ["august", "Tháng 8"],
+        ["september", "Tháng 9"],
+        ["october", "Tháng 10"],
+        ["november", "Tháng 11"],
+        ["december", "Tháng 12"],
     ],
     weekDays: [
-      ["saturday", "thứ bảy"],
-      ["sunday", "chủ nhật"],
-      ["monday", "thứ hai"],
-      ["tuesday", "thứ ba"],
-      ["wednesday", "thứ tư"],
-      ["thursday", "thứ năm"],
-      ["friday", "thứ sáu"],
+        ["saturday", "Thứ bảy"],
+        ["sunday", "Chủ nhật"],
+        ["monday", "Thứ hai"],
+        ["tuesday", "Thứ ba"],
+        ["wednesday", "Thứ tư"],
+        ["thursday", "Thứ năm"],
+        ["friday", "Thứ sáu"],
     ],
     digits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     meridiems: [
-      ["AM", "am"],
-      ["PM", "pm"],
+        ["AM", "sáng"],
+        ["PM", "chiều"],
     ],
-  };
+};
 
 const rows = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 0),
@@ -131,8 +131,8 @@ export default function UserStatistic() {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const [values, setValues] = useState([
-        new DateObject().subtract(4, "days"),
-        new DateObject().add(4, "days")
+        new DateObject().subtract(7, "days"),
+        new DateObject()
     ])
 
     let navigate = useNavigate()
@@ -170,16 +170,19 @@ export default function UserStatistic() {
                             </div>
                             <Grid container spacing={3}>
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                                    <div style={{display: "flex"}}>
+                                    <div style={{ display: "flex" }}>
                                         <Typography>Khoảng thời gian thống kê từ </Typography>
                                         <DatePicker
                                             value={values}
                                             onChange={setValues}
                                             range
-                                            dateSeparator=" đến " 
-                                            style={{ width: '15em', margin: "0 1em"}}
+                                            dateSeparator=" đến "
+                                            style={{ width: '130%', margin: "0 0.5em" }}
+                                            minDate="2022/1/1"
+                                            maxDate={new DateObject()}
+                                            locale={vn_en_lowercase} 
                                         />
-                                        <CalendarMonth/>
+                                        <CalendarMonth style={{ margin: "0 1em" }}/>
                                     </div>
                                 </Grid>
                                 <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
