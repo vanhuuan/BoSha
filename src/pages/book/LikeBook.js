@@ -97,7 +97,7 @@ const LikeBook = () => {
                                 if (isLike === true) {
                                     changeLike(false)
                                     document.getElementById("buy").style.color="rgb(157, 23, 77)";
-                                    document.getElementById("link").style.color="gray";
+                                    document.getElementById("like").style.color="gray";
                                 }
                             }}>Truyện đã mua</h1>
                         </div>

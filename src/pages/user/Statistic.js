@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Income from "../../components/chart/income";
 import { useState } from "react";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { SkipNext, SkipPrevious } from "@mui/icons-material";
+import { CalendarMonth, SkipNext, SkipPrevious } from "@mui/icons-material";
 import abbrNum from "../../services/numberHelper";
 import { useEffect } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -77,27 +77,27 @@ function createData(name, view, price, review, numOfReview, numOfChapter) {
 const gregorian_en_lowercase = {
     name: "gregorian_en_lowercase",
     months: [
-      ["january", "jan"],
-      ["february", "feb"],
-      ["march", "mar"],
-      ["april", "apr"],
-      ["may", "may"],
-      ["june", "jun"],
-      ["july", "jul"],
-      ["august", "aug"],
-      ["september", "sep"],
-      ["october", "oct"],
-      ["november", "nov"],
-      ["december", "dec"],
+      ["january", ""],
+      ["february", ""],
+      ["march", ""],
+      ["april", ""],
+      ["may", ""],
+      ["june", ""],
+      ["july", ""],
+      ["august", ""],
+      ["september", ""],
+      ["october", ""],
+      ["november", ""],
+      ["december", ""],
     ],
     weekDays: [
-      ["saturday", "sat"],
-      ["sunday", "sun"],
-      ["monday", "mon"],
-      ["tuesday", "tue"],
-      ["wednesday", "wed"],
-      ["thursday", "thu"],
-      ["friday", "fri"],
+      ["saturday", "thứ bảy"],
+      ["sunday", "chủ nhật"],
+      ["monday", "thứ hai"],
+      ["tuesday", "thứ ba"],
+      ["wednesday", "thứ tư"],
+      ["thursday", "thứ năm"],
+      ["friday", "thứ sáu"],
     ],
     digits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     meridiems: [
@@ -158,7 +158,7 @@ export default function UserStatistic() {
         setIsLoading(false)
     }
     return (
-        <Box margin={`2em 0`}>
+        <Box margin={`2em 0`} >
             {isLoading === false ?
                 <Grid container spacing={3}>
                     <Grid xs={1}></Grid>
@@ -170,14 +170,16 @@ export default function UserStatistic() {
                             </div>
                             <Grid container spacing={3}>
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                                    <div>
+                                    <div style={{display: "flex"}}>
+                                        <Typography>Khoảng thời gian thống kê từ </Typography>
                                         <DatePicker
                                             value={values}
                                             onChange={setValues}
                                             range
                                             dateSeparator=" đến " 
-                                            style={{ width: '10em'}}
+                                            style={{ width: '15em', margin: "0 1em"}}
                                         />
+                                        <CalendarMonth/>
                                     </div>
                                 </Grid>
                                 <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>

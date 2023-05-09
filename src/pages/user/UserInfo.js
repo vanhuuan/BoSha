@@ -60,7 +60,7 @@ export default function UserInfo() {
                 </Grid>
                 <Grid xs="10">
                     {isLoading === false ?
-                        <div className="container">
+                        <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography variant='h5'>Thông tin tài khoản </Typography>
                                 <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện </Typography>

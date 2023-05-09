@@ -110,17 +110,16 @@ export default function EditUser() {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
+        <Box sx={{ flexGrow: 1 }} margin={`2em 0`} >
             <Grid container spacing={2}>
                 <Grid xs="1">
 
                 </Grid>
                 <Grid xs="10">
                     {isLoading === false ?
-                        <div className="container">
+                        <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h5'>Thông tin tài khoản </Typography>
-                                <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }}>Thống kê truyện </Typography>
+                                <Typography variant='h5'>Cập nhật thông tin tài khoản </Typography>
                             </div>
                             <div className='container-body' style={{ display: "flex", alignItems: "center" }}>
                                 {ava ?
