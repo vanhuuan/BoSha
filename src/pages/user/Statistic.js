@@ -176,6 +176,7 @@ export default function UserStatistic() {
                                             value={values}
                                             onChange={setValues}
                                             range
+                                            rangeHover
                                             dateSeparator=" đến "
                                             style={{ width: '130%', margin: "0 0.5em" }}
                                             minDate="2022/1/1"
