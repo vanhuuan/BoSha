@@ -84,7 +84,7 @@ const ChapterNav = (props) => {
                     &#8250;
                 </button>
                 }
-            <button className="chapter-nav__comment" onClick={() => {resultRef.current.scrollIntoView({ behavior: "smooth" })}}>
+            <button className="chapter-nav__comment"  onClick={() => {resultRef.current.scrollIntoView({ behavior: "smooth" })}}>
                 <ChatBubbleIcon style={{ fontSize: `18px` }}></ChatBubbleIcon>
                 <span className="chapter-nav__comment-text">Bình luận</span>
             </button>

@@ -9,6 +9,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BorderAll } from '@mui/icons-material';
 import { Grid, LinearProgress } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
+import BookCardHot from '../components/book/BookCardHot'
 import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -67,7 +68,7 @@ const Home = () => {
       <div className='container m-0 p-0' style={{ width: `100%`, border: `0px` }}>
         <div className='row no-gutter'>
           <div className='col-1'></div>
-          <div className='col-2' style={{ paddingRight: `4px`, flex: `1` }}>
+          <div className='col-lg-2 col-md-2' sx={{ xs: {display: `none`}}} style={{ paddingRight: `4px`, flex: `1` }}>
             {/* <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>ĐỌC GẦN ĐÂY</h1>
@@ -85,7 +86,7 @@ const Home = () => {
               </div>
             </div> */}
           </div>
-          <div className='col-8' style={{ paddingLeft: `4px` }}>
+          <div className='col-lg-8 col-md-8 col-sm-8 col-xs-10' style={{ paddingLeft: `4px` }}>
             <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>TRUYỆN HOT</h1>
@@ -93,8 +94,8 @@ const Home = () => {
               <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
                 {
                   isLoading === false ? dataHot.map((item, index) => {
-                    return <div className='col-lg-2 col-md-2 container-book__padding'>
-                      <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
+                    return <div className='col-4 container-book__padding'>
+                      <BookCardHot key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
                     </div>
                   }) : <CircularProgress />
                 }

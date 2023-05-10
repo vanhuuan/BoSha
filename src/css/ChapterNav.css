@@ -67,6 +67,13 @@
     margin-left: 4px;
 }
 
+@media only screen and (max-width: 768px) {
+    .chapter-nav__comment-text {
+        display: none;
+        padding: 4px
+    }
+}
+
 .chapter-nav__comment:hover {
     background-color: rgb(63, 158, 63);
 }

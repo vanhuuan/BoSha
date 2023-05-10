@@ -1,0 +1,86 @@
+.bookcardhot-group {
+    display: block;
+    position: relative;
+    background-color: rgb(157, 23, 77);
+    border-radius: 10px;
+    overflow: hidden;
+    --gradient-to: rgb(0, 0, 0);
+    transition: transform .2s;
+}
+
+.bookcardhot-group:hover {
+    --gradient-to: rgb(157, 23, 77);
+}
+
+.from-transparent {
+    --gradient-from: transparent;
+    --gradient-stops: var(--gradient-from), var(--gradient-to);
+}
+
+.bookcardhot-group__container {
+    display: block;
+    width: 100%;
+}
+
+.bookcardhot-group__img {
+    display: block;
+    min-width: 100%;
+    max-width: 100%;
+    aspect-ratio: 10/16;
+    float: left;
+    object-fit: cover;
+}
+
+.bookcardhot-group__top-left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    text-align: center;
+}
+
+
+.bookcardhot-group__bottom {
+    width: 100%;
+    position: absolute;
+    display: grid;
+    bottom: 0;
+    align-content: flex-end;
+    height: 50%;
+    background-image: linear-gradient(var(--gradient-stops));
+    
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    
+  }
+
+.bookcardhot-group__bottom-quantity {
+    width: 100%;
+    color: white;
+    font-size: 14px;
+    font-weight: 00;
+    text-align: left !important;
+    padding: 0 1em;
+    margin-bottom: 0.25em;
+}
+
+.bookcardhot-group__bottom-name {
+    width: 100%;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    padding: 0 1em;
+    text-align: left!important;
+    margin-bottom: 0.5em;
+}
