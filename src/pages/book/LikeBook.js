@@ -58,6 +58,8 @@ const LikeBook = () => {
 
     useEffect(() => {
         load().catch(console.error)
+        document.getElementById("like").style.color = "rgb(157, 23, 77)";
+        document.getElementById("buy").style.color = "gray";
     }, [isLike])
 
     const fetchData = () => {
@@ -86,18 +88,18 @@ const LikeBook = () => {
                     <div className='col-1'></div>
                     <div className='col-10' style={{ marginRight: 0 }}>
                         <div className='row no-gutter d-flex flex-row' style={{ display: "flex", justifyContent: "space-between" }}>
-                            <h1 className='title' id='like' style={{ textAlign: 'left', marginTop: "2em"}} onClick={() => {
+                            <h1 className='title' id='like' style={{ textAlign: 'left', marginTop: "2em", display: "inline-block", width: "45%" }} onClick={() => {
                                 if (isLike === false) {
                                     changeLike(true)
-                                    document.getElementById("like").style.color="rgb(157, 23, 77)";
-                                    document.getElementById("buy").style.color="gray";
+                                    document.getElementById("like").style.color = "rgb(157, 23, 77)";
+                                    document.getElementById("buy").style.color = "gray";
                                 }
                             }}>Truyện đang theo dõi</h1>
-                            <h1 className='title' id='buy' style={{ textAlign: 'right', marginTop: "2em"}} onClick={() => {
+                            <h1 className='title' id='buy' style={{ textAlign: 'right', marginTop: "2em", display: "inline-block", width: "45%" }} onClick={() => {
                                 if (isLike === true) {
                                     changeLike(false)
-                                    document.getElementById("buy").style.color="rgb(157, 23, 77)";
-                                    document.getElementById("like").style.color="gray";
+                                    document.getElementById("buy").style.color = "rgb(157, 23, 77)";
+                                    document.getElementById("like").style.color = "gray";
                                 }
                             }}>Truyện đã mua</h1>
                         </div>

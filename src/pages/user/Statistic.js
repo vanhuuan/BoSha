@@ -84,27 +84,27 @@ function createData(name, view, price, review, numOfReview, numOfChapter) {
 const vn_en_lowercase = {
     name: "vn_en_lowercase",
     months: [
-        ["january", "Tháng 1"],
-        ["february", "Tháng 2"],
-        ["march", "Tháng 3"],
-        ["april", "Tháng 4"],
-        ["may", "Tháng 5"],
-        ["june", "Tháng 6"],
-        ["july", "Tháng 7"],
-        ["august", "Tháng 8"],
-        ["september", "Tháng 9"],
-        ["october", "Tháng 10"],
-        ["november", "Tháng 11"],
-        ["december", "Tháng 12"],
+        ["january", "Jan"],
+        ["february", "Feb"],
+        ["march", "Mar"],
+        ["april", "Apr"],
+        ["may", "May"],
+        ["june", "June"],
+        ["july", "July"],
+        ["august", "Aug"],
+        ["september", "Sep"],
+        ["october", "Oct"],
+        ["november", "Nov"],
+        ["december", "Dec"],
     ],
     weekDays: [
-        ["saturday", "Thứ bảy"],
-        ["sunday", "Chủ nhật"],
-        ["monday", "Thứ hai"],
-        ["tuesday", "Thứ ba"],
-        ["wednesday", "Thứ tư"],
-        ["thursday", "Thứ năm"],
-        ["friday", "Thứ sáu"],
+        ["saturday", "T7"],
+        ["sunday", "CN"],
+        ["monday", "T2"],
+        ["tuesday", "T3"],
+        ["wednesday", "T4"],
+        ["thursday", "T5"],
+        ["friday", "T6"],
     ],
     digits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     meridiems: [
@@ -155,8 +155,6 @@ const defaultCardData = {
 export default function UserStatistic() {
     const [chartData, setChartData] = useState()
     const [showMore, setShowMore] = useState(false)
-    const [month, setMonth] = useState(4)
-    const [year, setYear] = useState(2023)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -165,30 +163,24 @@ export default function UserStatistic() {
         new DateObject()
     ])
 
-    let navigate = useNavigate()
+    const onChangeDateValue = (value) => {
+        if(value.length == 2){
+            setValues(value)
+        }
+    }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-        setIsLoadingStatisticData(true)
-        statisticService.getStatisticData(values[0].format("MM/DD/YYYY"), values[1].format("MM/DD/YYYY"), newPage - 1, rowsPerPage, sortBy, sortType)
-            .then((rs) => {
-                setStatisticData(rs.data)
-                setIsLoadingStatisticData(false)
-            })
-    };
+    let navigate = useNavigate()
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
-        setPage(0);
+        setPage(1);
     };
 
     useEffect(() => {
         var dateObj = new Date();
-        setMonth(dateObj.getUTCMonth() + 1)
-        setYear(dateObj.getUTCFullYear())
         loadStatisticCard()
         loadChartData(sortChart)
-    }, [])
+    }, [values])
 
     const [isLoadingCard, setIsLoadingCard] = useState(true)
     const [cardData, setCardData] = useState(defaultCardData)
@@ -222,14 +214,28 @@ export default function UserStatistic() {
     })
     const [sortBy, setSortBy] = useState("View")
     const [sortType, setSortType] = useState("Desc")
+    const [statisticDatas, setStatisticDatas] = useState([])
     const loadStatictisData = () => {
         setIsLoadingStatisticData(true)
-        statisticService.getStatisticData(values[0].format("MM/DD/YYYY"), values[1].format("MM/DD/YYYY"), page - 1, rowsPerPage, sortBy, sortType)
+        statisticService.getStatisticData(values[0].format("MM/DD/YYYY"), values[1].format("MM/DD/YYYY"), page, rowsPerPage, sortBy, sortType)
             .then((rs) => {
                 setStatisticData(rs.data)
+                setStatisticDatas(rs.data.data)
                 setIsLoadingStatisticData(false)
             })
     }
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+        setIsLoadingStatisticData(true)
+        statisticService.getStatisticData(values[0].format("MM/DD/YYYY"), values[1].format("MM/DD/YYYY"), newPage, rowsPerPage, sortBy, sortType)
+            .then((rs) => {
+                console.log(newPage, rs.data)
+                setStatisticData(rs.data)
+                setStatisticDatas(rs.data.data)
+                setIsLoadingStatisticData(false)
+            })
+    };
 
     return (
         <Box margin={`2em 0`} >
@@ -247,11 +253,11 @@ export default function UserStatistic() {
                                     <Typography>Khoảng thời gian thống kê từ </Typography>
                                     <DatePicker
                                         value={values}
-                                        onChange={setValues}
+                                        onChange={onChangeDateValue}
                                         range
                                         rangeHover
                                         dateSeparator=" đến "
-                                        style={{ width: '130%', margin: "0 0.5em" }}
+                                        style={{ width: '110%', margin: "0 0.5em" }}
                                         minDate="2022/1/1"
                                         maxDate={new DateObject()}
                                         locale={vn_en_lowercase}
@@ -372,7 +378,7 @@ export default function UserStatistic() {
                                                 </TableHead>
 
                                                 <TableBody>
-                                                    {statistcData.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                                                    {statisticDatas.map((row) => (
                                                         <StyledTableRow key={row.name}>
                                                             <StyledTableCell align="left">{row.name.toLocaleString('vi-VN')}</StyledTableCell>
                                                             <StyledTableCell align="right">{row.numOfView.toLocaleString('vi-VN')}</StyledTableCell>
