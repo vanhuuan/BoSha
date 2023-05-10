@@ -121,7 +121,7 @@ export default function EditUser() {
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography variant='h5'>Cập nhật thông tin tài khoản </Typography>
                             </div>
-                            <div className='container-body' style={{ display: "flex", alignItems: "center" }}>
+                            <div className='container-body' style={{ display: "flex", justifyContent: "center" }}>
                                 {ava ?
                                     <Badge
                                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -160,12 +160,12 @@ export default function EditUser() {
                             </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>
-                                    <Grid md="4">
+                                    <Grid md={4} xs="12">
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography variant="h5"> Tên người dùng </Typography>
                                         </Box>
                                     </Grid>
-                                    <Grid md="6">
+                                    <Grid  md={8} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -180,9 +180,10 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Divider></Divider>
-                                    <Grid md="4"><Typography variant="h5">Email</Typography></Grid>
-                                    <Grid md="6">
+                                    <Grid xs="12"> <Divider></Divider> </Grid>
+                                    
+                                    <Grid  md={4} xs="12"><Typography variant="h5">Email</Typography></Grid>
+                                    <Grid  md={8} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -196,9 +197,9 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Divider></Divider>
-                                    <Grid md="4"><Typography variant="h5">Số điện thoại</Typography></Grid>
-                                    <Grid md="6">
+                                    <Grid xs="12"> <Divider></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5">Số điện thoại</Typography></Grid>
+                                    <Grid md={8} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -212,9 +213,10 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
+                                    <Grid xs="12"> <Divider></Divider> </Grid>
                                 </Grid>
                             </div>
-                            <div style={{ display: "flex", alignItems: "flex-end" }}>
+                            <div style={{ display: "flex", justifyContent: "end" }}>
                                 <IconButton>
                                     <CheckCircle onClick={(e) => { update() }} color="info" />
                                 </IconButton>

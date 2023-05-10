@@ -1,0 +1,26 @@
+.number-range{
+    width: "90px"
+}
+
+.category_item{
+    width: "8em"
+}
+
+@media only screen and (max-width: 600px)  {
+    .number-range{
+        width: "100px"
+    }
+
+    .searchManga{
+        margin: 10px;
+        width: 70%;
+        max-width: 70%;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .category_item{
+        width: "7em"
+    }
+}
+

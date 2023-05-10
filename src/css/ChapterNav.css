@@ -20,7 +20,7 @@
 
 .chapter-nav__page {
     height: 30px;
-    width: 30px;
+    aspect-ratio: 1/1;
     color: white;
     background-color: rgb(217,83,79);
     font-size: 20px;
@@ -30,10 +30,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.chapter-nav__page:hover {
-    background-color: rgb(156, 67, 64);
 }
 
 .chapter-nav__select-container {

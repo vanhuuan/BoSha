@@ -1,0 +1,27 @@
+.title{
+    font-weight: 'bold';
+    padding-left: "3em"
+}
+
+.text_value{
+    font-weight: lighter;
+}
+
+.button-info{
+    margin: "2em 2em";
+}
+
+.ava{
+    width: "5em";
+    height: "5em"
+}
+
+.devider-grid{
+    margin: "2em";
+}
+
+@media only screen and (max-width: 600px)  {
+    .devider-grid{
+        margin: "1em";
+    }
+}

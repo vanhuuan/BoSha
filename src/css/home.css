@@ -3,6 +3,13 @@ h1.title {
     color: rgb(157, 23, 77);
 }
 
+@media only screen and (max-width: 600px)  {
+    h1.title {
+        font-size: 18px;
+        color: rgb(157, 23, 77);
+    }
+}
+
 .container-book {
     border: 1px solid rgb(157, 23, 77);
     border-radius: 12px;

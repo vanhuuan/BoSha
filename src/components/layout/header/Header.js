@@ -44,8 +44,9 @@ function Header() {
 
     const search = (search) => {
         setSearchTerm(search)
+        console.log(search)
         const delayDebounceFn = setTimeout(() => {
-            if (search.length > 5) {
+            if (search.length >= 3) {
                 setIsLoading(true)
                 bookService.searchBook(search).then((rs) => {
                     console.log(rs.data)
@@ -275,7 +276,10 @@ function Header() {
                                 </ul>
                             </div>
                             <button className='header__toolbar-search-btn'>
-                                <SearchIcon className='header__toolbar-search-btn-icon'></SearchIcon>
+                                <SearchIcon className='header__toolbar-search-btn-icon' onClick={(e) => {
+                                    navigate("/book/search/true")
+                                }
+                                }></SearchIcon>
                             </button>
                         </div>
                         {isLogin ?

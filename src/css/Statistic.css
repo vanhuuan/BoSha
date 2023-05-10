@@ -1,0 +1,19 @@
+.lists-container {
+    display: none;
+}
+
+@media (max-width: 400px) {
+    .lists-container {
+        display: block;
+    }
+}
+
+.table-container {
+
+}
+
+@media (max-width: 400px) {
+    .table-container {
+        display: none;
+    }
+}
