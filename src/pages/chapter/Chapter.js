@@ -94,12 +94,12 @@ const Chapter = () => {
     }, [chapterId])
 
     return (
-        <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
+        <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
                     {isLoading === false ? <>
-                        <div style={{ margin: "0 2em", textAlign: "center" }}>
+                        <div style={{textAlign: "center" }}>
                             <Typography>{`${chapterDetail.name}`}</Typography>
                             <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>

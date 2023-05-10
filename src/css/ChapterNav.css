@@ -68,6 +68,11 @@
         display: none;
         padding: 4px
     }
+    .chapter-nav__select-item {
+        height: 75%;
+        min-width: 190px;
+        width: 190px;
+    }
 }
 
 .chapter-nav__comment:hover {
