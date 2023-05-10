@@ -9,6 +9,7 @@ import { LinearProgress, Stack, Switch, styled } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams, useSearchParams } from "react-router-dom";
+import "../../css/SearchBook.css"
 
 const Android12Switch = styled(Switch)(({ theme }) => ({
     padding: 8,
@@ -83,9 +84,9 @@ export default function SearchBook() {
 
     useEffect(() => {
         load()
-        if(isSimple){
+        if (isSimple) {
             setSimple(true)
-        }else{
+        } else {
             setSimple(false)
         }
         findBook()
@@ -145,7 +146,7 @@ export default function SearchBook() {
                                                     setCategory(category.filter(item => item !== cate.id))
                                                 }
                                             }} name={cate.id} />}
-                                                label={cate.name} sx={{ width: "8em" }} />
+                                                label={cate.name} className="category_item" />
                                         )
                                     })}
                                 </div> : <></>}
@@ -154,10 +155,10 @@ export default function SearchBook() {
                         : <></>}
                     <div style={{ margin: "1em 0" }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={2}>
+                            <Grid item xs={12} md={2} lg={2}>
                                 <InputLabel id="demo-simple-select-helper-label">Xắp xếp theo</InputLabel>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={12} md={4} lg={4}>
                                 <Select
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
@@ -176,10 +177,10 @@ export default function SearchBook() {
                                     <MenuItem value={"MostChapter"}>Số chapter nhiều</MenuItem>
                                 </Select>
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item xs={12} md={2} lg={2}>
                                 <InputLabel id="state">Tình trạng</InputLabel>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={12} md={4}>
                                 <Select
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
@@ -193,22 +194,22 @@ export default function SearchBook() {
                                     <MenuItem value={"Finish"}>Đã hoàn thành</MenuItem>
                                 </Select>
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item xs={12} lg={2}>
                                 <InputLabel id="state">Giá</InputLabel>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={12} lg={9}>
                                 <PriceSlider parentCallback={callBackPrice}></PriceSlider>
                             </Grid>
                         </Grid>
                     </div>
                     <div className='row'>
-                        <div className='col-lg-12'>
+                        <div className='col-xs-7 col-lg-12'>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 findBook();
                             }}>
                                 <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên sách' className='searchManga' />
-                                <IconButton onClick={(e) => { findBook(); }}> <Search></Search> Tìm kiếm</IconButton>
+                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em"}}></Search></IconButton>
                             </form>
                         </div>
                     </div>
@@ -265,11 +266,11 @@ function PriceSlider(props) {
             />
             <Stack direction="row" justifyContent="space-evenly" alignItems="center">
                 <TextField
+                    className="number-range"
                     label="Thấp nhất"
                     type="number"
                     variant="outlined"
                     InputLabelProps={{ shrink: true }}
-                    sx={{ width: "90px" }}
                     value={priceRangeValue[0]}
                     onChange={(e) => {
                         setPriceRangeValue([Number(e.target.value), priceRangeValue[1]]);
@@ -277,11 +278,11 @@ function PriceSlider(props) {
                 />
                 <Typography>-</Typography>
                 <TextField
+                    className="number-range"
                     label="Cao nhất"
                     type="number"
                     variant="outlined"
                     InputLabelProps={{ shrink: true }}
-                    sx={{ width: "90px" }}
                     value={priceRangeValue[1]}
                     onChange={(e) => {
                         setPriceRangeValue([priceRangeValue[0], Number(e.target.value)]);
