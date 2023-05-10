@@ -12,6 +12,7 @@ import { Divider, Avatar, Grid, Paper } from "@mui/material";
 import "../css/CommentList.css";
 import TextareaValidator from "./CommentReviewInput";
 import { commentService } from "../services/comment.services";
+import { StarBorderOutlined } from "@mui/icons-material";
 
 const moment = require('moment');
 moment.updateLocale('vi', {
@@ -91,8 +92,8 @@ function ReviewList(props) {
                                 </p>
                                 <div className="comment-bottom">
                                     <span className="comment-icon">
-                                        <FavoriteIcon className="icon" />
-                                        <span>{item.like}</span>
+                                        <StarBorderOutlined className="icon-star" />
+                                        <span>{item.star}</span>
                                     </span>
                                     <p style={{ textAlign: "left", color: "gray" }}>
                                         {

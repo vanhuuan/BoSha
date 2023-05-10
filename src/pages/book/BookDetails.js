@@ -13,7 +13,7 @@ import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCart, AddShoppingCartOutlined, FavoriteBorderOutlined } from "@mui/icons-material";
+import { AddShoppingCart, AddShoppingCartOutlined, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -129,10 +129,10 @@ export default function BookDetail() {
                                                 </div>
                                                 <div style={{marginBottom: `2em`}}>
                                                     {book.authorId !== uid ? <>
-                                                        <Button variant="outlined" startIcon={ status.liked ? <FavoriteBorderIcon style={{ color: "pink" }} /> : <FavoriteBorderOutlined style={{ color: "pink" }} />} style={{ marginRight: `1em` }} onClick={likeBook}>
+                                                        <Button variant="outlined" startIcon={ status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
-                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook}>
+                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{minWidth: "170px" }}>
                                                             {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
                                                         </Button> </> : <></>
                                                     }

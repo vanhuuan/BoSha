@@ -100,7 +100,7 @@ function Comment(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                flex: 'auto',
+                                justifyContent: "space-between"
                             }}
                         >
                             <button className="button" onClick={() => setShowEmojis(!showEmojis)}>
@@ -237,43 +237,45 @@ function Review(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                flex: 'auto',
+                                justifyContent: "space-between"
                             }}
                         >
-                            <button className="button" onClick={() => setShowEmojis(!showEmojis)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </button>
-                            {showEmojis && (
-                                <div style={{ position: "absolute", zIndex: 1, top: `100%`, width: `50%` }}>
-                                    <Picker onEmojiClick={addEmoji} searchDisabled skinTonesDisabled emojiStyle={EmojiStyle.GOOGLE} suggestedEmojisMode={SuggestionMode.None}
-                                        categories={[
-                                            {
-                                                name: "Smiles & Emotions",
-                                                category: Categories.SMILEYS_PEOPLE
-                                            },]}
-                                        previewConfig={{
-                                            showPreview: false
-                                        }}
-                                        height={"10em"}
-                                        width={"100%"} />
-                                </div>
-                            )}
-                            <Typography level="body3" color={"red"}>
-                                {message}
-                            </Typography>
-                            <Typography level="body3">
-                                {text.length} / 1000 từ
-                            </Typography>
-                            <Rating
-                                name="simple-controlled"
-                                value={star}
-                                onChange={(event, newValue) => {
-                                    setStar(newValue);
-                                }}
-                            />
-                            <Button sx={{ ml: 'auto' }} onClick={sendReview}>Gửi</Button>
+                            <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                                <button className="button" onClick={() => setShowEmojis(!showEmojis)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </button>
+                                {showEmojis && (
+                                    <div style={{ position: "absolute", zIndex: 1, top: `100%`, width: `50%` }}>
+                                        <Picker onEmojiClick={addEmoji} searchDisabled skinTonesDisabled emojiStyle={EmojiStyle.GOOGLE} suggestedEmojisMode={SuggestionMode.None}
+                                            categories={[
+                                                {
+                                                    name: "Smiles & Emotions",
+                                                    category: Categories.SMILEYS_PEOPLE
+                                                },]}
+                                            previewConfig={{
+                                                showPreview: false
+                                            }}
+                                            height={"10em"}
+                                            width={"100%"} />
+                                    </div>
+                                )}
+                                <Typography level="body3" color={"red"}>
+                                    {message}
+                                </Typography>
+                                <Typography level="body3">
+                                    {text.length} / 1000 từ
+                                </Typography>
+                                <Rating
+                                    name="simple-controlled"
+                                    value={star}
+                                    onChange={(event, newValue) => {
+                                        setStar(newValue);
+                                    }}
+                                />
+                            </div>
+                            <Button sx={{}} onClick={sendReview}>Gửi</Button>
                         </Box>
                     }
                     sx={{

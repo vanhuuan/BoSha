@@ -9,3 +9,13 @@
     border: none;
     margin: 0;
 }
+
+.css-3rxuqd-JoyTextarea-endDecorator{
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px)  {
+    .button {
+        padding: 0;
+    }
+}
