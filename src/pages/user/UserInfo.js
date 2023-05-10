@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { userService } from "../../services/userServices";
 import { useNavigate } from "react-router-dom";
 import { firebaseService } from "../../services/firebase.services";
+import "../../css/userinfo.css"
 
 export default function UserInfo() {
     const [userInfo, setUserInfo] = useState({
@@ -65,27 +66,28 @@ export default function UserInfo() {
                                 <Typography variant='h5'>Thông tin tài khoản </Typography>
                                 <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện </Typography>
                             </div>
-                            <div className='container-body' style={{ display: "flex", alignItems: "center" }}>
+                            <div className='container-body' style={{ display: "flex", justifyContent: "center" }}>
                                 {ava ?
-                                    <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name} src={ava} />
+                                    <Avatar alt={userInfo.name} src={ava} className="ava"/>
                                     :
-                                    <Avatar sx={{ width: "5em", height: "5em" }} alt={userInfo.name}>{userInfo.name[0]}</Avatar>
+                                    <Avatar alt={userInfo.name} className="ava">{userInfo.name[0]}</Avatar>
                                 }
                             </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>
-                                    <Grid md="4"><Typography variant="h5">Tên người dùng</Typography></Grid>
-                                    <Grid md="6"><Typography variant="h5">{userInfo.name}</Typography></Grid>
-                                    <Divider></Divider>
-                                    <Grid md="4"><Typography variant="h5">Email</Typography></Grid>
-                                    <Grid md="6"><Typography variant="h5">{userInfo.email}</Typography></Grid>
-                                    <Divider></Divider>
-                                    <Grid md="4"><Typography variant="h5">Số điện thoại</Typography></Grid>
-                                    <Grid md="6"><Typography variant="h5">{userInfo.phone}</Typography></Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title">Tên người dùng</Typography></Grid>
+                                    <Grid md={8} xs="12"><Typography variant="h6" className="text_value">{userInfo.name}</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title">Email</Typography></Grid>
+                                    <Grid md={8} xs="12"><Typography variant="h6" className="text_value">{userInfo.email}</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title">Số điện thoại</Typography></Grid>
+                                    <Grid md={8} xs="12"><Typography variant="h6" className="text_value">{userInfo.phone}</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
                                 </Grid>
                             </div>
-                            <div style={{ display: "flex", alignItems: "flex-end" }}>
-                                <IconButton onClick={() => navigate("/user/userEdit")} color="info">
+                            <div style={{ display: "flex", justifyContent: "end" }}>
+                                <IconButton className="button-info" onClick={() => navigate("/user/userEdit")} color="info">
                                     <EditIcon />
                                 </IconButton>
                             </div>
