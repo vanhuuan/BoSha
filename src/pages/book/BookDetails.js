@@ -141,7 +141,7 @@ export default function BookDetail() {
                                                     <Grid item sm={3} xs={3}>
                                                         <div className='info-item'>
                                                             <div><FavoriteBorderIcon style={{ color: 'rgb(226,37,144)' }} /></div>
-                                                            <div><b>{book.numOfStar / (book.numOfReview + 1)}</b></div>
+                                                            <div><b>{book.numOfReview !== 0 ? book.numOfStar / (book.numOfReview) : book.numOfStar / (book.numOfReview + 1)}</b></div>
                                                         </div>
                                                     </Grid>
                                                     <Grid item sm={3} xs={3}>

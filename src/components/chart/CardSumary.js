@@ -44,7 +44,7 @@ function CardBookSummary({ title, value, footer, img }) {
               alt={value}
             />
             <CardContent sx={{ flex: '1 0 auto' }}>
-              <Typography component="div" variant="h5" style={{ wordWrap: "break-word" }}>
+              <Typography component="div" variant="h6" style={{ wordWrap: "break-word" }}>
                 {value}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div" style={{ wordWrap: "break-word" }}>

@@ -7,7 +7,7 @@ import {
 import EditorImage from '../components/editor/editor';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BorderAll } from '@mui/icons-material';
-import { Grid, LinearProgress } from '@mui/material';
+import { Grid, LinearProgress, Typography } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
 import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
@@ -16,6 +16,7 @@ import { userBookService } from '../services/userBook.services';
 import { bookService } from '../services/books.services';
 import { useSearchParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Carousel } from '@trendyol-js/react-carousel';
 
 const Home = () => {
   let navigate = useNavigate()
@@ -90,15 +91,26 @@ const Home = () => {
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>TRUYỆN HOT</h1>
               </div>
-              <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
+              {/* <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
                 {
                   isLoading === false ? dataHot.map((item, index) => {
+                    var stars = 0;
+                      if(item.numOfReview !== 0){
+                        stars = item.numOfStar / item.numOfReview
+                      }
                     return <div className='col-lg-2 col-md-2 container-book__padding'>
-                      <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
+                      <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                     </div>
                   }) : <CircularProgress />
                 }
-              </div>
+              </div> */}
+              {
+                  isLoading === false ? dataHot.map((item, index) => {
+                    return <Carousel>
+                      <Typography>{item.name}</Typography>
+                    </Carousel>
+                  }) : <CircularProgress />
+                }
             </div>
           </div>
           <div className='col-1'></div>
@@ -120,8 +132,12 @@ const Home = () => {
                 <Grid container spacing={2}>
                   {
                     data.map((item, index) => {
+                      var stars = 0;
+                      if(item.numOfReview !== 0){
+                        stars = item.numOfStar / item.numOfReview
+                      }
                       return <Grid item xs={6} sm={4} md={2}>
-                        <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
+                        <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                       </Grid>
                     })
                   }

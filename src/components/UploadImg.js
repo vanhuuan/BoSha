@@ -37,7 +37,7 @@ const FileInput = (props) => {
             />
             <label htmlFor="select-image" style={{ width: '100%' }}>
                 <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
-                    Upload Image
+                    Thay ảnh
                 </Button>
             </label>
         </>

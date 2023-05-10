@@ -6,29 +6,43 @@ import moment from 'moment'
 import ReactApexChart from 'react-apexcharts'
 import abbrNum from '../../services/numberHelper';
 
-export default function Income({chartsData, title, label}) {
+export default function Income({ chartsData, title, label }) {
   const [isLoading, setLoading] = useState(false)
   const [lbText, setLbText] = useState(label)
   const [data, setData] = useState()
   const [revenueList, setRevenueList] = useState([65, 59, 80, 81, 56, 65, 59, 80, 81, 56, 22, 22])
-  const listManga = ["truyện 1", "truyện 2",  "truyện 3",  "truyện 4dfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfsdfgdfgdsfgdfg",  "truyện 5",  "truyện 6",  "truyện 7",  "truyện 8",  "truyện 9",  "truyện 10",  "truyện 11",  "truyện 12"]
-  var labelText = ''
+  const [listManga, setListManga] = useState(["truyện 1", "truyện 2", "truyện 3", "truyện 4dfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfsdfgdfgdsfgdfg", "truyện 5", "truyện 6", "truyện 7", "truyện 8", "truyện 9", "truyện 10", "truyện 11", "truyện 12"])
+  const [labelText, setLabelText] = useState("Lượt xem")
+  const [titleText, setTitleText] = useState('Lượt xem')
   useEffect(() => {
     console.log(chartsData)
+    setLoading(true)
     if (chartsData) {
-      if (isLoading) {
-        let rs = []
-        chartsData.forEach(function addRevenue(i) {
-          rs.push(i.revenue)
-        })
-        setRevenueList(rs)
-      }
+      let rs = []
+      let lb = []
+      chartsData.forEach(function addRevenue(i) {
+        rs.push(i.value)
+        lb.push(i.name)
+      })
+      setRevenueList(rs)
+      setListManga(lb)
       setLoading(false)
     }
-    console.log(label)
-    labelText = label.toString()
+    switch(label.toString()){
+      case "View": setLabelText("Lượt xem"); break;
+      case "Revenue" : setLabelText("Doanh thu (VND)"); break;
+      case "Star" : setLabelText("Đánh giá"); break;
+      default: setLabelText("Lượt xem"); break;
+    }
+
+    switch(title){
+      case "View": setTitleText("lượt xem"); break;
+      case "Revenue" : setTitleText("doanh thu (VND)"); break;
+      case "Star" : setTitleText("đánh giá"); break;
+      default: setTitleText("lượt xem"); break;
+    }
   }, [])
-  
+
   const c = {
     series: [{
       name: `${label}`,
@@ -56,7 +70,6 @@ export default function Income({chartsData, title, label}) {
       },
       xaxis: {
         labels: {
-          rotate: -45,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         },
@@ -64,11 +77,11 @@ export default function Income({chartsData, title, label}) {
       },
       yaxis: {
         title: {
-          text: `${label}`
+          text: `${labelText}`
         },
         labels: {
           formatter: function (value) {
-            return  abbrNum(value);
+            return abbrNum(value);
           }
         },
       },
@@ -88,12 +101,11 @@ export default function Income({chartsData, title, label}) {
     <Box display={'flex'}
       flexDirection={'column'}
       justifyContent={'center'}
-      sx={{ backgroundColor: 'white', boxShadow: '0px 0px 3px grey' }}>
-      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>{title}</Typography>
-
+      sx={{ backgroundColor: 'white', boxShadow: '0px 0px 3px grey', padding: "2em" }}>
+      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>Thống kê theo {titleText}</Typography>
       {
         isLoading ? <CircularProgress sx={{ alignSelf: 'center' }} /> :
-          <ReactApexChart options={c.options} series={c.series} type="bar"  width={'100%'} height={"200%"}/>
+          <ReactApexChart options={c.options} series={c.series} type="bar" width={'100%'} height={"250%"} />
       }
     </Box>
   );
