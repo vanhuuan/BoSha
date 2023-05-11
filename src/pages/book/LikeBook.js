@@ -13,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { userBookService } from '../../services/userBook.services';
 import { bookService } from '../../services/books.services';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { NotificationManager } from 'react-notifications';
 
 const LikeBook = () => {
     let navigate = useNavigate()
@@ -46,13 +47,19 @@ const LikeBook = () => {
                 console.log(rs.data)
                 setMangaList(rs.data)
                 setData(rs.data.data)
-            }).catch(console.error)
+            }).catch((e) => {
+                NotificationManager.error("Bạn chưa đăng nhập", "Hãy đăng nhập", 1000)
+                navigate("/login")
+            })
         } else {
             userBookService.getUserBuyBook(pageNumber, 12).then((rs) => {
                 console.log(rs.data)
                 setMangaList(rs.data)
                 setData(rs.data.data)
-            }).catch(console.error)
+            }).catch((e) => {
+                NotificationManager.error("Bạn chưa đăng nhập", "Hãy đăng nhập", 1000)
+                navigate("/login")
+            })
         }
     }
 
@@ -69,7 +76,9 @@ const LikeBook = () => {
             console.log("data like", rs.data.data);
             setMangaList(rs.data)
             setData(old => old.concat(rs.data.data))
-        }).catch(console.error)
+        }).catch((e) => {
+            navigate("/login")
+        })
     }
 
     const fetchBuy = () => {
@@ -78,7 +87,9 @@ const LikeBook = () => {
             console.log("data buy", rs.data.data);
             setMangaList(rs.data)
             setData(old => old.concat(rs.data.data))
-        }).catch(console.error)
+        }).catch((e) => {
+            navigate("/login")
+        })
     }
 
     return (

@@ -325,7 +325,7 @@ function Header() {
                     </Toolbar>
                     {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{ zIndex: 1 }} onMouseLeave={() => { setIsHover(!isHover); }}>
                         {categories.map((cate) => (
-                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories${cate.id}`) }}>{cate.name}</div>
+                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories=${cate.id}`) }}>{cate.name}</div>
                         ))}
                     </div> : <></>}
                 </Container>

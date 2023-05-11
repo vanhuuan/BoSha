@@ -55,11 +55,10 @@ export default function SearchBook() {
     const [searchInput, setSearchInput] = useState('')
     const [searchSent, setSearchSent] = useState(false)
     const [pageNumber, setPageNumber] = useState(1)
-    const [searchParams] = useSearchParams();
     const [simple, setSimple] = useState(false)
 
     const [isSearching, setIsSearching] = useState(false)
-
+    const [searchParams, setSearchParams] = useSearchParams();
     const [range, setRange] = React.useState([0, 1000000]);
 
     const [mangaList, setMangaList] = useState({
@@ -83,13 +82,19 @@ export default function SearchBook() {
     const { isSimple } = useParams();
 
     useEffect(() => {
+        
         load()
         if (isSimple) {
             setSimple(true)
         } else {
             setSimple(false)
         }
-        findBook()
+        if(searchParams.get("categories")){
+            findBooks([searchParams.get("categories")])
+        }else{
+            findBook()
+        }
+        
     }, [])
 
     const findBook = () => {
@@ -98,6 +103,19 @@ export default function SearchBook() {
         bookService.findBook(1, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
+            setMangaList(rs.data)
+            setIsLoading(false)
+            setIsSearching(false)
+        })
+    }
+
+    const findBooks = (cate) => {
+        setIsSearching(true)
+        setPageNumber(1)
+        bookService.findBook(1, 12, searchInput, cate, state, range[0], range[1], sortBy).then((rs) => {
+            setPageNumber(1)
+            setData(rs.data.data)
+            setMangaList(rs.data)
             setIsLoading(false)
             setIsSearching(false)
         })
@@ -213,7 +231,8 @@ export default function SearchBook() {
                         </div>
                     </div>
                     <div style={{ margin: "1em 0" }}>
-                        {isSearching === false ?
+                        {isSearching === false ? <>
+                            <Typography variant="caption">Tìm thấy {mangaList.total}  truyện</Typography>
                             <InfiniteScroll
                                 dataLength={data.length} //This is important field to render the next data
                                 next={fetchData}
@@ -233,7 +252,8 @@ export default function SearchBook() {
                                         })
                                     }
                                 </Grid>
-                            </InfiniteScroll>
+                            </InfiniteScroll>                     
+                            </>
                             : <LinearProgress />}
                     </div>
                 </Grid>

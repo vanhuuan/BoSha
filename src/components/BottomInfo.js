@@ -77,7 +77,7 @@ const BottomInfo = (props) => {
             <Grid item sm={3} xs={3}>
                 <div className='info-item'>
                     <div>Lượt xem</div>
-                    <div><b>{intToString(1)}</b></div>
+                    <div><b>{intToString(book.numOfView)}</b></div>
                 </div>
             </Grid>
         </Grid>

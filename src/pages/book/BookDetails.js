@@ -53,7 +53,8 @@ export default function BookDetail() {
 
     const share = () =>{ 
         NotificationManager.success(book.name, 'Đã sao chép', 1000);
-        navigator.clipboard.writeText(`/Book/${book.id}`);
+        var host = window.location.host;
+        navigator.clipboard.writeText(`${host}/Book/${book.id}`);
     }
 
     const setPreviewText = (data) => {

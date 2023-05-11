@@ -79,7 +79,7 @@ const CommentList = forwardRef((props, ref) =>  {
                         <Grid container wrap="nowrap" spacing={2}>
 
                             <Grid item>
-                                <Avatar alt="Remy Sharp" src={item.userAva} />
+                                <Avatar alt={item.userName} src={item.userAva} />
                             </Grid>
                             <Grid justifyContent="left" item xs zeroMinWidth>
                                 <h4 style={{ margin: 0, textAlign: "left" }}>{item.userName}</h4>
