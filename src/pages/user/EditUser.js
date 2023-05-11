@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowBackIos, Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
+import { ArrowBackIos, Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
 import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, styled, Badge, Avatar } from "@mui/material";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
@@ -118,7 +118,7 @@ export default function EditUser() {
                     {isLoading === false ?
                         <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h5'>Cập nhật thông tin tài khoản </Typography>
+                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }}><Person color="primary"/> Cập nhật thông tin tài khoản </Typography>
                             </div>
                             <div className='container-body' style={{ display: "flex", justifyContent: "center" }}>
                                 {ava ?
@@ -161,7 +161,7 @@ export default function EditUser() {
                                 <Grid container spacing={2}>
                                     <Grid md={4} xs="12">
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}> Tên người dùng </Typography>
+                                            <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}> Tên người dùng </Typography>
                                         </Box>
                                     </Grid>
                                     <Grid md={6} xs="12">
@@ -179,10 +179,10 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider></Divider> </Grid>
+                                    <Grid xs="12"> <Divider  variant="middle"></Divider> </Grid>
 
                                     <Grid md={4} xs="12">
-                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}>Email</Typography>
+                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Email</Typography>
                                     </Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
@@ -198,9 +198,9 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider></Divider> </Grid>
+                                    <Grid xs="12"> <Divider  variant="middle"></Divider> </Grid>
                                     <Grid md={4} xs="12">
-                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}>Số điện thoại</Typography>
+                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Số điện thoại</Typography>
                                     </Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
@@ -216,7 +216,7 @@ export default function EditUser() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider></Divider> </Grid>
+                                    <Grid xs="12"> <Divider  variant="middle"></Divider> </Grid>
                                 </Grid>
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between", margin: "0 5em 0.5 5em" }}>

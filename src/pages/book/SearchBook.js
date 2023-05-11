@@ -115,6 +115,7 @@ export default function SearchBook() {
         bookService.findBook(pageNumber, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
             console.log("data new", rs.data.data);
             setData(old => old.concat(rs.data.data))
+            setMangaList(rs.data)
             setPageNumber(pageNumber + 1)
         }).catch(console.error)
     }
@@ -163,7 +164,6 @@ export default function SearchBook() {
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={sortBy}
-                                    label="Xắp sếp theo"
                                     onChange={(e) => { setSortBy(e.target.value) }}
                                     sx={{ minWidth: "20em" }}
                                 >
@@ -182,10 +182,9 @@ export default function SearchBook() {
                             </Grid>
                             <Grid item xs={12} md={4}>
                                 <Select
-                                    labelId="demo-simple-select-helper-label"
+                                    labelId="state"
                                     id="demo-simple-select-helper"
                                     value={state}
-                                    label="Xắp sếp theo"
                                     onChange={(e) => { setState(e.target.value) }}
                                     sx={{ minWidth: "20em" }}
                                 >
@@ -218,14 +217,18 @@ export default function SearchBook() {
                             <InfiniteScroll
                                 dataLength={data.length} //This is important field to render the next data
                                 next={fetchData}
-                                hasMore={data.length !== mangaList.total}
+                                hasMore={data.length < mangaList.total}
                                 loader={<LinearProgress />}
                             >
                                 <Grid container spacing={2}>
                                     {
                                         data.map((item, index) => {
+                                            var stars = 0;
+                                            if (item.numOfReview !== 0) {
+                                                stars = item.numOfStar / item.numOfReview
+                                            }
                                             return <Grid item xs={6} sm={4} md={2}>
-                                                <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
+                                                <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                             </Grid>
                                         })
                                     }

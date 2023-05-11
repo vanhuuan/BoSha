@@ -14,15 +14,11 @@ export const bookService = {
         return await api.get(`${baseURL}/Book/Status?id=${id}`)
     },
     findBook: async (pageNumber, pageSize, name, categories, state, min, max, sort) => {
-        var textCate = ""
+        var textCate = "?Categories="
         if (categories && categories.length > 0) {
             categories.forEach(element => {
-                textCate = textCate.concat("?Categories=" + element.id)
+                textCate = textCate.concat("&Categories=" + element)
             });
-            console.log(textCate)
-        } else {
-            textCate = "?Categories="
-            console.log(textCate)
         }
 
         const url = `${baseURL}/Books${textCate}&Name=${name}&State=${state}&NotState=Susspend&MinPrice=${min}&MaxPrice=${max}&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=fgsdgsdfgdfg&QueryString=sdfgsdfgdfg&SortBy=${sort}&SortType=Desc`

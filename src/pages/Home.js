@@ -7,7 +7,7 @@ import {
 import EditorImage from '../components/editor/editor';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { BorderAll } from '@mui/icons-material';
-import { Grid, LinearProgress, Typography } from '@mui/material';
+import { Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
 import BookCardHot from '../components/book/BookCardHot'
 import RecentlyBookCard from '../components/RecentlyBookCard';
@@ -17,7 +17,7 @@ import { userBookService } from '../services/userBook.services';
 import { bookService } from '../services/books.services';
 import { useSearchParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Carousel } from '@trendyol-js/react-carousel';
+import Carousel from 'react-material-ui-carousel';
 
 const Home = () => {
   let navigate = useNavigate()
@@ -57,11 +57,11 @@ const Home = () => {
 
   const fetchData = () => {
     setPageNumber(pageNumber + 1)
-      console.log("Load more", pageNumber + 1)
-      bookService.booksNew(pageNumber + 1, 12, "Name", "fghdf").then((rs) => {
-        console.log("data new", rs.data.data);
-        setData(old => old.concat(rs.data.data))
-      }).catch(console.error)
+    console.log("Load more", pageNumber + 1)
+    bookService.booksNew(pageNumber + 1, 12, "Name", "fghdf").then((rs) => {
+      console.log("data new", rs.data.data);
+      setData(old => old.concat(rs.data.data))
+    }).catch(console.error)
   }
 
   return (
@@ -69,7 +69,7 @@ const Home = () => {
       <div className='container m-0 p-0' style={{ width: `100%`, border: `0px` }}>
         <div className='row no-gutter'>
           <div className='col-1'></div>
-          <div className='col-lg-2 col-md-2' sx={{ xs: {display: `none`}}} style={{ paddingRight: `4px`, flex: `1` }}>
+          <div className='col-lg-2 col-md-2' sx={{ xs: { display: `none` } }} style={{ paddingRight: `4px`, flex: `1` }}>
             {/* <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
                 <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>ĐỌC GẦN ĐÂY</h1>
@@ -90,7 +90,7 @@ const Home = () => {
           <div className='col-lg-8 col-md-8 col-sm-8 col-xs-10' style={{ paddingLeft: `4px` }}>
             <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
-                <h1 style={{ textAlign: 'left', fontSize: `18px` }}>TRUYỆN HOT</h1>
+                <h1 style={{ textAlign: 'left', fontSize: `18px`, color: "rgb(157, 23, 77)" }}>TRUYỆN HOT</h1>
               </div>
               {/* <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
                 {
@@ -106,12 +106,20 @@ const Home = () => {
                 }
               </div> */}
               {
-                  isLoading === false ? dataHot.map((item, index) => {
-                    return <Carousel>
-                      <Typography>{item.name}</Typography>
-                    </Carousel>
-                  }) : <CircularProgress />
-                }
+                isLoading === false ?
+                  <Carousel> {
+                    dataHot.map((item, index) => {
+                      var stars = 0;
+                      if (item.numOfReview !== 0) {
+                        stars = item.numOfStar / item.numOfReview
+                      }
+                      return <Paper>
+                        <BookCardHot key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
+                      </Paper>
+                    })}
+                  </Carousel>
+                  : <CircularProgress />
+              }
             </div>
           </div>
           <div className='col-1'></div>
@@ -134,7 +142,7 @@ const Home = () => {
                   {
                     data.map((item, index) => {
                       var stars = 0;
-                      if(item.numOfReview !== 0){
+                      if (item.numOfReview !== 0) {
                         stars = item.numOfStar / item.numOfReview
                       }
                       return <Grid item xs={6} sm={4} md={2}>

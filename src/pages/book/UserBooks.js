@@ -5,7 +5,8 @@ import BookCard2 from '../../components/book/BookCard2'
 import { useNavigate } from 'react-router-dom';
 import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
-import { Button, InputLabel, NativeSelect, Pagination, MenuItem, Select, Grid } from '@mui/material';
+import { Button, InputLabel, NativeSelect, Pagination, MenuItem, Select, Grid, LinearProgress } from '@mui/material';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const UserBook = () => {
     const [searchInput, setSearchInput] = useState('')
@@ -19,77 +20,41 @@ const UserBook = () => {
     })
     const [data, setData] = useState([])
     const [searchParams, setSearchParams] = useSearchParams();
-    let pageNumber = searchParams.get("pageNumber")
+    const [pageNumber, setPageNumber] = useState(1)
 
     let navigate = useNavigate();
 
-    const onPageChange = (e, page) => {
-        console.log(page)
-        navigate("/book/UserBook",
-            {
-                pageNumber: page
-            })
-    }
-
-
     useEffect(() => {
-        const load = async () => {
-            if (!pageNumber) {
-                pageNumber = 1
-            }
-            const rs = await userBookService.userBook(pageNumber, 10, "Name", "fghdf", "CreateDate", "Desc");
-            console.log(rs.data)
-            if (rs) {
-                setMangaList(rs.data)
-                setData(rs.data.data)
-            }
-        }
+        // const load = async () => {
+        //     const rs = await userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc");
+        //     console.log(rs.data)
+        //     if (rs) {
+        //         setMangaList(rs.data)
+        //         setData(rs.data.data)
+        //     }
+        // }
 
         setIsLoading(true)
-        load().catch(console.error)
+       // load().catch(console.error)
         setIsLoading(false)
     }, [])
 
-    const onSearchInputChange = e => {
-        setSearchInput(e.target.value)
-        if (e.target.value.length === 0) {
-            setSearchSent(false)
-        }
-    }
+    const fetchData = () => {
+        setPageNumber(pageNumber + 1)
+        console.log("Load more", pageNumber + 1)
+        userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc").then((rs) => {
+          console.log("data new", rs.data.data);
+          setData(old => old.concat(rs.data.data))
+        }).catch(console.error)
+      }
 
     return (
         <div className='homePage container-fluid'>
-
-            <div className='row'>
-                <div className='col-lg-12'>
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        setSearchSent(true)
-                    }}>
-                        <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Search Mangas' className='searchManga' />
-                    </form>
-                </div>
-            </div>
-            <div className='row'>
+            <div className='row' style={{ margin: "2em 0" }}>
                 <div className='col-lg-1'></div>
                 <div className='col-lg-2' style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
                     <span>
-                        <Button id="addBook" href="/book/addBook" variant="contained" sx={{display: 'inline'}}>Thêm truyện mới</Button> 
-                    </span>
-                    <span>
-                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-helper-label"
-                            id="demo-simple-select-helper"
-                            label="Sắp xếp"
-                        >
-                            <MenuItem value="" selected>
-                                <em>Mới nhất</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
+                        <Button id="addBook" href="/book/addBook" variant="contained" sx={{ display: 'inline' }}>Thêm truyện mới</Button>
                     </span>
                 </div>
                 <div className='col-lg-1'></div>
@@ -100,19 +65,31 @@ const UserBook = () => {
                 {isLoading == false ? <>
                     <div className='col-10 position-relative'>
                         <Grid container spacing={2}>
-                            
-                                {
-                                    data.map((item, index) => {
-                                        return <Grid item xs={6} sm={4} md={2}>
-                                                <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover }} />
+
+                            <InfiniteScroll
+                                dataLength={data.length} //This is important field to render the next data
+                                next={fetchData}
+                                hasMore={data.length !== mangaList.total}
+                                loader={<LinearProgress />}
+                            >
+                                <Grid container spacing={2}>
+                                    {
+                                        data.map((item, index) => {
+                                            var stars = 0;
+                                            if (item.numOfReview !== 0) {
+                                                stars = item.numOfStar / item.numOfReview
+                                            }
+                                            return <Grid item xs={6} sm={4} md={2}>
+                                                <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                             </Grid>
-                                    })
-                                }
-                            
+                                        })
+                                    }
+                                </Grid>
+                            </InfiniteScroll>
+
                         </Grid>
                     </div>
                     <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
-                        <Pagination page={mangaList.pageIndex} count={mangaList.total} variant="outlined" shape="rounded" />
                     </div> </> : <></>
                 }
             </div>

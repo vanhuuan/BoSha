@@ -1,4 +1,4 @@
-import { EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined } from "@mui/icons-material";
+import { BarChart, EditLocation, EmailOutlined, Person, Person2, PhoneAndroidOutlined } from "@mui/icons-material";
 import { Avatar, Box, CircularProgress, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
@@ -56,26 +56,27 @@ export default function UserInfo() {
     return (
         <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
             <Grid container spacing={2}>
-                <Grid xs="3">
+                <Grid sm="1" md="2" lg="3">
 
                 </Grid>
-                <Grid xs="6">
+                <Grid sm="10" md="8" lg="6">
                     {isLoading === false ?
                         <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography variant='h5'>Thông tin tài khoản </Typography>
-                                <Typography variant='h5' onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện </Typography>
+                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }}> <Person color="primary" />Thông tin tài khoản </Typography>
+                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }} onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện <BarChart /></Typography>
                             </div>
                             <div className='container-body' style={{ display: "flex", justifyContent: "center" }}>
                                 {ava ?
-                                    <Avatar alt={userInfo.name} src={ava} className="ava" sx={{ width: "5em", height: "5em"}} />
+                                    <Avatar alt={userInfo.name} src={ava} className="ava" sx={{ width: "5em", height: "5em" }} />
                                     :
-                                    <Avatar alt={userInfo.name} className="ava" sx={{ width: "5em", height: "5em"}} >{userInfo.name[0]}</Avatar>
+                                    <Avatar alt={userInfo.name} className="ava" sx={{ width: "5em", height: "5em" }} >{userInfo.name[0]}</Avatar>
                                 }
                             </div>
                             <div className='container-body'>
                                 <Grid container spacing={2}>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em"}}>Tên người dùng</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Tên người dùng</Typography></Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
@@ -88,8 +89,8 @@ export default function UserInfo() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em"}}>Email</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Email</Typography></Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
@@ -102,8 +103,8 @@ export default function UserInfo() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em"}}>Số điện thoại</Typography></Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Số điện thoại</Typography></Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
@@ -116,11 +117,11 @@ export default function UserInfo() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid xs="12"> <Divider className="devider-grid"></Divider> </Grid>
+                                    <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
                                 </Grid>
                             </div>
                             <div style={{ display: "flex", justifyContent: "end", marginRight: "5em", marginBottom: "0.5em" }}>
-                                <IconButton className="button-info" onClick={() => navigate("/user/userEdit")} color="info">
+                                <IconButton sx={{ width: "2em", height: "2em" }} className="button-info" onClick={() => navigate("/user/userEdit")} color="info">
                                     <EditIcon />
                                 </IconButton>
                             </div>
@@ -128,7 +129,7 @@ export default function UserInfo() {
 
                         : <CircularProgress />}
                 </Grid>
-                <Grid xs="3">
+                <Grid  sm="1" md="2" lg="3">
                 </Grid>
             </Grid>
         </Box >

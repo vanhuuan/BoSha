@@ -1,5 +1,5 @@
 .bookcardhot-group {
-    display: block;
+    display: inline-block;
     position: relative;
     background-color: rgb(157, 23, 77);
     border-radius: 10px;

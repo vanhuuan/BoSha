@@ -2,12 +2,11 @@ import { Box, Card, Grid, TextField, Typography, styled, TableContainer, Paper, 
 import React from "react";
 import { CardBookSummary, CardSummary } from "../../components/chart/CardSumary";
 import { CardBar } from "../../components/chart/CardBar";
-import { BarChart } from "../../components/chart/BarChart";
 import { useNavigate } from "react-router-dom";
 import Income from "../../components/chart/income";
 import { useState } from "react";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { CalendarMonth, SearchOffTwoTone, SkipNext, SkipPrevious } from "@mui/icons-material";
+import { BarChart, CalendarMonth, Person, SearchOffTwoTone, SkipNext, SkipPrevious } from "@mui/icons-material";
 import abbrNum from "../../services/numberHelper";
 import { useEffect } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -77,10 +76,6 @@ const columns = [
     },
 ];
 
-function createData(name, view, price, review, numOfReview, numOfChapter) {
-    return { name, view, price, review, numOfReview, numOfChapter };
-}
-
 const vn_en_lowercase = {
     name: "vn_en_lowercase",
     months: [
@@ -135,7 +130,7 @@ const defaultCardData = {
     },
     "mostView": {
         "id": "643657cf8e27bd8b11654f08",
-        "name": "Isekai shihai no sukiruteika ~zero kara hajimeru dorei harem~",
+        "name": "truyện is the bét",
         "authorName": "An Văn",
         "authorId": "6429794a900ceafd4f064648",
         "cover": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/DefaultCover.png?alt=media&token=8c3ccc1d-1316-46e6-9184-d2d0d2f012bd",
@@ -244,8 +239,8 @@ export default function UserStatistic() {
                 <Grid xs={10}>
                     <div className="container">
                         <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "1em" }}>
-                            <Typography variant='h5' onClick={(e) => { navigate("/user/userInfo") }} >Thông tin tài khoản </Typography>
-                            <Typography variant='h5'>Thống kê truyện </Typography>
+                            <Typography  onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' } }} ><Person/> Thông tin tài khoản </Typography>
+                            <Typography  sx={{ typography: { md: 'h5', sm: 'h10' } }} >Thống kê truyện <BarChart color="primary" /> </Typography>
                         </div>
                         <Grid container spacing={3}>
                             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -266,7 +261,7 @@ export default function UserStatistic() {
                                 </div>
                             </Grid>
                             {isLoadingCard === false ? <>
-                                <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+                                <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
                                     <CardSummary
                                         title="Tổng thu nhập từ bán truyện"
                                         value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
@@ -274,7 +269,7 @@ export default function UserStatistic() {
                                         footer={<div>  </div>}
                                     />
                                 </Grid>
-                                <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+                                <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
                                     <CardSummary
                                         title="Thu nhập thực tế của bạn "
                                         value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
@@ -282,7 +277,7 @@ export default function UserStatistic() {
                                         footer={<div> 80% Tổng thu nhập từ bán truyện  </div>}
                                     />
                                 </Grid>
-                                <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+                                <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
                                     <CardBookSummary
                                         title="Truyện có doanh thu cao nhất"
                                         value={cardData.bestSeller.name}
@@ -291,7 +286,7 @@ export default function UserStatistic() {
                                         img={cardData.bestSeller.cover}
                                     />
                                 </Grid>
-                                <Grid item xl={3} lg={3} md={4} sm={6} xs={12}>
+                                <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
                                     <CardBookSummary
                                         title="Truyện có lượt xem nhiều nhất"
                                         value={cardData.mostView.name}
@@ -357,7 +352,7 @@ export default function UserStatistic() {
                                             <MenuItem value={"Desc"}>Giảm dần</MenuItem>
                                         </Select>
                                     </FormControl>
-                                    <IconButton aria-label="find"  size="large" onClick={(e) => { loadStatictisData() }}>
+                                    <IconButton aria-label="find"  size="large" onClick={(e) => { loadStatictisData() }} sx={{ marginTop: "0.5em"}}>
                                         <SearchIcon sx={{ width: "1em", height: "1em"}} />
                                     </IconButton>
                                     {isLoadingStatisticData === false ?
@@ -417,7 +412,7 @@ export default function UserStatistic() {
                         </Grid>
                     </div>
                 </Grid>
-                <Grid xs={1}></Grid>
+                <Grid sm={0} md={1}></Grid>
             </Grid>
         </Box>
     )

@@ -70,14 +70,16 @@ export default function Income({ chartsData, title, label }) {
       },
       xaxis: {
         labels: {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
+          rotate: 0,
+          trim: true,
+          hideOverlappingLabels: false
         },
         categories: listManga,
       },
       yaxis: {
         title: {
-          text: `${labelText}`
+          text: `${labelText}`,
+          trim: false,
         },
         labels: {
           formatter: function (value) {
