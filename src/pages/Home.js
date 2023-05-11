@@ -69,30 +69,12 @@ const Home = () => {
       <div className='container m-0 p-0' style={{ width: `100%`, border: `0px` }}>
         <div className='row no-gutter'>
           <div className='col-1'></div>
-          <div className='col-lg-2 col-md-2' sx={{ xs: { display: `none` } }} style={{ paddingRight: `4px`, flex: `1` }}>
-            {/* <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
-              <div>
-                <h1 className='title' style={{ textAlign: 'left', fontSize: `18px` }}>ĐỌC GẦN ĐÂY</h1>
-              </div>
-              <div>
-                <div className='row no-gutter'>
-                  <RecentlyBookCard></RecentlyBookCard>
-                </div>
-                <div className='row no-gutter'>
-                  <RecentlyBookCard></RecentlyBookCard>
-                </div>
-                <div className='row no-gutter'>
-                  <RecentlyBookCard></RecentlyBookCard>
-                </div>
-              </div>
-            </div> */}
-          </div>
-          <div className='col-lg-8 col-md-8 col-sm-8 col-xs-10' style={{ paddingLeft: `4px` }}>
+          <div className='col-lg-10 col-md-10 col-sm-10 col-xs-10' style={{ paddingLeft: `4px` }}>
             <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
               <div>
                 <h1 style={{ textAlign: 'left', fontSize: `18px`, color: "rgb(157, 23, 77)" }}>TRUYỆN HOT</h1>
               </div>
-              {/* <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
+              <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
                 {
                   isLoading === false ? dataHot.map((item, index) => {
                     var stars = 0;
@@ -104,8 +86,8 @@ const Home = () => {
                     </div>
                   }) : <CircularProgress />
                 }
-              </div> */}
-              {
+              </div>
+              {/* {
                 isLoading === false ?
                   <Carousel> {
                     dataHot.map((item, index) => {
@@ -119,7 +101,7 @@ const Home = () => {
                     })}
                   </Carousel>
                   : <CircularProgress />
-              }
+              } */}
             </div>
           </div>
           <div className='col-1'></div>
