@@ -100,7 +100,7 @@ function Comment(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                justifyContent: "space-between"
+                                flex: "auto"
                             }}
                         >
                             <button className="button" onClick={() => setShowEmojis(!showEmojis)}>
@@ -237,7 +237,8 @@ function Review(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                justifyContent: "space-between"
+                                justifyContent: "space-between",
+                                flex: "auto"
                             }}
                         >
                             <div style={{ display: 'flex', justifyContent: "space-between" }}>

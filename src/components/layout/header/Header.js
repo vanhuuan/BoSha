@@ -284,7 +284,7 @@ function Header() {
                         </div>
                         {isLogin ?
                             <Box sx={{ flexGrow: 0 }}>
-                                <Tooltip title="Open settings">
+                                <Tooltip title="Mở trang của bạn">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                         {isLoadingAva === false ?
                                             <Avatar alt={userName} src={ava} />

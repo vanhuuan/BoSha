@@ -132,7 +132,7 @@ export default function BookDetail() {
                                                         <Button variant="outlined" startIcon={ status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
-                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{minWidth: "170px" }}>
+                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{minWidth: "170px", marginBottom: "0.5em" }}>
                                                             {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
                                                         </Button> </> : <></>
                                                     }
@@ -140,7 +140,7 @@ export default function BookDetail() {
                                                 <Grid container>
                                                     <Grid item sm={3} xs={3}>
                                                         <div className='info-item'>
-                                                            <div><FavoriteBorderIcon style={{ color: 'rgb(226,37,144)' }} /></div>
+                                                            <div><StarBorderOutlined style={{ color: "#faaf00" }} /></div>
                                                             <div><b>{book.numOfReview !== 0 ? book.numOfStar / (book.numOfReview) : book.numOfStar / (book.numOfReview + 1)}</b></div>
                                                         </div>
                                                     </Grid>

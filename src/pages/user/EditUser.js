@@ -1,5 +1,5 @@
 import React from "react";
-import { Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
+import { ArrowBackIos, Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
 import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, styled, Badge, Avatar } from "@mui/material";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
@@ -112,10 +112,9 @@ export default function EditUser() {
     return (
         <Box sx={{ flexGrow: 1 }} margin={`2em 0`} >
             <Grid container spacing={2}>
-                <Grid xs="1">
-
+                <Grid xs="3">
                 </Grid>
-                <Grid xs="10">
+                <Grid xs="6">
                     {isLoading === false ?
                         <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -162,10 +161,10 @@ export default function EditUser() {
                                 <Grid container spacing={2}>
                                     <Grid md={4} xs="12">
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <Typography variant="h5"> Tên người dùng </Typography>
+                                            <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}> Tên người dùng </Typography>
                                         </Box>
                                     </Grid>
-                                    <Grid  md={8} xs="12">
+                                    <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -181,9 +180,11 @@ export default function EditUser() {
                                         </FormControl>
                                     </Grid>
                                     <Grid xs="12"> <Divider></Divider> </Grid>
-                                    
-                                    <Grid  md={4} xs="12"><Typography variant="h5">Email</Typography></Grid>
-                                    <Grid  md={8} xs="12">
+
+                                    <Grid md={4} xs="12">
+                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}>Email</Typography>
+                                    </Grid>
+                                    <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -198,8 +199,10 @@ export default function EditUser() {
                                         </FormControl>
                                     </Grid>
                                     <Grid xs="12"> <Divider></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5">Số điện thoại</Typography></Grid>
-                                    <Grid md={8} xs="12">
+                                    <Grid md={4} xs="12">
+                                        <Typography variant="h5" style={{ fontWeight: "bold", marginLeft: "2.5em" }}>Số điện thoại</Typography>
+                                    </Grid>
+                                    <Grid md={6} xs="12">
                                         <FormControl fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
@@ -216,17 +219,19 @@ export default function EditUser() {
                                     <Grid xs="12"> <Divider></Divider> </Grid>
                                 </Grid>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "end" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", margin: "0 5em 0.5 5em" }}>
                                 <IconButton>
-                                    <CheckCircle onClick={(e) => { update() }} color="info" />
+                                    <ArrowBackIos sx={{ width: "2em", height: "2em" }} onClick={(e) => { navigate("/user/userInfo") }} color="warning" />
+                                </IconButton>
+                                <IconButton>
+                                    <CheckCircle sx={{ width: "2em", height: "2em" }} onClick={(e) => { update() }} color="info" />
                                 </IconButton>
                             </div>
                         </div>
 
                         : <CircularProgress />}
                 </Grid>
-                <Grid xs="1">
-
+                <Grid xs="3">
                 </Grid>
             </Grid>
         </Box >
