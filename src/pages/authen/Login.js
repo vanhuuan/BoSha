@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 // import './login.css'
 import LogoOrange from '../../assets/images/LogoOrange.png'
 import { Box, Button, TextField, } from '@mui/material'
@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 import { Divider } from '@mui/material';
 import { authService } from '../../services/auth.services';
 import { useNavigate } from "react-router-dom"
+import { NotificationManager } from 'react-notifications';
 
 const Login = () => {
   let navigate = useNavigate()
@@ -58,17 +59,19 @@ const Login = () => {
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
         navigate("/")
-      }else{
+      } else {
+        NotificationManager.error("Đăng nhập không thành công", "Tên đăng nhập hoặc mật khẩu không đúng!", 2000)
         setNotifyText('Tên đăng nhập hoặc mật khẩu không đúng!')
       }
     } catch (error) {
+      NotificationManager.error("Đăng nhập không thành công", "Tên đăng nhập hoặc mật khẩu không đúng!", 2000)
       console.log(error.response.data)
     }
   }
 
   async function handleLoginGoogle(rs) {
     let account = {
-        tokenId: rs.credential,
+      tokenId: rs.credential,
     }
     try {
       const login = await authService.loginGoogle(account);
@@ -81,10 +84,12 @@ const Login = () => {
         localStorage.setItem("Roles", login.data.roles)
         localStorage.setItem("Ava", login.data.photo)
         navigate("/")
-      }else{
+      } else {
+        NotificationManager.error("Đăng nhập không thành công", "Email chưa đăng ký!", 2000)
         setNotifyText('Email chưa đăng ký!')
       }
     } catch (error) {
+      NotificationManager.error("Đăng nhập không thành công", "Sai tài khoản hoặc mật khẩu", 2000)
       console.log(error.response.data)
     }
   }
@@ -127,20 +132,22 @@ const Login = () => {
               ),
             }}></TextField>
           <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#89D5C9", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleLogin} >ĐĂNG NHẬP</Button>
-          <a style={{marginTop: 10, fontSize: 13, fontStyle: "bold"}} href="/forgotPassword">Quên mật khẩu?</a>
+          <a style={{ marginTop: 10, fontSize: 13, fontStyle: "bold" }} href="/forgotPassword">Quên mật khẩu?</a>
           <Divider >Hoặc</Divider>
           <GoogleOAuthProvider clientId={cleintId}>
-            <GoogleLogin 
-                    clientId={cleintId}
-                    buttonText="Đăng nhập với google"
-                    onSuccess={ (rs) => { handleLoginGoogle(rs)}}
-                    onFailure={ (rs) => { console.log('Failed')}}
-                    cookiePolicy={'single_host_origin'}    
-                    isSignedIn={true}      
-                />
-            </GoogleOAuthProvider>
-            <Typography sx={{ marginTop: 2, fontSize: 13, fontStyle: "bold" }} >Nếu bạn chưa có tài khoản, hãy <a style={{marginTop: 2, fontSize: 13, fontStyle: "bold"}} href="/signUp"> đăng ký</a></Typography>
-          <Typography color='error'>{notifyText}</Typography>
+            <GoogleLogin
+              clientId={cleintId}
+              buttonText="Đăng nhập với google"
+              onSuccess={(rs) => { handleLoginGoogle(rs) }}
+              onFailure={(rs) => { console.log('Failed') }}
+              cookiePolicy={'single_host_origin'}
+              isSignedIn={true}
+            />
+          </GoogleOAuthProvider>
+          <Typography sx={{ marginTop: 2, fontSize: 13, fontStyle: "bold" }} >Nếu bạn chưa có tài khoản, hãy <a style={{ marginTop: 2, fontSize: 13, fontStyle: "bold" }} href="/signUp"> đăng ký</a></Typography>
+          {notifyText.length > 0 ?
+            <Typography color='error'>{notifyText}</Typography>
+            : <></>}
 
         </Box>
       </form>
