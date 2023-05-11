@@ -9,6 +9,9 @@ const FileInput = (props) => {
     const [imageUrl, setImageUrl] = useState(null);
     let imgD = props.book.img
 
+    const MIN_FILE_SIZE = 1024 // 1MB
+    const MAX_FILE_SIZE = 5120 // 5MB
+
     useEffect(() => {
         if (selectedImage) {
             setImageUrl(URL.createObjectURL(selectedImage));
@@ -30,6 +33,19 @@ const FileInput = (props) => {
             NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
             return false;
         }
+
+        const fileSizeKiloBytes = image.size / 1024
+
+        if(fileSizeKiloBytes < MIN_FILE_SIZE){
+            NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 1mb", 2000);
+          return
+        }
+        if(fileSizeKiloBytes > MAX_FILE_SIZE){
+            NotificationManager.error("File quá lơn", "Tối đa là 5mb", 2000);
+          setIsSuccess(false)
+          return
+        }
+
         setSelectedImage(image)
     }
 
