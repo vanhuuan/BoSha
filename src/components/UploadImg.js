@@ -36,42 +36,41 @@ const FileInput = (props) => {
 
         const fileSizeKiloBytes = image.size / 1024
 
-        if(fileSizeKiloBytes < MIN_FILE_SIZE){
+        if (fileSizeKiloBytes < MIN_FILE_SIZE) {
             NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 1mb", 2000);
-          return
+            return
         }
-        if(fileSizeKiloBytes > MAX_FILE_SIZE){
+        if (fileSizeKiloBytes > MAX_FILE_SIZE) {
             NotificationManager.error("File quá lơn", "Tối đa là 5mb", 2000);
-          setIsSuccess(false)
-          return
+            return
         }
 
         setSelectedImage(image)
     }
 
-        return (
-            <>
-                <Box mt={2} textAlign="left">
-                    {imageUrl && selectedImage ? (
-                        <img src={imageUrl} alt={selectedImage.name} width="100%" />
-                    ) :
-                        <img src={imgD} alt='Default img' width="100%" />
-                    }
-                </Box>
-                <input
-                    accept="image/*"
-                    type="file"
-                    id="select-image"
-                    style={{ display: "none" }}
-                    onChange={(e) => onChangeFile(e.target.files[0])}
-                />
-                <label htmlFor="select-image" style={{ width: '100%' }}>
-                    <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
-                        Thay ảnh
-                    </Button>
-                </label>
-            </>
-        );
-    };
+    return (
+        <>
+            <Box mt={2} textAlign="left">
+                {imageUrl && selectedImage ? (
+                    <img src={imageUrl} alt={selectedImage.name} width="100%" />
+                ) :
+                    <img src={imgD} alt='Default img' width="100%" />
+                }
+            </Box>
+            <input
+                accept="image/*"
+                type="file"
+                id="select-image"
+                style={{ display: "none" }}
+                onChange={(e) => onChangeFile(e.target.files[0])}
+            />
+            <label htmlFor="select-image" style={{ width: '100%' }}>
+                <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
+                    Thay ảnh
+                </Button>
+            </label>
+        </>
+    );
+};
 
-    export default FileInput;
+export default FileInput;

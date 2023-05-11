@@ -79,6 +79,7 @@ const EditBook = () => {
                 console.log(rs.data)
                 setBook(rs.data)
                 setPrice(rs.data.price)
+                setName(rs.data.name)
                 setListCategory(rs.data.category)
                 setState(rs.data.state)
                 firebaseService.gerPreview(id, (rs2) => { setDesc(rs2); setIsLoading(false) })
@@ -112,6 +113,7 @@ const EditBook = () => {
             "price": price,
             "state": state
         }
+        console.log(data)
         userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
                 if (imgChange) {
