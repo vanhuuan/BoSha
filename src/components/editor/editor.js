@@ -39,6 +39,7 @@ function EditorImage(props) {
         ContentState.createFromBlockArray(convertFromHTML(props.chap.text))))
 
     const maxLength = "15000"
+    const minLength = "100"
     const [convertedContent, setConvertedContent] = useState(null);
 
     useEffect(() => {
@@ -52,10 +53,14 @@ function EditorImage(props) {
         props.parentCallback(htmls);
     }
 
+    const sendDataOke = (oke) => {
+        props.okeCallback(oke);
+    }
+
+
     return (
-        <Grid container spacing={2} border={'1px solid #ccc;'}>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={10}>
+        <Grid container spacing={2} border={'1px solid #ccc;'} marginTop={"2em"}>
+            <Grid item xs={12}>
                 <Editor
                     editorState={editorState}
                     onEditorStateChange={setEditorState}
@@ -69,7 +74,13 @@ function EditorImage(props) {
                     handleBeforeInput={val => {
                         const textLength = editorState.getCurrentContent().getPlainText().length;
                         if (val && textLength >= maxLength) {
+                            sendDataOke(false)
                             return 'handled';
+                        }
+                        if (val && textLength < minLength) {
+                            sendDataOke(false)
+                        }else{
+                            sendDataOke(true)
                         }
                         return 'not-handled';
                     }}
@@ -80,7 +91,6 @@ function EditorImage(props) {
                 />
                 <Typography variant='caption'>{editorState.getCurrentContent().getPlainText().length} / {maxLength} ký tự</Typography>
             </Grid>
-            <Grid item xs={1}></Grid>
         </Grid>
 
     );

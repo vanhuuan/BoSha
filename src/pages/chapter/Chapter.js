@@ -89,7 +89,7 @@ const Chapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            // navigate(-1);
+            navigate("/NotFound");
         })
     }, [chapterId])
 

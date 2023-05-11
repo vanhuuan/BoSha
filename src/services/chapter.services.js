@@ -13,4 +13,7 @@ export const chapterService = {
     updateChapter: async () => {
         return await api.get(baseURL+'/categories')
     },
+    getChapterNextIndex: async (bookId) => {
+        return await api.get(baseURL+'/Chapter/GetNextIndex?bookId='+bookId)
+    },
 }

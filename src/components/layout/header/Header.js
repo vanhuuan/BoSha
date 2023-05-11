@@ -135,6 +135,7 @@ function Header() {
     useEffect(() => {
         load()
         if (localStorage.getItem("UserId")) {
+            setIsLoadingAva(true);
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
         }else{
             setIsLoadingAva(false)

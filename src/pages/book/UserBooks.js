@@ -25,17 +25,17 @@ const UserBook = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        // const load = async () => {
-        //     const rs = await userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc");
-        //     console.log(rs.data)
-        //     if (rs) {
-        //         setMangaList(rs.data)
-        //         setData(rs.data.data)
-        //     }
-        // }
+        const load = async () => {
+            const rs = await userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc");
+            console.log(rs.data)
+            if (rs) {
+                setMangaList(rs.data)
+                setData(rs.data.data)
+            }
+        }
 
         setIsLoading(true)
-       // load().catch(console.error)
+        load().catch(console.error)
         setIsLoading(false)
     }, [])
 
@@ -43,16 +43,16 @@ const UserBook = () => {
         setPageNumber(pageNumber + 1)
         console.log("Load more", pageNumber + 1)
         userBookService.userBook(pageNumber, 12, "Name", "fghdf", "CreateDate", "Desc").then((rs) => {
-          console.log("data new", rs.data.data);
-          setData(old => old.concat(rs.data.data))
+            console.log("data new", rs.data.data);
+            setData(old => old.concat(rs.data.data))
         }).catch(console.error)
-      }
+    }
 
     return (
         <div className='homePage container-fluid'>
             <div className='row' style={{ margin: "2em 0" }}>
                 <div className='col-lg-1'></div>
-                <div className='col-lg-2' style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+                <div className='col-lg-2' style={{ marginTop: '10px', display: 'flex', justifyContent: 'right' }}>
                     <span>
                         <Button id="addBook" href="/book/addBook" variant="contained" sx={{ display: 'inline' }}>Thêm truyện mới</Button>
                     </span>
@@ -90,7 +90,7 @@ const UserBook = () => {
                         </Grid>
                     </div>
                     <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
-                    </div> </> : <></>
+                    </div> </> : <LinearProgress style={{ margin: "2em" }} />
                 }
             </div>
             <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>

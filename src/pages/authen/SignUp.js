@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { NotificationManager } from 'react-notifications';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -117,6 +118,7 @@ const SignUp = () => {
       if(login.status >= 200 && login.status < 300){
         handleClickOpen()
       }else{
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
@@ -138,6 +140,7 @@ const SignUp = () => {
             handleClickOpen()
         }
       }else{
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {

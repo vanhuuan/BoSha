@@ -70,6 +70,8 @@ const UpdateChapter = () => {
     const [isLoading, setIsLoading] = useState(true)
     const location = useLocation();
     const data = location.state;
+    const [okeChap, setOkeChap] = useState(false)
+    const [error, setError] = useState(false)
     // const bookId = data.bookId;
     // const chapterId = data.chapterId
 
@@ -83,6 +85,16 @@ const UpdateChapter = () => {
             "state": states,
             "chapterId": chapterDetail.chapterId,
         }
+
+        if (name.length < 5 || name.length > 50) {
+            setError(true)
+            return
+        }
+        if(!okeChap){
+            NotificationManager.error("Dữ liệu lỗi", "Nội dung chương phải từ 100 kí tự đến 15000 ký tự!", 2000)
+            return
+        }
+
         userBookService.updateChapter(data).then((rs) => {
             console.log(rs)
             firebaseService.uploadChapter(data.bookId, chapterDetail.chapterId, chap).then((rs) => {
@@ -97,6 +109,20 @@ const UpdateChapter = () => {
         console.log(data)
         setChap(data)
         setIsLoading(false)
+    }
+
+    const onNameChange = (e) => {
+        setName(e)
+        if (e.length < 5 || e.length > 50) {
+            setError(true)
+        } else {
+            setError(false)
+        }
+    }
+
+    const callBackOke = (childData) => {
+        setOkeChap(childData)
+        console.log(childData)
     }
 
     useEffect(() => {
@@ -135,7 +161,7 @@ const UpdateChapter = () => {
             >
                 <Grid container spacing={2}>
                     <Grid item xs={1}>
-                       
+
                     </Grid>
                     <Grid item xs={10}>
                         {isLoading === false ?
@@ -154,9 +180,11 @@ const UpdateChapter = () => {
                                     label="Tên truyện"
                                     value={name}
                                     onChange={(event) => {
-                                        setName(event.target.value);
+                                        onNameChange(event.target.value);
                                     }}
                                     sx={{ width: "100%", margin: "1em" }}
+                                    helperText="Tên truyện phải từ 5 đến 50 ký tự"
+                                    error={error}
                                 />
                                 <FormLabel id="demo-controlled-radio-buttons-group">Loại chương</FormLabel>
                                 <FormControlLabel
@@ -167,9 +195,9 @@ const UpdateChapter = () => {
                                     control={<Android12Switch checked={states} onChange={(e) => setStates(e.target.checked)} />}
                                     label="Ẩn truyện"
                                 />
-                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} chap={{ text: chap }} >
+                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} okeCallback={callBackOke} chap={{ text: chap }} >
                                 </EditorImage>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1em" }}>
                                     <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
                                     <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
                                 </div>
