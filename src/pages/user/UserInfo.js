@@ -1,5 +1,5 @@
 import { BarChart, EditLocation, EmailOutlined, Person, Person2, PhoneAndroidOutlined } from "@mui/icons-material";
-import { Avatar, Box, CircularProgress, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
+import { Avatar, Box, CircularProgress, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, LinearProgress, OutlinedInput, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
@@ -54,7 +54,7 @@ export default function UserInfo() {
     }, [])
 
     return (
-        <Box sx={{ flexGrow: 1 }} margin={`2em 0`}>
+        <Box sx={{ flexGrow: 1 }} margin={`2em 0`} className="userInfo">
             <Grid container spacing={2}>
                 <Grid sm="1" md="2" lg="3">
 
@@ -76,9 +76,9 @@ export default function UserInfo() {
                             <div className='container-body'>
                                 <Grid container spacing={2}>
                                     <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Tên người dùng</Typography></Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" >Tên người dùng</Typography></Grid>
                                     <Grid md={6} xs="12">
-                                        <FormControl fullWidth sx={{ m: 1 }}>
+                                        <FormControl className="formCt" fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
@@ -90,9 +90,9 @@ export default function UserInfo() {
                                         </FormControl>
                                     </Grid>
                                     <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Email</Typography></Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" >Email</Typography></Grid>
                                     <Grid md={6} xs="12">
-                                        <FormControl fullWidth sx={{ m: 1 }}>
+                                        <FormControl className="formCt" fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
@@ -104,9 +104,9 @@ export default function UserInfo() {
                                         </FormControl>
                                     </Grid>
                                     <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
-                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" style={{ fontWeight: "bold", marginLeft: "2.5em", marginTop: "1em" }}>Số điện thoại</Typography></Grid>
+                                    <Grid md={4} xs="12"><Typography variant="h5" className="title" >Số điện thoại</Typography></Grid>
                                     <Grid md={6} xs="12">
-                                        <FormControl fullWidth sx={{ m: 1 }}>
+                                        <FormControl className="formCt" fullWidth sx={{ m: 1 }}>
                                             <InputLabel htmlFor="outlined-adornment-amount"></InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
@@ -127,7 +127,7 @@ export default function UserInfo() {
                             </div>
                         </div>
 
-                        : <CircularProgress />}
+                        : <LinearProgress />}
                 </Grid>
                 <Grid  sm="1" md="2" lg="3">
                 </Grid>

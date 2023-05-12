@@ -317,7 +317,7 @@ export default function UserStatistic() {
 
                                     <Income chartsData={chartData} title={`Thống kê ${sortChart}`} label={`${sortChart}`}></Income>
                                 </Grid>
-                                : <CircularProgress />}
+                                : <LinearProgress />}
                             {showMore ?
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                     <FormControl sx={{ m: 1, minWidth: 300 }}>
