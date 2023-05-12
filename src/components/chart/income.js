@@ -80,6 +80,7 @@ export default function Income({ chartsData, title, label }) {
         title: {
           text: `${labelText}`,
           trim: false,
+          opposite: true
         },
         labels: {
           formatter: function (value) {
