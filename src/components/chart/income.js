@@ -87,6 +87,14 @@ export default function Income({ chartsData, title, label }) {
           }
         },
       },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#89D5C9',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
       fill: {
         opacity: 1
       },
@@ -96,7 +104,22 @@ export default function Income({ chartsData, title, label }) {
             return abbrNum(value);
           }
         }
-      }
+      },
+      responsive: [
+        {
+          breakpoint: 1000,
+          options: {
+            plotOptions: {
+              bar: {
+                horizontal: true
+              }
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
     },
   }
   return (
