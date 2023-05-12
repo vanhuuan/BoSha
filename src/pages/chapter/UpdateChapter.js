@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useParams } from "react";
 import { EditorImage } from "../../components/editor/editor";
-import { TextField, Box, Button, Grid, Typography, CircularProgress } from "@mui/material";
+import { TextField, Box, Button, Grid, Typography, CircularProgress, LinearProgress } from "@mui/material";
 import { useLocation } from "react-router";
 import { userBookService } from "../../services/userBook.services";
 import { firebaseService } from "../../services/firebase.services";
@@ -90,7 +90,7 @@ const UpdateChapter = () => {
             setError(true)
             return
         }
-        if(!okeChap){
+        if (!okeChap) {
             NotificationManager.error("Dữ liệu lỗi", "Nội dung chương phải từ 100 kí tự đến 15000 ký tự!", 2000)
             return
         }
@@ -147,7 +147,6 @@ const UpdateChapter = () => {
 
     const callBackChap = (childData) => {
         setChap(childData)
-        console.log(childData)
     }
 
     return (
@@ -198,11 +197,11 @@ const UpdateChapter = () => {
                                 <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} okeCallback={callBackOke} chap={{ text: chap }} >
                                 </EditorImage>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1em" }}>
+                                    <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/"+chapterDetail.bookId) }}>Trở về</Button>
                                     <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
-                                    <Button variant="contained" color="warning" onClick={(e) => { setName("Tên truyện"); setStt(0) }}>Reset</Button>
                                 </div>
                             </FormControl>
-                            : <CircularProgress></CircularProgress>}
+                            : <LinearProgress></LinearProgress>}
                     </Grid>
                     <Grid item xs={1}></Grid>
                 </Grid>

@@ -6,6 +6,9 @@ import DOMPurify from 'dompurify';
 import { convertToHTML } from 'draft-convert';
 import Grid from '@mui/material/Grid';
 import { Button, Typography } from '@mui/material';
+import {stateToHTML} from 'draft-js-export-html';
+import draftToHtml from 'draftjs-to-html';
+import { convertToRaw } from 'draft-js';
 
 function createMarkup(html) {
     return {
@@ -43,8 +46,9 @@ function EditorImage(props) {
     const [convertedContent, setConvertedContent] = useState(null);
 
     useEffect(() => {
-        console.log(props.chap.text)
-        let html = convertToHTML(editorState.getCurrentContent());
+        let raw = convertToRaw(editorState.getCurrentContent());
+        let html = draftToHtml(raw)
+        console.log(html)
         setConvertedContent(html);
         sendData(html)
     }, [editorState]);
@@ -110,7 +114,9 @@ function EditorDescription(props) {
     const maxLength = 3000;
 
     useEffect(() => {
-        let html = convertToHTML(editorState.getCurrentContent());
+        let raw = convertToRaw(editorState.getCurrentContent());
+        let html = draftToHtml(raw)
+        console.log(html)
         setConvertedContent(html);
         sendData(html)
     }, [editorState]);

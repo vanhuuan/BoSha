@@ -84,7 +84,7 @@ const Home = () => {
                     return <div className='col-4 container-book__padding'>
                       <BookCardHot key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                     </div>
-                  }) : <CircularProgress />
+                  }) : <LinearProgress />
                 }
               </div>
               {/* {

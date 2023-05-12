@@ -70,8 +70,8 @@ export default function Income({ chartsData, title, label }) {
       },
       xaxis: {
         labels: {
-          rotate: 0,
-          trim: true,
+          rotate: -15,
+          trim: false,
           hideOverlappingLabels: false
         },
         categories: listManga,
