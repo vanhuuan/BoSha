@@ -12,5 +12,8 @@ export const buyBookService = {
     },
     buyBook: async (data) => {
         return await api.post(`${baseURL}/Book/BuyBook`, data)
+    },
+    getBuyBookStatus: async (buyId) => {
+        return await api.get(`${baseURL}/Book/GetBuyBookStatus?buyBookId=${buyId}`)
     }
 }

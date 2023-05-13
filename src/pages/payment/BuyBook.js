@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import { buyBookService } from "../../services/buybook.services";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { NotificationManager } from 'react-notifications';
 
 const steps = ['Thông tin thanh toán'];
 
@@ -92,13 +93,17 @@ const BuyBook = () => {
 
     const [checkoutInfo, setCheckoutInfo] = useState()
     const [buyLink, setBuyLink] = useState("")
-    const [paymentMethod, setPaymentMethod] = useState(" Phương thức thanh toán")
+    const [paymentMethod, setPaymentMethod] = useState("Phương thức thanh toán")
 
 
     const handleBuyBook = () => {
         const data = {
             "bookId": bookId,
-            "paymentMethod": "Paypal"
+            "paymentMethod": paymentMethod
+        }
+        if(paymentMethod === "Phương thức thanh toán"){
+            NotificationManager.error("Hãy chọn phương thức thanh toán")
+            return
         }
         setIsLoading(true)
         buyBookService.buyBook(data).then((rs) => {
@@ -206,11 +211,11 @@ const BuyBook = () => {
                                                         open={open}
                                                         onClose={handleClose}
                                                     >
-                                                        <MenuItem onClick={handleClose} disableRipple selected={true} onClickCapture={(e) => { setPaymentMethod(" Paypal")}}>
+                                                        <MenuItem onClick={handleClose} disableRipple onClickCapture={(e) => { setPaymentMethod("Paypal")}}>
                                                             <PaymentOutlined />
                                                             Paypal
                                                         </MenuItem>
-                                                        <MenuItem onClick={handleClose} disableRipple disabled={true}>
+                                                        <MenuItem onClick={handleClose} disableRipple  selected={true} onClickCapture={(e) => { setPaymentMethod("VnPay")}}>
                                                             <PaymentOutlined />
                                                             VNPay
                                                         </MenuItem>
