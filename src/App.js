@@ -32,7 +32,7 @@ import UserInfo from "./pages/user/UserInfo";
 import EditUser from "./pages/user/EditUser";
 import UserStatistic from "./pages/user/Statistic";
 import LikeBook from "./pages/book/LikeBook";
-import VnPayStatus from "./pages/payment/VnPayStatus";
+import VnpayStatus from "./pages/payment/VnPayStatus";
 
 function App() {
   useEffect(() => {
@@ -68,7 +68,7 @@ function App() {
           <Route path="/user/payPayPal" element={<><Header /><Chapter /></>}></Route>
           <Route path='/notifySuccess' element={<><Header /><PaymentSuccess /></>}></Route>
           <Route path='/notifyFailed' element={<><Header /><PaymentFaild /></>}></Route>
-          <Route path='/vnPaySatus' element={<><Header /><VnPayStatus /></>}></Route>
+          <Route path='/vnPaySatus' element={<><Header/> <VnpayStatus/> </>}></Route>
           <Route path='/BuyBook' element={<><Header /> <BuyBook/></>}></Route>
           <Route path='*' element={<><Header /><PageNotFound /></>} />
         </Routes>
