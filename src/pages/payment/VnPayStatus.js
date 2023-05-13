@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { buyBookService } from '../../services/buybook.services';
 import { Typography } from '@mui/material';
 import { NotificationManager } from 'react-notifications';
+import { CircularProgress } from '@mui/material';
 
 const VnpayStatus = () => {
     const [searchParams] = useSearchParams();
@@ -26,7 +28,7 @@ const VnpayStatus = () => {
                 navigate("/book/" + rs.data.bookId)
             } else if (rs.data.status == "Faild") {
                 setRs("Thất bại")
-                NotificationManager.success("Thanh toán không thành công", "Giao dịch không thành công", 2000)
+                NotificationManager.error("Thanh toán không thành công", "Giao dịch không thành công", 2000)
                 isLoading(false)
                 navigate("/book/" + rs.data.bookId)
             } else {
