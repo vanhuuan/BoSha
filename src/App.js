@@ -68,7 +68,7 @@ function App() {
           <Route path="/user/payPayPal" element={<><Header /><Chapter /></>}></Route>
           <Route path='/notifySuccess' element={<><Header /><PaymentSuccess /></>}></Route>
           <Route path='/notifyFailed' element={<><Header /><PaymentFaild /></>}></Route>
-          <Route path='/vnPaySatus' element={<><Header/> <VnpayStatus/> </>}></Route>
+          <Route path='/vnPayStatus' element={<><Header/> <VnpayStatus/> </>}></Route>
           <Route path='/BuyBook' element={<><Header /> <BuyBook/></>}></Route>
           <Route path='*' element={<><Header /><PageNotFound /></>} />
         </Routes>
