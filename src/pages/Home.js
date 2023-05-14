@@ -34,6 +34,61 @@ const Home = () => {
   const [dataHot, setDataHot] = useState([])
   const [pageNumber, setPageNumber] = useState(1)
 
+  function throttle(cb, delay = 10) {
+    let shouldWait = false
+    let waitingArgs
+    const timeoutFunc = () => {
+      if (waitingArgs == null) {
+        shouldWait = false
+      } else {
+        cb(...waitingArgs)
+        waitingArgs = null
+        setTimeout(timeoutFunc, delay)
+      }
+    }
+
+    return (...args) => {
+      if (shouldWait) {
+        waitingArgs = args
+        return
+      }
+
+      cb(...args)
+      shouldWait = true
+      setTimeout(timeoutFunc, delay)
+    }
+  }
+
+  function calculateProgressBar(progressBar) {
+    progressBar.innerHTML = ""
+    const slider = progressBar.closest(".container-book").querySelector(".slider")
+    const itemCount = 12
+    const itemsPerScreen = parseInt(
+      getComputedStyle(slider).getPropertyValue("--items-per-screen")
+    )
+    let sliderIndex = parseInt(
+      getComputedStyle(slider).getPropertyValue("--slider-index")
+    )
+    const progressBarItemCount = Math.ceil(itemCount / itemsPerScreen)
+    if (sliderIndex >= progressBarItemCount) {
+      slider.style.setProperty("--slider-index", progressBarItemCount - 1)
+      sliderIndex = progressBarItemCount - 1
+    }
+
+    for (let i = 0; i < progressBarItemCount; i++) {
+      const barItem = document.createElement("div")
+      barItem.classList.add("progress-item")
+      if (i === sliderIndex) {
+        barItem.classList.add("active")
+      }
+      progressBar.append(barItem)
+    }
+  }
+
+  const throttleProgressBar = throttle(() => {
+    document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
+  }, 250)
+
   useEffect(() => {
     const load = async () => {
       if (!pageNumber) {
@@ -49,63 +104,8 @@ const Home = () => {
         console.log(rs.data.data)
         setDataHot(rs.data.data)
         setIsLoading(false)
-
-        const throttleProgressBar = throttle(() => {
-          document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
-        }, 250)
-
         window.addEventListener("resize", throttleProgressBar)
-        function throttle(cb, delay = 10) {
-          let shouldWait = false
-          let waitingArgs
-          const timeoutFunc = () => {
-            if (waitingArgs == null) {
-              shouldWait = false
-            } else {
-              cb(...waitingArgs)
-              waitingArgs = null
-              setTimeout(timeoutFunc, delay)
-            }
-          }
-
-          return (...args) => {
-            if (shouldWait) {
-              waitingArgs = args
-              return
-            }
-
-            cb(...args)
-            shouldWait = true
-            setTimeout(timeoutFunc, delay)
-          }
-        }
-
         document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
-        function calculateProgressBar(progressBar) {
-          progressBar.innerHTML = ""
-          const slider = progressBar.closest(".container-book").querySelector(".slider")
-          const itemCount = 12
-          const itemsPerScreen = parseInt(
-            getComputedStyle(slider).getPropertyValue("--items-per-screen")
-          )
-          let sliderIndex = parseInt(
-            getComputedStyle(slider).getPropertyValue("--slider-index")
-          )
-          const progressBarItemCount = Math.ceil(itemCount / itemsPerScreen)
-          if (sliderIndex >= progressBarItemCount) {
-            slider.style.setProperty("--slider-index", progressBarItemCount - 1)
-            sliderIndex = progressBarItemCount - 1
-          }
-
-          for (let i = 0; i < progressBarItemCount; i++) {
-            const barItem = document.createElement("div")
-            barItem.classList.add("progress-item")
-            if (i === sliderIndex) {
-              barItem.classList.add("active")
-            }
-            progressBar.append(barItem)
-          }
-        }
       })
     }
 
