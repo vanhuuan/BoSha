@@ -37,6 +37,25 @@
   }
 }
 
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row>* {
+  margin-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .page-transition-animation .notification-enter {
   visibility: hidden;
   transform: translate3d(100%, 0, 0) scale(0, 0);

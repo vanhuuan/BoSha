@@ -1,0 +1,133 @@
+ 
+/* CSS */
+  :root {
+    --handle-size: 1rem;
+    --img-gap: .25rem;
+  }
+
+  .container-book-hot {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .slider {
+    --slider-index: 0;
+    display: flex;
+    flex-grow: 1;
+    margin: 0 var(--img-gap);
+    transform: translateX(calc(var(--slider-index) * -100%));
+    transition: transform 250ms ease-in-out;
+  }
+  
+  .slider-item {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: calc(100% / var(--items-per-screen));
+    max-width: calc(100% / var(--items-per-screen));
+    padding: var(--img-gap);
+    border-radius: 1rem;
+  }
+  
+  .handle {
+    border: none;
+    border-radius: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: white;
+    z-index: 10;
+    margin: var(--img-gap) 0;
+    width: var(--handle-size);
+    font-size: 3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(128, 128, 128, 0.5);
+    line-height: 0;
+    transition: background-color 150ms ease-in-out;
+  }
+
+  
+  /* .handle:hover,
+  .handle:focus {
+    background-color: rgba(255, 255, 255, .5);
+  } */
+  
+  .text {
+    transition: transform 150ms ease-in-out;
+  }
+  
+  .handle:hover .text {
+    transform: scale(1.2);
+  }
+  
+  .header-slider {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem calc(var(--img-gap) * 2 + var(--handle-size));
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin: 0;
+  }
+  
+  .progress-bar {
+    display: inline-block;
+    gap: .25rem;
+  }
+  
+  .progress-item {
+    display: inline-block;
+    margin: 0 2px;
+    border: 1px solid rgba(128, 128, 128, .3);
+    border-radius: 4px;
+    min-width: 1.2rem;
+    height: .5rem;
+    background-color: white;
+  }
+  
+  .progress-item.active {
+    background-color: rgba(128, 128, 128, .5)
+  }
+
+  @media (min-width: 1200px) {
+    .slider {
+      --items-per-screen: 6;
+    }
+  }
+  
+  @media (min-width: 900px) and (max-width: 1200px) {
+    .slider {
+      --items-per-screen: 4;
+    }
+    .handle {
+      --handle-size: 0.8rem;
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 900px) {
+    .slider {
+      --items-per-screen: 3;
+    }
+    .handle {
+      --handle-size: 0.6rem;
+      font-size: 1.6rem;
+      --img-gap: .05rem;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .slider {
+      --items-per-screen: 2;
+    }
+    .handle {
+      --handle-size: 0.4rem;
+      font-size: 1.4rem;
+      --img-gap: 0;
+    }
+  }
+  

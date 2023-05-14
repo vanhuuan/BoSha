@@ -1,7 +1,8 @@
 .bookcard2-group {
     display: block;
     position: relative;
-    background-color: rgb(157, 23, 77);
+    background-color: white;
+    border: 2px solid white;
     border-radius: 10px;
     overflow: hidden;
     --gradient-to: rgb(0, 0, 0);

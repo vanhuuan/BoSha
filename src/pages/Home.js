@@ -12,6 +12,7 @@ import BookCard2 from '../components/book/BookCard2'
 import BookCardHot from '../components/book/BookCardHot'
 import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
+import "../css/media-scroll.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import { userBookService } from '../services/userBook.services';
 import { bookService } from '../services/books.services';
@@ -48,6 +49,63 @@ const Home = () => {
         console.log(rs.data.data)
         setDataHot(rs.data.data)
         setIsLoading(false)
+
+        const throttleProgressBar = throttle(() => {
+          document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
+        }, 250)
+
+        window.addEventListener("resize", throttleProgressBar)
+        function throttle(cb, delay = 10) {
+          let shouldWait = false
+          let waitingArgs
+          const timeoutFunc = () => {
+            if (waitingArgs == null) {
+              shouldWait = false
+            } else {
+              cb(...waitingArgs)
+              waitingArgs = null
+              setTimeout(timeoutFunc, delay)
+            }
+          }
+
+          return (...args) => {
+            if (shouldWait) {
+              waitingArgs = args
+              return
+            }
+
+            cb(...args)
+            shouldWait = true
+            setTimeout(timeoutFunc, delay)
+          }
+        }
+
+        document.querySelectorAll(".progress-bar").forEach(calculateProgressBar)
+        function calculateProgressBar(progressBar) {
+          progressBar.innerHTML = ""
+          const slider = progressBar.closest(".container-book").querySelector(".slider")
+          const itemCount = 12
+          const itemsPerScreen = parseInt(
+            getComputedStyle(slider).getPropertyValue("--items-per-screen")
+          )
+          let sliderIndex = parseInt(
+            getComputedStyle(slider).getPropertyValue("--slider-index")
+          )
+          const progressBarItemCount = Math.ceil(itemCount / itemsPerScreen)
+          if (sliderIndex >= progressBarItemCount) {
+            slider.style.setProperty("--slider-index", progressBarItemCount - 1)
+            sliderIndex = progressBarItemCount - 1
+          }
+
+          for (let i = 0; i < progressBarItemCount; i++) {
+            const barItem = document.createElement("div")
+            barItem.classList.add("progress-item")
+            if (i === sliderIndex) {
+              barItem.classList.add("active")
+            }
+            progressBar.append(barItem)
+          }
+        }
       })
     }
 
@@ -64,44 +122,80 @@ const Home = () => {
     }).catch(console.error)
   }
 
+  function onHandleClickLeft() {
+    const progressBar = document.querySelector(".progress-bar")
+    const slider = document.querySelector(".slider")
+    const sliderIndex = parseInt(
+      getComputedStyle(slider).getPropertyValue("--slider-index")
+    )
+    const progressBarItemCount = progressBar.children.length
+
+    if (sliderIndex - 1 < 0) {
+      slider.style.setProperty("--slider-index", progressBarItemCount - 1)
+      progressBar.children[sliderIndex].classList.remove("active")
+      progressBar.children[progressBarItemCount - 1].classList.add("active")
+    } else {
+      slider.style.setProperty("--slider-index", sliderIndex - 1)
+      progressBar.children[sliderIndex].classList.remove("active")
+      progressBar.children[sliderIndex - 1].classList.add("active")
+    }
+  }
+
+  function onHandleClickRight() {
+    const progressBar = document.querySelector(".progress-bar")
+    const slider = document.querySelector(".slider")
+    const sliderIndex = parseInt(
+      getComputedStyle(slider).getPropertyValue("--slider-index")
+    )
+    const progressBarItemCount = progressBar.children.length
+
+    if (sliderIndex + 1 >= progressBarItemCount) {
+      slider.style.setProperty("--slider-index", 0)
+      progressBar.children[sliderIndex].classList.remove("active")
+      progressBar.children[0].classList.add("active")
+    } else {
+      slider.style.setProperty("--slider-index", sliderIndex + 1)
+      progressBar.children[sliderIndex].classList.remove("active")
+      progressBar.children[sliderIndex + 1].classList.add("active")
+    }
+  }
+
   return (
     <>
       <div className='container m-0 p-0' style={{ width: `100%`, border: `0px` }}>
         <div className='row no-gutter'>
           <div className='col-1'></div>
-          <div className='col-lg-10 col-md-10 col-sm-10 col-xs-10' style={{ paddingLeft: `4px` }}>
-            <div className='row no-gutter container-book' style={{ height: `100%`, padding: `8px 0` }}>
-              <div>
-                <h1 style={{ textAlign: 'left', fontSize: `18px`, color: "rgb(157, 23, 77)" }}>TRUYỆN HOT</h1>
+          <div className='col-10'>
+            <div className='row no-gutter container-book' style={{ padding: "10px", margin: "20px 0", overflow: `hidden` }}>
+              <div className='header-slider'>
+                <h1 className='title' style={{ textAlign: 'left', fontSize: "20px", lineHeight: "24px" }}>TRUYỆN HOT</h1>
+                <div className='progress-bar'></div>
               </div>
-              <div className='row no-gutter' style={{ flexWrap: `nowrap`, overflowX: `scroll` }}>
-                {
-                  isLoading === false ? dataHot.map((item, index) => {
-                    var stars = 0;
-                      if(item.numOfReview !== 0){
-                        stars = item.numOfStar / item.numOfReview
-                      }
-                    return <div className='col-4 container-book__padding'>
-                      <BookCardHot key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
-                    </div>
-                  }) : <LinearProgress />
-                }
-              </div>
-              {/* {
-                isLoading === false ?
-                  <Carousel> {
-                    dataHot.map((item, index) => {
+              <div className='container-book-hot' style={{ padding: 0 }}>
+                <button class="handle left-handle" style={{ padding: 0 }}
+                  onClick={() => onHandleClickLeft()}
+                >
+                  <div class="text">&#8249;</div>
+                </button>
+                <div class="slider">
+                  {
+                    isLoading === false ? dataHot.map((item, index) => {
                       var stars = 0;
                       if (item.numOfReview !== 0) {
                         stars = item.numOfStar / item.numOfReview
                       }
-                      return <Paper>
-                        <BookCardHot key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
-                      </Paper>
-                    })}
-                  </Carousel>
-                  : <CircularProgress />
-              } */}
+                      return <div className='slider-item'>
+                        <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
+                      </div>
+                    }) : <LinearProgress />
+                  }
+                </div>
+                <button class="handle right-handle" style={{ padding: 0 }}
+                  onClick={() => onHandleClickRight()}
+                >
+                  <div class="text">&#8250;</div>
+                </button>
+              </div>
             </div>
           </div>
           <div className='col-1'></div>
@@ -134,21 +228,11 @@ const Home = () => {
                   }
                 </Grid>
               </InfiniteScroll>
-
-              {/* <Grid container spacing={2}>
-                {
-                  isLoading === false ? data.map((item, index) => {
-                    return <Grid item xs={6} sm={4} md={2}>
-                      <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: 100 }} />
-                    </Grid>
-                  }) : <CircularProgress />
-                }
-              </Grid> */}
             </div>
           </div>
           <div className='col-1'></div>
         </div>
-      </div>
+      </div >
     </>
 
   )
