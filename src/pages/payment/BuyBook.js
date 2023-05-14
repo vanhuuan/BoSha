@@ -29,6 +29,7 @@ import { buyBookService } from "../../services/buybook.services";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { NotificationManager } from 'react-notifications';
+import "../../css/BuyBook.css"
 
 const steps = ['Thông tin thanh toán'];
 
@@ -140,7 +141,7 @@ const BuyBook = () => {
     }, [])
 
     return (
-        <div>
+        <div className="buybook">
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <AppBar
@@ -181,14 +182,14 @@ const BuyBook = () => {
                                     {isLoading === false ?
                                         <Grid container spacing={2}>
 
-                                            <Grid item xs={4}>
+                                            <Grid item xs={12} sm={4} md={4}>
                                                 <img src={checkoutInfo.cover} alt="ảnh truyện" style={{ maxWidth: "15em" }}></img>
                                             </Grid>
-                                            <Grid item xs={6}>
-                                                <div style={{ marginLeft: '3em' }}>
-                                                    <Typography variant="h5" sx={{ marginBottom: "1em" }}><b>Người mua: </b>{checkoutInfo.userName}</Typography>
-                                                    <Typography variant="h5" sx={{ marginBottom: "1em" }}><b>Truyện: </b>{checkoutInfo.bookName}</Typography>
-                                                    <Typography variant="h5" sx={{ marginBottom: "1em" }}><b>Giá tiền: </b>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(checkoutInfo.price)} </Typography>
+                                            <Grid item xs={12} sm={6} md={8}>
+                                                <div className="infoCard">
+                                                    <Typography className="info" variant="h5"><b>Người mua: </b>{checkoutInfo.userName}</Typography>
+                                                    <Typography className="info" variant="h5"><b>Truyện: </b>{checkoutInfo.bookName}</Typography>
+                                                    <Typography className="info" variant="h5"><b>Giá tiền: </b>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(checkoutInfo.price)} </Typography>
                                                     <Button
                                                         id="demo-customized-button"
                                                         aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -217,7 +218,7 @@ const BuyBook = () => {
                                                         </MenuItem>
                                                         <MenuItem onClick={handleClose} disableRipple  selected={true} onClickCapture={(e) => { setPaymentMethod("VnPay")}}>
                                                             <PaymentOutlined />
-                                                            VNPay
+                                                            VnPay
                                                         </MenuItem>
                                                         <MenuItem onClick={handleClose} disableRipple disabled={true}>
                                                             <PaymentOutlined />

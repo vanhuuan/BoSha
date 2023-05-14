@@ -69,10 +69,13 @@ export default function BookDetail() {
                 firebaseService.gerPreview(id, setPreviewText)
                 setBook(rs.data)
                 bookService.bookStatus(id).then((rs) => {
-                    console.log(rs)
+                    console.log("status", rs)
                     setStatus(rs.data)
                     setIsLoading(false)
-                }).catch(console.error)
+                }).catch((err) =>{
+                    console.error("err load status", err)
+                    setIsLoading(false)
+                })
             }
         ).catch((err) => console.log(err))
     }, [id])

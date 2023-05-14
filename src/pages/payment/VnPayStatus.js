@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { buyBookService } from '../../services/buybook.services';
-import { Typography } from '@mui/material';
+import { Box, Grid, LinearProgress, Typography } from '@mui/material';
 import { NotificationManager } from 'react-notifications';
 import { CircularProgress } from '@mui/material';
 
@@ -21,43 +21,62 @@ const VnpayStatus = () => {
         const buyId = searchParams.get('vnp_TxnRef')
         console.log("BuyId", buyId)
         buyBookService.getBuyBookStatus(buyId).then((rs) => {
-            if (rs.data.status == "Success") {
+            console.log(rs)
+            if (rs.data.status == "Suscess") {
                 setRs("Thành công")
                 NotificationManager.success("Thanh toán thành công", "Giao dịch thành công", 2000)
-                isLoading(false)
+                setIsLoading(false)
+                setTimeout(() => {
+                    console.log("Payment ok")
+                }, 2000)
+
                 navigate("/book/" + rs.data.bookId)
             } else if (rs.data.status == "Faild") {
                 setRs("Thất bại")
                 NotificationManager.error("Thanh toán không thành công", "Giao dịch không thành công", 2000)
-                isLoading(false)
+                setIsLoading(false)
+                setTimeout(() => {
+                    console.log("Payment notOk")
+                }, 2000)
+
                 navigate("/book/" + rs.data.bookId)
             } else {
-                setRetryCount(retry_count + 1)
+                setTimeout(() => {
+                    setRetryCount(retry_count + 1)
+                }, 5000)
+
             }
         }).catch((e) => {
-            NotificationManager.success("Có lỗi trong quá trình kiểm tra giao dịch", "Giao dịch không thành công", 2000)
-            navigate("/")
+            console.log("Loi roi", e)
+            NotificationManager.error("Có lỗi trong quá trình kiểm tra giao dịch", "Giao dịch không thành công", 2000)
+            // navigate("/")
         })
     }, [retry_count]);
-    
+
     return (
-        <>
-            {isLoading === false ? <>
-                {rs === "Thành công" ?
-                    <Alert severity="success">
-                        <AlertTitle><strong>Thanh toán thành công</strong></AlertTitle>
-                        Hãy quay lại ứng dụng!
-                    </Alert>
-                    : <Alert severity="error">
-                        <AlertTitle><strong>Thanh toán thất bại</strong></AlertTitle>
-                        Hãy quay lại ứng dụng!
-                    </Alert>}
-            </>
-                : <div>
-                    <CircularProgress />
-                    <Typography variant='h3'>Đang kiểm tra tình trạng thanh toán, hãy chờ trong giây lát!</Typography>
-                </div>}
-        </>
+        <Box marginTop={"3em"}>
+            <Grid container spacing={2}>
+                <Grid xs={2}></Grid>
+                <Grid xs={8}>
+                    {isLoading === false ? <>
+                        {rs === "Thành công" ?
+                            <Alert severity="success">
+                                <AlertTitle><strong>Thanh toán thành công</strong></AlertTitle>
+                                Hãy quay lại ứng dụng!
+                            </Alert>
+                            : <Alert severity="error">
+                                <AlertTitle><strong>Thanh toán thất bại</strong></AlertTitle>
+                                Hãy quay lại ứng dụng!
+                            </Alert>}
+                    </>
+                        : <div>                    
+                            <Typography variant='h5'>Đang kiểm tra tình trạng thanh toán, hãy chờ trong giây lát!</Typography>
+                            <LinearProgress />
+                        </div>}
+                </Grid>
+                <Grid xs={2}></Grid>
+            </Grid>
+        </Box>
     )
 }
 
