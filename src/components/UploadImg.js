@@ -9,7 +9,7 @@ const FileInput = (props) => {
     const [imageUrl, setImageUrl] = useState(null);
     const [imgD, setImgD] = useState("https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/DefaultCover.png?alt=media&token=8c3ccc1d-1316-46e6-9184-d2d0d2f012bd")
 
-    const MIN_FILE_SIZE = 1024 // 1MB
+    const MIN_FILE_SIZE = 100 // 100Kb
     const MAX_FILE_SIZE = 5120 // 5MB
 
     useEffect(() => {
