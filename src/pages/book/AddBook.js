@@ -33,15 +33,15 @@ const AddBook = () => {
 
   const addBook = () => {
     if (price < 0 || (price > 0 && price < 1000) || (price > 1000000)) {
-      NotificationManager.error(book.name, 'Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND', 1000);
+      NotificationManager.error(name, 'Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND', 1000);
       return;
     }
     if (name.length < 5 || name.length > 100) {
-      NotificationManager.error(book.name, 'Tên truyện phải chứa từ 5 đến 100 ký tự', 1000);
+      NotificationManager.error(name, 'Tên truyện phải chứa từ 5 đến 100 ký tự', 1000);
       return;
     }
     if (desc.length < 50 || desc.length > 3000) {
-      NotificationManager.error(book.name, 'Miêu tả phải chứa từ 50 đến 3000 ký tự', 1000);
+      NotificationManager.error(name, 'Miêu tả phải chứa từ 50 đến 3000 ký tự', 1000);
       return;
     }
     const data = {
