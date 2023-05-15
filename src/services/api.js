@@ -44,7 +44,7 @@ instance.interceptors.response.use(
                         return instance(originalConfig);
                     }else{
                         NotificationManager.error("Hãy đăng nhập để thực hiện","Chưa đăng nhập", 2000)
-                        return Promise.reject(_error);
+                        return Promise.reject();
                     }
                 } catch (_error) {
                     return Promise.reject(_error);
