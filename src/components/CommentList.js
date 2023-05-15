@@ -87,10 +87,6 @@ const CommentList = forwardRef((props, ref) =>  {
                                     {item.text}
                                 </p>
                                 <div className="comment-bottom">
-                                    <span className="comment-icon">
-                                        <FavoriteIcon className="icon" />
-                                        <span>{item.like}</span>
-                                    </span>
                                     <p style={{ textAlign: "left", color: "gray" }}>
                                         {
                                             moment().from(new Date(item.creatDate))
