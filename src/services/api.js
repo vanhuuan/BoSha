@@ -1,5 +1,6 @@
 import axios from "axios";
 import TokenService from "./token.services";
+import { NotificationManager } from 'react-notifications';
 
 const instance = axios.create({
     baseURL: "https://boshaapi.site",
@@ -37,11 +38,14 @@ instance.interceptors.response.use(
                 try {
                     const refreshToken = TokenService.getLocalRefreshToken()
                     const rs = await instance.get(`/Authen/GetAccessToken?token=${refreshToken}`);
-
-                    const accessToken = rs.data.accessToken;
-                    TokenService.updateLocalAccessToken(accessToken);
-
-                    return instance(originalConfig);
+                    if(rs.data){
+                        const accessToken = rs.data.accessToken;
+                        TokenService.updateLocalAccessToken(accessToken);
+                        return instance(originalConfig);
+                    }else{
+                        NotificationManager.error("Hãy đăng nhập để thực hiện","Chưa đăng nhập", 2000)
+                        return Promise.reject(_error);
+                    }
                 } catch (_error) {
                     return Promise.reject(_error);
                 }
