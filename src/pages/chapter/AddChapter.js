@@ -154,7 +154,7 @@ const AddChapter = () => {
                                     onNameChange(event.target.value);
                                 }}
                                 sx={{ width: "100%", margin: "1em" }}
-                                helperText="Tên truyện phải từ 5 đến 50 ký tự"
+                                helperText="Tên chương phải từ 5 đến 50 ký tự"
                                 error={error}
                             />
                             <FormControlLabel

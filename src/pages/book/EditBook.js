@@ -179,6 +179,8 @@ const EditBook = () => {
                                                     className='input-text'
                                                     defaultValue={book.name}
                                                     onChange={(e) => { setName(e.target.value); setMessageText("") }}
+                                                    error={name.length >= 5 && name.length <= 100}
+                                                    helperText="Tên truyện phải từ 5 đến 100 ký tự"
                                                 />
                                             </div>
                                             <MultipleSelect book={{ categories: book.category }} parentCallback={callbackCategory}></MultipleSelect>

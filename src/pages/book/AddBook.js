@@ -24,14 +24,26 @@ const AddBook = () => {
   const [desc, setDesc] = useState("")
   const [img, setImg] = useState("")
 
-  const limitChar = 50;
+  const limitChar = 100;
   const handleChange = (e) => {
-    if (e.target.value.toString().length <= limitChar) {
+    if (e.target.value.toString().length >= 5 && e.target.value.toString().length <= limitChar) {
       setName(e.target.value);
     }
   };
 
   const addBook = () => {
+    if (price < 0 || (price > 0 && price < 1000) || (price > 1000000)) {
+      NotificationManager.error(book.name, 'Giá truyện phải là miễn phí hoặc từ 1.000 VND đến 1.000.000 VND', 1000);
+      return;
+    }
+    if (name.length < 5 || name.length > 100) {
+      NotificationManager.error(book.name, 'Tên truyện phải chứa từ 5 đến 100 ký tự', 1000);
+      return;
+    }
+    if (desc.length < 50 || desc.length > 3000) {
+      NotificationManager.error(book.name, 'Miêu tả phải chứa từ 50 đến 3000 ký tự', 1000);
+      return;
+    }
     const data = {
       "name": name,
       "categories": listCategory,
@@ -52,7 +64,7 @@ const AddBook = () => {
   const reset = (e) => {
     setName("Tên truyện")
     setPrice(0)
-  } 
+  }
 
   const callbackPrice = (childData) => {
     setPrice(childData)
@@ -89,8 +101,7 @@ const AddBook = () => {
               <div className='container-body'>
                 <Grid container spacing={2}>
                   <Grid item md={3} sm={12}>
-                    <FileInput book={{ img: "https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/336360852_998079328269332_2768670379783425409_n.jpg" }} parentCallback={callbackImg}>
-
+                    <FileInput book={{ img: "" }} parentCallback={callbackImg}>
                     </FileInput>
                   </Grid>
                   <Grid item md={9} sm={12} width="100%">
@@ -101,20 +112,22 @@ const AddBook = () => {
                         label="Tên truyện"
                         className='input-text'
                         defaultValue={name}
-                        onChange={(e) => { handleChange(e)}}
+                        onChange={(e) => { handleChange(e) }}
                         inputProps={{ maxLength: 50 }}
+                        error={name.length >= 5 && name.length <= 100}
+                        helperText="Tên truyện phải từ 5 đến 100 ký tự"
                       />
                     </div>
                     <MultipleSelect parentCallback={callbackCategory}></MultipleSelect>
-                    <div sx={{ marginTop: '4px' }}> 
-                      <RadioPrice book={{ price: price}} parentCallback={callbackPrice}></RadioPrice>
+                    <div sx={{ marginTop: '4px' }}>
+                      <RadioPrice book={{ price: price }} parentCallback={callbackPrice}></RadioPrice>
                     </div>
                   </Grid>
                 </Grid>
               </div>
             </div>
             <div>
-              <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: "<p></p>" }} parentCallback={callbackDesc}/>
+              <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: "<p></p>" }} parentCallback={callbackDesc} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
               <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={addBook}>Thêm truyện</Button>
