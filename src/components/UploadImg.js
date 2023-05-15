@@ -7,7 +7,7 @@ import { NotificationManager } from "react-notifications";
 const FileInput = (props) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
-    let imgD = props.book.img
+    const [imgD, setImgD] = useState("https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/DefaultCover.png?alt=media&token=8c3ccc1d-1316-46e6-9184-d2d0d2f012bd")
 
     const MIN_FILE_SIZE = 1024 // 1MB
     const MAX_FILE_SIZE = 5120 // 5MB
@@ -16,6 +16,9 @@ const FileInput = (props) => {
         if (selectedImage) {
             setImageUrl(URL.createObjectURL(selectedImage));
             sendData(URL.createObjectURL(selectedImage))
+        }
+        if(props.book.img){
+            setImgD(props.book.img)
         }
     }, [selectedImage]);
 
