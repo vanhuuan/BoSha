@@ -185,7 +185,7 @@ const Home = () => {
                         stars = item.numOfStar / item.numOfReview
                       }
                       return <div className='slider-item'>
-                        <BookCard2 key={index} manga={{ name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
+                        <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                       </div>
                     }) : <LinearProgress />
                   }
