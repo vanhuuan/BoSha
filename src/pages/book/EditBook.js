@@ -213,7 +213,7 @@ const EditBook = () => {
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
                                 <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>
-                                <Button variant="contained" color='error' sx={{ width: '10em' }}>Reset</Button>
+                                <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/"+id) }} >Trở về</Button>
                             </div> </> : <></>
                         }
                     </Grid>

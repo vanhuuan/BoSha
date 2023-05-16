@@ -62,7 +62,7 @@ const AddBook = () => {
   }
 
   const reset = (e) => {
-    setName("Tên truyện")
+    navigate(-1)
     setPrice(0)
   }
 
@@ -131,7 +131,7 @@ const AddBook = () => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
               <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={addBook}>Thêm truyện</Button>
-              <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={reset}>Reset</Button>
+              <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={reset}>Trở về</Button>
             </div>
           </Grid>
           <Grid item xs={1}>
