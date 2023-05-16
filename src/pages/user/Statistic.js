@@ -159,7 +159,7 @@ export default function UserStatistic() {
     ])
 
     const onChangeDateValue = (value) => {
-        if(value.length == 2){
+        if (value.length == 2) {
             setValues(value)
         }
     }
@@ -239,8 +239,8 @@ export default function UserStatistic() {
                 <Grid xs={10}>
                     <div className="container">
                         <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "1em" }}>
-                            <Typography  onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' } }} ><Person/> Thông tin tài khoản </Typography>
-                            <Typography  sx={{ typography: { md: 'h5', sm: 'h10' } }} >Thống kê truyện <BarChart color="primary" /> </Typography>
+                            <Typography onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' } }} ><Person /> Thông tin tài khoản </Typography>
+                            <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }} >Thống kê truyện <BarChart color="primary" /> </Typography>
                         </div>
                         <Grid container spacing={3}>
                             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -277,22 +277,39 @@ export default function UserStatistic() {
                                         footer={<div> 80% Tổng thu nhập từ bán truyện  </div>}
                                     />
                                 </Grid>
+
                                 <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
-                                    <CardBookSummary
-                                        title="Truyện có doanh thu cao nhất"
-                                        value={cardData.bestSeller.name}
-                                        footer={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                                            .format(cardData.bestSeller.price)}
-                                        img={cardData.bestSeller.cover}
-                                    />
+                                    {cardData.bestSeller ?
+                                        <CardBookSummary
+                                            title="Truyện có doanh thu cao nhất"
+                                            value={cardData.bestSeller.name}
+                                            footer={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                .format(cardData.bestSeller.price)}
+                                            img={cardData.bestSeller.cover}
+                                        />
+                                        :
+                                        <CardSummary
+                                            title="Trong khoảng thời gian này bạn chưa bán được truyện nào"
+                                            value=""
+                                            footer={<div></div>}
+                                        />
+                                    }
                                 </Grid>
                                 <Grid item xl={3} lg={3} md={6} sm={6} xs={12}>
-                                    <CardBookSummary
-                                        title="Truyện có lượt xem nhiều nhất"
-                                        value={cardData.mostView.name}
-                                        footer={`${abbrNum(cardData.mostView.price)} lượt xem`}
-                                        img={cardData.mostView.cover}
-                                    />
+                                    {cardData.mostView ?
+                                        <CardBookSummary
+                                            title="Truyện có lượt xem nhiều nhất"
+                                            value={cardData.mostView.name}
+                                            footer={`${abbrNum(cardData.mostView.price)} lượt xem`}
+                                            img={cardData.mostView.cover}
+                                        />
+                                        :
+                                        <CardSummary
+                                            title="Trong khoảng thời gian này bạn chưa ai xem truyện của bạn cả"
+                                            value=""
+                                            footer={<div></div>}
+                                        />
+                                    }
                                 </Grid> </>
                                 : <LinearProgress />}
                             {isLoadingChart === false ?
@@ -352,8 +369,8 @@ export default function UserStatistic() {
                                             <MenuItem value={"Desc"}>Giảm dần</MenuItem>
                                         </Select>
                                     </FormControl>
-                                    <IconButton aria-label="find"  size="large" onClick={(e) => { loadStatictisData() }} sx={{ marginTop: "0.5em"}}>
-                                        <SearchIcon sx={{ width: "1em", height: "1em"}} />
+                                    <IconButton aria-label="find" size="large" onClick={(e) => { loadStatictisData() }} sx={{ marginTop: "0.5em" }}>
+                                        <SearchIcon sx={{ width: "1em", height: "1em" }} />
                                     </IconButton>
                                     {isLoadingStatisticData === false ?
                                         <TableContainer component={Paper}>
