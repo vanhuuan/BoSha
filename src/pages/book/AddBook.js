@@ -114,7 +114,7 @@ const AddBook = () => {
                         defaultValue={name}
                         onChange={(e) => { handleChange(e) }}
                         inputProps={{ maxLength: 50 }}
-                        error={name.length >= 5 && name.length <= 100}
+                        error={name.length < 5 || name.length > 100}
                         helperText="Tên truyện phải từ 5 đến 100 ký tự"
                       />
                     </div>
