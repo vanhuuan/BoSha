@@ -65,7 +65,7 @@ const FileInput = (props) => {
                 type="file"
                 id="select-image"
                 style={{ display: "none" }}
-                onChange={(e) => onChangeFile(e.target.files[0])}
+                onChange={(e) => onChangeFile(e)}
             />
             <label htmlFor="select-image" style={{ width: '100%' }}>
                 <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
