@@ -160,7 +160,6 @@ const UpdateChapter = () => {
             >
                 <Grid container spacing={2}>
                     <Grid item xs={1}>
-
                     </Grid>
                     <Grid item xs={10}>
                         {isLoading === false ?
@@ -191,8 +190,8 @@ const UpdateChapter = () => {
                                     label="Xem thử"
                                 />
                                 <FormControlLabel
-                                    control={<Android12Switch checked={states} onChange={(e) => setStates(e.target.checked)} />}
-                                    label="Ẩn truyện"
+                                    control={<Android12Switch checked={!states} onChange={(e) => setStates(!states)} />}
+                                    label="Ẩn chương"
                                 />
                                 <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} okeCallback={callBackOke} chap={{ text: chap }} >
                                 </EditorImage>

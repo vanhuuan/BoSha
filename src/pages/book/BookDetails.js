@@ -51,7 +51,7 @@ export default function BookDetail() {
 
     let navigate = useNavigate();
 
-    const share = () =>{ 
+    const share = () => {
         NotificationManager.success(book.name, 'Đã sao chép', 1000);
         var host = window.location.host;
         navigator.clipboard.writeText(`${host}/Book/${book.id}`);
@@ -72,7 +72,7 @@ export default function BookDetail() {
                     console.log("status", rs)
                     setStatus(rs.data)
                     setIsLoading(false)
-                }).catch((err) =>{
+                }).catch((err) => {
                     console.error("err load status", err)
                     setIsLoading(false)
                 })
@@ -83,8 +83,8 @@ export default function BookDetail() {
     const data = { bookId: book.id, bookName: book.name }
 
     const buyBook = (e) => {
-        if(status.buyed == false){
-            navigate("/BuyBook", { state: data } )
+        if (status.buyed == false) {
+            navigate("/BuyBook", { state: data })
         }
     }
 
@@ -128,17 +128,18 @@ export default function BookDetail() {
                                                     <Typography variant='h4'>{book.name} </Typography>
                                                 </div>
                                                 <BookCategories categories={{ cate: book.category }} />
-                                                <div style={{margin: `1em 0`}}>
+                                                <div style={{ margin: `1em 0` }}>
                                                     <BookInfo book={{ bookDetail: book }}></BookInfo>
                                                 </div>
-                                                <div style={{marginBottom: `2em`}}>
+                                                <div style={{ marginBottom: `2em` }}>
                                                     {book.authorId !== uid ? <>
-                                                        <Button variant="outlined" startIcon={ status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
+                                                        <Button variant="outlined" startIcon={status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
-                                                        <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{minWidth: "170px", marginBottom: "0.5em" }}>
-                                                            {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
-                                                        </Button> </> : <></>
+                                                        {book.price > 0 ?
+                                                            <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
+                                                                {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
+                                                            </Button> : <></>} </> : <></>
                                                     }
                                                 </div>
                                                 <Grid container>
@@ -179,8 +180,8 @@ export default function BookDetail() {
                                     </div>
                                     <div className='container-bottom'>
                                         {showMore ?
-                                            <div dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div>
-                                            : <div dangerouslySetInnerHTML={{ __html: preview }}></div>
+                                            <div style={{ padding: "1em"}} dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div>
+                                            : <div style={{ padding: "1em"}} dangerouslySetInnerHTML={{ __html: preview }}></div>
                                         }
                                         {preview.length < 250 ? <></> :
                                             <button className="btn" onClick={() => setShowMore(!showMore)}>{showMore ? "Ít hơn" : "Mở rộng"}</button>
@@ -200,7 +201,9 @@ export default function BookDetail() {
                                     </div>
                                 </div>
                                 <div id='review'>
-                                    <Review book={{ bookId: id }}></Review>
+                                    {book.price === 0 || status.buyed === true ?
+                                        <Review book={{ bookId: id }}></Review>
+                                        : <></>}
                                     <ReviewList book={{ bookId: id }}></ReviewList>
                                 </div>
                             </div> : <></>
