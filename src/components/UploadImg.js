@@ -40,11 +40,11 @@ const FileInput = (props) => {
         const fileSizeKiloBytes = image.size / 1024
 
         if (fileSizeKiloBytes < MIN_FILE_SIZE) {
-            NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 1mb", 2000);
+            NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 100 Kb", 2000);
             return
         }
         if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-            NotificationManager.error("File quá lơn", "Tối đa là 5mb", 2000);
+            NotificationManager.error("File quá lơn", "Tối đa là 5 Mb", 2000);
             return
         }
 
