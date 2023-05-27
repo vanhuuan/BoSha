@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
 import { NotificationManager } from "react-notifications";
+import { imgService } from "../services/image.services";
 
 const FileInput = (props) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [imgD, setImgD] = useState("https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/DefaultCover.png?alt=media&token=8c3ccc1d-1316-46e6-9184-d2d0d2f012bd")
+    const [isDisa, setIsDisa] = useState(false)
 
     const MIN_FILE_SIZE = 100 // 100Kb
-    const MAX_FILE_SIZE = 5120 // 5MB
+    const MAX_FILE_SIZE = 6144 // 6MB
 
     useEffect(() => {
         if (selectedImage) {
@@ -27,6 +29,7 @@ const FileInput = (props) => {
     }
 
     const onChangeFile = event => {
+        setIsDisa(true)
         const image = event.target.files[0];
         if (!image) {
             NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
@@ -44,11 +47,28 @@ const FileInput = (props) => {
             return
         }
         if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-            NotificationManager.error("File quá lơn", "Tối đa là 5 Mb", 2000);
+            NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
             return
         }
-
-        setSelectedImage(image)
+        imgService.checkImg(image).then((rs) => {
+            if(rs.data){
+                console.log(rs)
+                if(rs.data.status === "Oke"){
+                    NotificationManager.success("Ảnh phù hợp", "Kiểm tra ảnh thành công", 2000);
+                    setSelectedImage(image)
+                }else{
+                    NotificationManager.error("Ảnh không phù hợp", "Kiểm tra ảnh thành công", 2000);
+                }
+            }else{
+                NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
+            }
+            setIsDisa(false);
+        }).catch((err) => {
+            console.log(err)
+            NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
+            setIsDisa(false);
+        })
+        
     }
 
     return (
@@ -68,7 +88,7 @@ const FileInput = (props) => {
                 onChange={(e) => onChangeFile(e)}
             />
             <label htmlFor="select-image" style={{ width: '100%' }}>
-                <Button variant="contained" color="primary" component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
+                <Button disabled={isDisa} variant="contained" color={isDisa === true ? "error" : "primary"} component="span" sx={{ width: '100%', marginTop: '0.5em' }}>
                     Thay ảnh
                 </Button>
             </label>
