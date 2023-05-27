@@ -29,6 +29,9 @@ const FileInput = (props) => {
     }
 
     const onChangeFile = event => {
+        if(isDisa === true){
+            return
+        }
         setIsDisa(true)
         const image = event.target.files[0];
         if (!image) {

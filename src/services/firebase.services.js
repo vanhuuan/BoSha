@@ -143,7 +143,7 @@ export const firebaseService = {
         })
 
     },
-    uploadAva: async (uid, img) => {
+    uploadAva: async (uid, img, callback) => {
         if (img == null)
             return;
 
@@ -161,6 +161,7 @@ export const firebaseService = {
                     console.log("Upload ava", error)
                 },
                 () => {
+                    callback("/user/userInfo")
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log(downloadURL)
                         return downloadURL

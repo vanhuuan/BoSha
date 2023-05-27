@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { NotificationManager } from 'react-notifications';
 import { firebaseService } from "../../services/firebase.services";
 import "../../css/edituser.css"
+import { imgService } from "../../services/image.services";
 
 export default function EditUser() {
     const [userInfo, setUserInfo] = useState({
@@ -32,6 +33,7 @@ export default function EditUser() {
     const [ava, setAva] = useState(avaState.src)
     const [isLoading, setIsLoading] = useState(true)
     const [imageUrl, setImageUrl] = useState(null);
+    const [isUploading, setIsUploading] = useState(false)
 
     const [nameHelp, setNameHelp] = useState("")
 
@@ -91,9 +93,8 @@ export default function EditUser() {
         console.log(userInfo)
 
         userService.updateUserInfo(data).then((rs) => {
-            firebaseService.uploadAva(userInfo.id, imageUrl).then((rs) => {
+            firebaseService.uploadAva(userInfo.id, imageUrl, back).then((rs) => {
                 NotificationManager.success("Cập nhật", 'thành công', 1000);
-                navigate("/user/userInfo")
             }).catch((e) => {
                 console.log(e)
                 NotificationManager.error("Cập nhật", 'Thất bại', 1000);
@@ -108,6 +109,10 @@ export default function EditUser() {
 
     const getAva = (avaUrl) => {
         setAva(avaUrl)
+    }
+
+    const back = (url) => {
+        navigate(url)
     }
 
     return (
@@ -126,11 +131,23 @@ export default function EditUser() {
                                     <Badge
                                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                         badgeContent={
-                                            <IconButton color="primary" aria-label="upload picture" component="label">
+                                            <IconButton disabled={isUploading} color={isUploading === false? "primary" : "error"} aria-label="upload picture" component="label">
                                                 <input hidden accept="image/*" type="file" onChange={(e) => {
+                                                    if(isUploading === true){
+                                                        return
+                                                    }
                                                     if (e.target.files[0]) {
-                                                        setImageUrl(URL.createObjectURL(e.target.files[0]));
-                                                        setAva(URL.createObjectURL(e.target.files[0]))
+                                                        setIsUploading(true)
+                                                        imgService.checkImg(e.target.files[0]).then((rs) => {
+                                                            if (rs.data.status === "Oke") {
+                                                                setImageUrl(URL.createObjectURL(e.target.files[0]));
+                                                                setAva(URL.createObjectURL(e.target.files[0]))
+                                                                NotificationManager.success("Ảnh phù hợp", "Kiểm tra ảnh thành công", 2000);
+                                                            }else{
+                                                                NotificationManager.error("Ảnh không phù hợp", "Kiểm tra ảnh thành công", 2000);
+                                                            }
+                                                            setIsUploading(false)
+                                                        })
                                                     }
                                                 }} />
                                                 <PhotoCamera />
@@ -163,7 +180,7 @@ export default function EditUser() {
                                     <Grid xs="12"> <Divider className="devider-grid" variant="middle"></Divider> </Grid>
                                     <Grid md={4} xs="12">
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <Typography variant="h5"  className="title" > Tên người dùng </Typography>
+                                            <Typography variant="h5" className="title" > Tên người dùng </Typography>
                                         </Box>
                                     </Grid>
                                     <Grid md={6} xs="12">
@@ -184,7 +201,7 @@ export default function EditUser() {
                                     <Grid xs="12"> <Divider variant="middle"></Divider> </Grid>
 
                                     <Grid md={4} xs="12">
-                                        <Typography variant="h5"  className="title" >Email</Typography>
+                                        <Typography variant="h5" className="title" >Email</Typography>
                                     </Grid>
                                     <Grid md={6} xs="12">
                                         <FormControl className="formCt" fullWidth sx={{ m: 1 }}>
