@@ -267,7 +267,7 @@ function Header() {
                                                             {item.name}
                                                         </div>
                                                         <div className='header__toolbar-search-item-chapter'>
-                                                            {item.lastestChapIndex}
+                                                            Tập {item.lastestChapIndex}
                                                         </div>
                                                     </div>
                                                 </a>
