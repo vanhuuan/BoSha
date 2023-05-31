@@ -175,7 +175,7 @@ export default function SearchBook() {
                     <div style={{ margin: "1em 0" }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={2} lg={2}>
-                                <InputLabel id="demo-simple-select-helper-label">Xắp sếp theo</InputLabel>
+                                <InputLabel id="demo-simple-select-helper-label">Sắp xếp theo</InputLabel>
                             </Grid>
                             <Grid item xs={12} md={4} lg={4}>
                                 <Select
