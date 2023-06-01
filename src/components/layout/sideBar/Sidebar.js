@@ -1,11 +1,8 @@
 import React from 'react'
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import LogoOrange from '../../../../assets/images/LogoOrange.png'
 import '../../../../css/header.css'
 
 import { NavLink } from 'react-router-dom';

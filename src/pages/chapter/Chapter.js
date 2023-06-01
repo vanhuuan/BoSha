@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
-import { ConstructionOutlined } from "@mui/icons-material";
 import { bookService } from "../../services/books.services";
 
 const data = {

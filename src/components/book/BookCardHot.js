@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
-import ListIcon from '@mui/icons-material/List';
+import React from "react";
 import { Link } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';

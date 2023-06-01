@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
 // import './login.css'
-import LogoOrange from '../../assets/images/LogoOrange.png'
 import { Box, Button, TextField, } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';

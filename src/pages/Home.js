@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {
-  NavLink,
-  Link,
   useNavigate
 } from "react-router-dom";
-import EditorImage from '../components/editor/editor';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { BorderAll } from '@mui/icons-material';
-import { Grid, LinearProgress, Paper, Typography } from '@mui/material';
+import { Grid, LinearProgress } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
-import BookCardHot from '../components/book/BookCardHot'
-import RecentlyBookCard from '../components/RecentlyBookCard';
 import "../css/home.css";
 import "../css/media-scroll.css";
-import CircularProgress from '@mui/material/CircularProgress';
-import { userBookService } from '../services/userBook.services';
 import { bookService } from '../services/books.services';
-import { useSearchParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Carousel from 'react-material-ui-carousel';
 
 const Home = () => {
-  let navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState({
@@ -92,7 +81,7 @@ const Home = () => {
   useEffect(() => {
     const load = async () => {
       if (!pageNumber) {
-        pageNumber = 1
+        setPageNumber(1)
       }
       const rs = bookService.booksNew(pageNumber, 12, "Name", "fghdf").then((rs) => {
         console.log(rs.data)

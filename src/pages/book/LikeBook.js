@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {
-    NavLink,
-    Link,
     useNavigate
 } from "react-router-dom";
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { BorderAll } from '@mui/icons-material';
 import { Grid, LinearProgress, Typography } from '@mui/material';
 import BookCard2 from '../../components/book/BookCard2';
 import "../../css/home.css";
-import CircularProgress from '@mui/material/CircularProgress';
 import { userBookService } from '../../services/userBook.services';
-import { bookService } from '../../services/books.services';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NotificationManager } from 'react-notifications';
 
@@ -25,11 +20,8 @@ const LikeBook = () => {
         "data": []
     })
     const [data, setData] = useState([])
-    const [dataHot, setDataHot] = useState([])
     const [pageNumber, setPageNumber] = useState(0)
     const [isLike, setIsLike] = useState(true)
-    const [colorLike, setColorLike] = useState("rgb(157, 23, 77)")
-    const [colorBuy, setColorBuy] = useState("gray")
 
     const changeLike = (val) => {
         console.log(val)

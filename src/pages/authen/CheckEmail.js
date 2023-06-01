@@ -1,14 +1,14 @@
 import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { authService } from '../../services/auth.services';
-import { NavLink, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 const ForgotPassword = () => {
   const [email, setEmail] = useState('')
   let navigate = useNavigate()
   const handleSendEmail = () => {
     authService.forgetPass(email);
     alert("Vui lòng kiểm tra Email đã đăng ký để có hướng dẫn tiếp theo");
-    // navigate("/login")
+    navigate("/login")
   }
   return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>

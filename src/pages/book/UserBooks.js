@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import BookCard2 from '../../components/book/BookCard2'
 import { useNavigate } from 'react-router-dom';
 import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
-import { Button, InputLabel, NativeSelect, Pagination, MenuItem, Select, Grid, LinearProgress } from '@mui/material';
+import { Button, Grid, LinearProgress } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const UserBook = () => {
-    const [searchInput, setSearchInput] = useState('')
     const [isLoading, setIsLoading] = useState(true)
-    const [searchSent, setSearchSent] = useState(false)
     const [mangaList, setMangaList] = useState({
         "total": 81,
         "pageIndex": 1,
@@ -19,10 +16,7 @@ const UserBook = () => {
         "data": []
     })
     const [data, setData] = useState([])
-    const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1)
-
-    let navigate = useNavigate();
 
     useEffect(() => {
         const load = async () => {

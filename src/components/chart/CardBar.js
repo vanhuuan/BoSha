@@ -2,8 +2,7 @@ import {
   Card,
   CardContent,
   Typography,
-  Divider,
-  Paper
+  Divider
 } from "@mui/material";
 import React from "react";
 

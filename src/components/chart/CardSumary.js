@@ -1,6 +1,5 @@
-import { Card, CardContent, Typography, Divider, CardMedia, Box, styled } from "@mui/material";
+import { Card, CardContent, Typography, Divider, CardMedia, Box } from "@mui/material";
 import React from "react";
-import { makeStyles } from "@mui/material";
 
 function CardSummary({ title, value, footer }) {
   return (

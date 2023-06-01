@@ -1,8 +1,7 @@
 import React from "react";
-import { ArrowBackIos, Camera, CameraAlt, CheckCircle, EditLocation, EmailOutlined, Person, Person2, PhoneAndroidOutlined, PhotoCamera, SupervisedUserCircle } from "@mui/icons-material";
-import { Box, CircularProgress, Divider, Grid, IconButton, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, styled, Badge, Avatar, LinearProgress } from "@mui/material";
+import { ArrowBackIos,  CheckCircle, EmailOutlined, Person, Person2, PhoneAndroidOutlined, PhotoCamera } from "@mui/icons-material";
+import { Box, Divider, Grid, IconButton, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, Badge, Avatar, LinearProgress } from "@mui/material";
 import { useState } from "react";
-import EditIcon from '@mui/icons-material/Edit';
 import { useEffect } from "react";
 import { userService } from "../../services/userServices";
 import { useNavigate } from "react-router-dom";

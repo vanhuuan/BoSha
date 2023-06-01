@@ -1,13 +1,6 @@
 import React, { useEffect, useState, forwardRef } from "react";
-import ReactDOM from "react-dom";
-import { CircularProgress, Pagination, Typography } from "@mui/material";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import FormHelperText from '@mui/joy/FormHelperText';
-import Textarea from '@mui/joy/Textarea';
-
-import { Divider, Avatar, Grid, Paper } from "@mui/material";
+import { CircularProgress, Pagination } from "@mui/material";
+import { Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
 import { commentService } from "../services/comment.services";

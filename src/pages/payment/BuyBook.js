@@ -3,27 +3,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CircularProgress, TextField } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
 import { PaymentOutlined } from "@mui/icons-material";
-import { IconButton, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import { buyBookService } from "../../services/buybook.services";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -90,7 +83,6 @@ const BuyBook = () => {
     const location = useLocation();
     const data = location.state;
     const bookId = data.bookId;
-    const bookName = data.bookName
 
     const [checkoutInfo, setCheckoutInfo] = useState()
     const [buyLink, setBuyLink] = useState("")

@@ -9,7 +9,6 @@ import { Rating, Typography } from '@mui/material';
 import Picker, { Categories, EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import "../css/Comment.css";
 import { commentService } from '../services/comment.services';
-import { Message } from '@mui/icons-material';
 
 function Comment(props) {
     const [italic, setItalic] = React.useState(false);

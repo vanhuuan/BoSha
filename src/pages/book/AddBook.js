@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import FileInput from '../../components/UploadImg';
 import { Grid, Typography, TextField, Box, Button } from '@mui/material';
 import RadioPrice from '../../components/RadioPrice';
 import MultipleSelect from '../../components/SelectMulti';
-import EditorImage, { EditorDescription } from '../../components/editor/editor';
-import Switch from '@mui/material/Switch';
+import { EditorDescription } from '../../components/editor/editor';
 import {
-  NavLink,
-  Link,
   useNavigate
 } from "react-router-dom";
 import { NotificationManager } from 'react-notifications';
 import '../../css/AddBook.css'
-import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
 

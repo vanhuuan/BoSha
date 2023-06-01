@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import { purple } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 
 const primary = '#89D5C9'; // #f44336

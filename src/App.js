@@ -23,7 +23,6 @@ import Chapter from './pages/chapter/Chapter';
 import PaymentSuccess from './pages/payment/PaymentSuccess';
 import PaymentFaild from './pages/payment/PaymentFailed';
 import AddChapter from "./pages/chapter/AddChapter";
-import { NotificationContainer } from 'react-notifications';
 import UpdateChapter from "./pages/chapter/UpdateChapter";
 import BuyBook from "./pages/payment/BuyBook";
 import 'react-notifications/lib/notifications.css';

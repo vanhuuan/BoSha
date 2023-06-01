@@ -1,6 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import axios from 'axios'
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';

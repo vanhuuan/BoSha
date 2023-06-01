@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slide, Slider, TextField } from "@mui/material";
+import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slider, TextField } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { userBookService } from "../../services/userBook.services";
@@ -46,14 +46,12 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 
 export default function SearchBook() {
     const [isLoadingCate, setIsLoadingCate] = useState(true)
-    const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState([])
     const [sortBy, setSortBy] = useState("Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
     const [searchInput, setSearchInput] = useState('')
-    const [searchSent, setSearchSent] = useState(false)
     const [pageNumber, setPageNumber] = useState(1)
     const [simple, setSimple] = useState(false)
 
@@ -70,7 +68,6 @@ export default function SearchBook() {
 
     const load = async () => {
         setIsLoadingCate(true)
-        setIsLoading(true)
         const rs = await userBookService.categories();
         console.log(rs)
         if (rs) {
@@ -104,7 +101,6 @@ export default function SearchBook() {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
-            setIsLoading(false)
             setIsSearching(false)
         })
     }
@@ -116,16 +112,12 @@ export default function SearchBook() {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
-            setIsLoading(false)
             setIsSearching(false)
         })
     }
 
     const onSearchInputChange = e => {
         setSearchInput(e.target.value)
-        if (e.target.value.length === 0) {
-            setSearchSent(false)
-        }
     }
 
     const fetchData = () => {

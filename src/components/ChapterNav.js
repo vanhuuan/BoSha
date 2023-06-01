@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Select, MenuItem } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import ListIcon from '@mui/icons-material/List';
 import { Link } from 'react-router-dom';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import "../css/ChapterNav.css";
@@ -12,12 +11,8 @@ const ChapterNav = (props) => {
     const [isLoading, setIsLoading] = useState(true)
     const id = props.chapter.book;
     const chapId = props.chapter.chap;
-    const [age, setAge] = useState(id)
     const [next, setNext] = React.useState(chapId);
     const [pre, setPre] = React.useState(chapId)
-    const handleChange = (e) => {
-        setAge(e.target.value);
-    };
     const resultRef = props.resultRef
     const [chapters, setChapters] = React.useState([])
     let navigate = useNavigate()
@@ -64,7 +59,6 @@ const ChapterNav = (props) => {
                 }
 
             <Select
-                onChange={handleChange}
                 displayEmpty
                 className="chapter-nav__select-item"
                 value={chapId}

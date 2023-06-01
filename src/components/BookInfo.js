@@ -1,19 +1,9 @@
-import React, { useState } from "react";
-import { Typography, Grid, Button, InputLabel, OutlinedInput, InputAdornment } from "@mui/material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ForumIcon from '@mui/icons-material/Forum';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import ShareIcon from '@mui/icons-material/Share';
-import { Navigator } from "react-router-dom";
-import { NotificationManager } from 'react-notifications';
+import React from "react";
+import { Typography } from "@mui/material";
 
 const BookInfo = (props) => {
     const book = props.book.bookDetail
     console.log("book info:", book)
-    const share = () =>{ 
-        NotificationManager.success(book.name, 'Đã sao chép', 1000);
-        navigator.clipboard.writeText(`/Book/${book.id}`);
-    }
     return (
         <>
             <Typography style={{marginBottom: `0.5em`}}>

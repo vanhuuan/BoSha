@@ -28,7 +28,7 @@ const BottomInfo = (props) => {
     const date1 = new Date(book.updateDate);
 
     const moment = require('moment');
-    let localeData = moment.updateLocale('vi', {
+    moment.updateLocale('vi', {
         relativeTime: {
             future: "%s",
             past: "%s giây trước",

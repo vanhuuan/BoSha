@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { Grid, Box, Typography, TextField, Radio, RadioGroup, FormControlLabel, Button, InputLabel, OutlinedInput, IconButton } from '@mui/material'
+import { Grid, Box, Typography, Button, IconButton } from '@mui/material'
 import ListChapter from "../../components/ListChapter";
-import CommentList from "../../components/CommentList";
 import BookInfo from "../../components/BookInfo";
 import BottomInfo from "../../components/BottomInfo";
 import BookCategories from "../../components/book/BookCategories";
-import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import EditIcon from '@mui/icons-material/Edit';
 import { userBookService } from "../../services/userBook.services";
 import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCart, AddShoppingCartOutlined, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { AddShoppingCartOutlined, StarBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ForumIcon from '@mui/icons-material/Forum';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ShareIcon from '@mui/icons-material/Share';
@@ -83,7 +80,7 @@ export default function BookDetail() {
     const data = { bookId: book.id, bookName: book.name }
 
     const buyBook = (e) => {
-        if (status.buyed == false) {
+        if (status.buyed === false) {
             navigate("/BuyBook", { state: data })
         }
     }

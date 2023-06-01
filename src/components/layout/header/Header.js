@@ -1,8 +1,5 @@
-import LogoTurquoise from '../../../assets/images/LogoTurquoise.png'
 import '../../../css/header.css'
 import {
-    NavLink,
-    Link,
     useNavigate
 } from "react-router-dom";
 import * as React from 'react';
@@ -18,10 +15,8 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Grid } from "@mui/material";
 import { userBookService } from '../../../services/userBook.services';
 import { useEffect } from 'react';
-import zIndex from '@mui/material/styles/zIndex';
 import SearchIcon from '@mui/icons-material/Search';
 import { bookService } from '../../../services/books.services';
 import { firebaseService } from '../../../services/firebase.services';

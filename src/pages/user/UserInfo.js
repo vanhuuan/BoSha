@@ -1,5 +1,5 @@
-import { BarChart, EditLocation, EmailOutlined, Person, Person2, PhoneAndroidOutlined } from "@mui/icons-material";
-import { Avatar, Box, CircularProgress, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, LinearProgress, OutlinedInput, TextField, Typography } from "@mui/material";
+import { BarChart, EmailOutlined, Person, Person2, PhoneAndroidOutlined } from "@mui/icons-material";
+import { Avatar, Box, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, LinearProgress, OutlinedInput, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
@@ -28,14 +28,6 @@ export default function UserInfo() {
     })
     const [ava, setAva] = useState("")
     const [isLoading, setIsLoading] = useState(true)
-
-    function onClose() {
-        setAvaState({ preview: null })
-    }
-
-    function onCrop(preview) {
-        setAvaState({ preview })
-    }
 
     let navigate = useNavigate()
 

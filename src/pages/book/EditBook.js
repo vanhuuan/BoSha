@@ -3,33 +3,20 @@ import FileInput from '../../components/UploadImg';
 import { Grid, Typography, TextField, Box, Button } from '@mui/material';
 import RadioPrice from '../../components/RadioPrice';
 import MultipleSelect from '../../components/SelectMulti';
-import EditorImage, { EditorDescription } from '../../components/editor/editor';
+import { EditorDescription } from '../../components/editor/editor';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useParams } from 'react-router-dom';
 import {
-    NavLink,
-    Link,
     useNavigate
 } from "react-router-dom";
 
 import '../../css/AddBook.css'
-import { EditorState } from 'draft-js';
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
 import AlertRoot from '../../components/notification/AlertRoot';
 import { NotificationManager } from 'react-notifications';
-
-function getStyles(name, personName, theme) {
-    return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -188,7 +175,7 @@ const EditBook = () => {
                                                 <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
                                             </div>
                                             <div>
-                                                {state === "Suspend" ? <></> : <>
+                                                {state === "Block" ? <>Truyện đã bị người quản trị chặn vì </> : <>
                                                     <InputLabel id="demo-select-small-label">Tình trạng</InputLabel>
                                                     <Select
                                                         labelId="demo-select-small-label"
@@ -199,7 +186,7 @@ const EditBook = () => {
                                                     >
                                                         <MenuItem value={"Unfinish"}>Chưa hoàn thành</MenuItem>
                                                         <MenuItem value={"Finish"}>Đã hoàn thành</MenuItem>
-                                                        <MenuItem value={"Suspend"}>Bị ẩn</MenuItem>
+                                                        <MenuItem value={"Suspend"}>Tạm dừng</MenuItem>
                                                     </Select>
                                                 </>
                                                 }

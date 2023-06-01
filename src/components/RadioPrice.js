@@ -4,7 +4,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import { OutlinedInput } from "@mui/material";
@@ -84,7 +83,7 @@ export default function RadioPrice(props) {
                     label="Có phí"
                 />
             </RadioGroup>
-            {selectedValue == 2 ?
+            {selectedValue === 2 ?
                 <FormControl fullWidth margin="normal">
                     <InputLabel htmlFor="outlined-adornment-amount">Giá tiền</InputLabel>
                     <OutlinedInput

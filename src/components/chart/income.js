@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
 import { CircularProgress, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import moment from 'moment'
 import ReactApexChart from 'react-apexcharts'
 import abbrNum from '../../services/numberHelper';
 
 export default function Income({ chartsData, title, label }) {
   const [isLoading, setLoading] = useState(false)
-  const [lbText, setLbText] = useState(label)
-  const [data, setData] = useState()
   const [revenueList, setRevenueList] = useState([65, 59, 80, 81, 56, 65, 59, 80, 81, 56, 22, 22])
   const [listManga, setListManga] = useState(["truyện 1", "truyện 2", "truyện 3", "truyện 4dfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfsdfgdfgdsfgdfg", "truyện 5", "truyện 6", "truyện 7", "truyện 8", "truyện 9", "truyện 10", "truyện 11", "truyện 12"])
   const [labelText, setLabelText] = useState("Lượt xem")

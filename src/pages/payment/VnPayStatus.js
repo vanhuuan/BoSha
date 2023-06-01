@@ -7,7 +7,6 @@ import AlertTitle from '@mui/material/AlertTitle';
 import { buyBookService } from '../../services/buybook.services';
 import { Box, Grid, LinearProgress, Typography } from '@mui/material';
 import { NotificationManager } from 'react-notifications';
-import { CircularProgress } from '@mui/material';
 
 const VnpayStatus = () => {
     const [searchParams] = useSearchParams();
@@ -22,7 +21,7 @@ const VnpayStatus = () => {
         console.log("BuyId", buyId)
         buyBookService.getBuyBookStatus(buyId).then((rs) => {
             console.log(rs)
-            if (rs.data.status == "Suscess") {
+            if (rs.data.status === "Suscess") {
                 setRs("Thành công")
                 NotificationManager.success("Thanh toán thành công", "Giao dịch thành công", 2000)
                 setIsLoading(false)
@@ -31,7 +30,7 @@ const VnpayStatus = () => {
                 }, 2000)
 
                 navigate("/book/" + rs.data.bookId)
-            } else if (rs.data.status == "Faild") {
+            } else if (rs.data.status === "Faild") {
                 setRs("Thất bại")
                 NotificationManager.error("Thanh toán không thành công", "Giao dịch không thành công", 2000)
                 setIsLoading(false)
