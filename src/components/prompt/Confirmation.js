@@ -27,10 +27,10 @@ const Confirmation = ({
                 </Modal.Header>
                 <Modal.Body>{confirmation}</Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => proceed(false)}>{cancelLabel}</Button>
+                    <Button color="error" onClick={() => proceed(false)}>{cancelLabel}</Button>
                     <Button
                         className="button-l"
-                        bsStyle="primary"
+                        color="primary"
                         onClick={() => proceed(true)}
                     >
                         {okLabel}
