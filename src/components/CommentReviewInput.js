@@ -11,6 +11,7 @@ import "../css/Comment.css";
 import { commentService } from '../services/comment.services';
 import { Delete, Edit } from '@mui/icons-material';
 import { NotificationManager } from 'react-notifications';
+import { confirm } from './prompt/Confirmation';
 
 function Comment(props) {
     const [italic, setItalic] = React.useState(false);
@@ -91,11 +92,14 @@ function Comment(props) {
         })
     }
 
-    const deleteComment= () => {
+    const deleteComment = async () => {
         var check = window.confirm("Bạn có chắc muốn xóa comment chứ!")
         if (check === true) {
             commentService.deleteUserChapterComment(commentEd.id)
         }
+        if (await confirm("Are your sure?")) {
+            commentService.deleteUserChapterComment(commentEd.id)
+          }
     }
 
     const onEditComment = () => {
