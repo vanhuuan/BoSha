@@ -119,9 +119,9 @@ function Comment(props) {
                 console.log("comment:", rs.data)
                 setCommentEd(rs.data)
                 setText(rs.data.text)
-                setIsReviewed(true)
+                setIsCommented(true)
             }).catch((err) => {
-                setIsReviewed(false)
+                setIsCommented(false)
                 console.log(err)
             })
         }).catch((err) => {

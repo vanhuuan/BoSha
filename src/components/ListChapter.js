@@ -27,7 +27,11 @@ export default function ListChapter(props) {
     console.log(props.book.canBuyed)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
+    
     if (rs) {
+      if(props.book.canEdit !== true){
+        rs.data = rs.data.filter((x) => { return x.state === true })
+      }
       setChapters(rs.data)
       if (rs.data.length > 10) {
         setShowMore(true)
