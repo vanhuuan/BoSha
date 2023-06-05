@@ -1,4 +1,4 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, IconButton } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CommentList from "../../components/CommentList";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -9,6 +9,7 @@ import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
 import { bookService } from "../../services/books.services";
+import { LockPerson } from "@mui/icons-material";
 
 const data = {
     "bookId": "643656848e27bd8b116546e9",
@@ -92,18 +93,29 @@ const Chapter = () => {
         })
     }, [chapterId])
 
+    const buyBook = (e) => {
+        if (status.buyed === false) {
+            navigate("/BuyBook", { state: data })
+        }
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
                     {isLoading === false ? <>
-                        <div style={{textAlign: "center" }}>
+                        <div style={{ textAlign: "center" }}>
                             <Typography>{`${chapterDetail.name}`}</Typography>
                             <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
-                            <div dangerouslySetInnerHTML={{ __html: chap }} style={{textAlign: "left"}}></div>
+                            {status.buyed === true || status.canEdit === true ?
+                                <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
+                                : <IconButton color="primary" onClick={buyBook}>
+                                    <LockPerson /> Hãy mua truyện này.
+                                </IconButton>
+                            }
                         </div>
 
                         <Comment chap={{ chapId: chapterId }}></Comment>

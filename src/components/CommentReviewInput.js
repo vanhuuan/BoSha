@@ -5,10 +5,12 @@ import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Textarea from '@mui/joy/Textarea';
 import { useState } from 'react';
-import { Rating, Typography } from '@mui/material';
+import { IconButton, Paper, Rating, Typography } from '@mui/material';
 import Picker, { Categories, EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import "../css/Comment.css";
 import { commentService } from '../services/comment.services';
+import { Delete, Edit } from '@mui/icons-material';
+import { NotificationManager } from 'react-notifications';
 
 function Comment(props) {
     const [italic, setItalic] = React.useState(false);
@@ -17,6 +19,7 @@ function Comment(props) {
     const [text, setText] = React.useState('');
     const [isCommented, setIsCommented] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const [edit, setEdit] = useState(false)
     const [commentEd, setCommentEd] = useState({
         "id": "645117b7b226be32c08b5dd6",
         "userName": "An Văn",
@@ -43,6 +46,7 @@ function Comment(props) {
         commentService.getUserChapterComment(id).then((rs) => {
             console.log("comment:", rs.data)
             setCommentEd(rs.data)
+            setText(rs.data.text)
             setIsCommented(true)
             setIsLoading(false)
         }).catch((err) => {
@@ -60,8 +64,12 @@ function Comment(props) {
     };
 
     const sendComment = () => {
+        if(edit === true){
+            sendEdit()
+            return
+        }
         if (text.length < 5) {
-            setMessage("Độ dài tối thiểu 5 ký tự")
+            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {
@@ -73,10 +81,49 @@ function Comment(props) {
             commentService.getUserChapterComment(id).then((rs) => {
                 console.log("comment:", rs.data)
                 setCommentEd(rs.data)
+                setText(rs.data.text)
                 setIsCommented(true)
                 setIsLoading(false)
             }
             )
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const deleteComment= () => {
+        var check = window.confirm("Bạn có chắc muốn xóa comment chứ!")
+        if (check === true) {
+            commentService.deleteUserChapterComment(commentEd.id)
+        }
+    }
+
+    const onEditComment = () => {
+        if (isCommented == true) {
+            setIsCommented(false)
+            setEdit(true)
+        }
+    }
+
+    const sendEdit = () => {
+        if (text.length < 5) {
+            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            return
+        }
+        var data = {
+            "id": commentEd.id,
+            "text": text
+        }
+        commentService.updateCommentChapter(data).then((rs) => {
+            commentService.getUserBookReview(id).then((rs) => {
+                console.log("comment:", rs.data)
+                setCommentEd(rs.data)
+                setText(rs.data.text)
+                setIsReviewed(true)
+            }).catch((err) => {
+                setIsReviewed(false)
+                console.log(err)
+            })
         }).catch((err) => {
             console.log(err)
         })
@@ -128,6 +175,9 @@ function Comment(props) {
                             <Typography level="body3">
                                 {text.length} / 300 từ
                             </Typography>
+                            {edit === true ?
+                                <Button sx={{}} onClick={() => { setIsCommented(true); setEdit(false); setText(commentEd.text) }}>Bỏ</Button>
+                                : <></>}
                             <Button sx={{ ml: 'auto' }} onClick={sendComment}>Gửi</Button>
                         </Box>
                     }
@@ -139,6 +189,18 @@ function Comment(props) {
                 /> </> : <> {isLoading === false ? <Textarea
                     minRows={3}
                     disabled
+                    endDecorator={
+                        <Box sx={{ justifyContent: 'space-between' }}>
+                            <Box>
+                                <IconButton color='error' onClick={deleteComment}>
+                                    <Delete /> /
+                                </IconButton>
+                                <IconButton color='primary' onClick={onEditComment}>
+                                    <Edit />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    }
                     value={commentEd.text}
                     style={{ color: `black` }}>
                 </Textarea> : <> </>
@@ -155,6 +217,7 @@ function Review(props) {
     const [text, setText] = React.useState('');
     const [star, setStar] = React.useState(5);
     const [isReviewed, setIsReviewed] = useState(false)
+    const [edit, setEdit] = useState(false)
     const [review, setReview] = useState({
         "id": "645117b7b226be32c08b5dd6",
         "userName": "An Văn",
@@ -172,8 +235,8 @@ function Review(props) {
         if (texts.length < 1001) {
             setText(texts)
         }
-        if (texts.length > 5) {
-            setMessage("")
+        if (texts.length < 5) {
+            setMessage(" ")
         }
     }
 
@@ -181,6 +244,8 @@ function Review(props) {
         commentService.getUserBookReview(id).then((rs) => {
             console.log("review:", rs.data)
             setReview(rs.data)
+            setText(rs.data.text)
+            setStar(rs.data.star)
             setIsReviewed(true)
         }).catch((err) => {
             setIsReviewed(false)
@@ -189,8 +254,12 @@ function Review(props) {
     }, [])
 
     const sendReview = () => {
+        if( edit === true ){
+            sendEdit()
+            return
+        }
         if (text.length < 5) {
-            setMessage("Độ dài tối thiểu 5 ký tự");
+            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {
@@ -219,6 +288,44 @@ function Review(props) {
         let emoji = String.fromCodePoint(...codesArray);
         setInput(text + emoji);
     };
+
+    const deleteReview = () => {
+        var check = window.confirm("Bạn có chắc muốn xóa review chứ!")
+        if (check === true) {
+            commentService.deleteUserBookReview(id)
+        }
+    }
+
+    const onEditReview = () => {
+        if (isReviewed == true) {
+            setIsReviewed(false)
+            setEdit(true)
+        }
+    }
+
+    const sendEdit = () => {
+        if (text.length < 5) {
+            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            return
+        }
+        var data = {
+            "id": review.id,
+            "text": text,
+            "star": star
+        }
+        commentService.updateReviewBook(data).then((rs) => {
+            commentService.getUserBookReview(id).then((rs) => {
+                console.log("comment:", rs.data)
+                setReview(rs.data)
+                setIsReviewed(true)
+            }).catch((err) => {
+                setIsReviewed(false)
+                console.log(err)
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     return (
         <FormControl>
@@ -275,7 +382,10 @@ function Review(props) {
                                     }}
                                 />
                             </div>
-                            <Button sx={{}} onClick={sendReview}>Gửi</Button>
+                            {edit === true ?
+                                <Button sx={{}} onClick={() => { setIsReviewed(true); setEdit(false); setText(review.text) }}>Bỏ</Button>
+                                : <></>}
+                            <Button sx={{ marginRight: "1em" }} onClick={sendReview}>Gửi</Button>
                         </Box>
                     }
                     sx={{
@@ -286,11 +396,23 @@ function Review(props) {
                 />
                 : <Textarea value={review.text}
                     disabled
-                    endDecorator={<Rating
-                        name="simple-controlled"
-                        value={review.star}
-                        readOnly
-                    />}
+                    endDecorator={
+                        <Box sx={{ justifyContent: 'space-between' }}>
+                            <Rating
+                                name="simple-controlled"
+                                value={review.star}
+                                readOnly
+                            />
+                            <Box>
+                                <IconButton color='error' onClick={deleteReview}>
+                                    <Delete /> /
+                                </IconButton>
+                                <IconButton color='primary' onClick={onEditReview}>
+                                    <Edit />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    }
                     style={{ color: `black` }}>
                 </Textarea>}
         </FormControl>

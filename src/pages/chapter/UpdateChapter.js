@@ -75,7 +75,7 @@ const UpdateChapter = () => {
 
     let navigate = useNavigate()
 
-    const UpdateChapter = (props) => {
+    const UpdateChapter = () => {
         const data = {
             "bookId": chapterDetail.bookId,
             "chapterName": name,
@@ -139,7 +139,7 @@ const UpdateChapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            // navigate(-1);
+            navigate("/NotFound");
         })
     }, [])
 
