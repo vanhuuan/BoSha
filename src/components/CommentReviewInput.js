@@ -65,12 +65,12 @@ function Comment(props) {
     };
 
     const sendComment = () => {
-        if(edit === true){
+        if (edit === true) {
             sendEdit()
             return
         }
         if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {
@@ -93,13 +93,14 @@ function Comment(props) {
     }
 
     const deleteComment = async () => {
+        console.log("Hiii")
         var check = window.confirm("Bạn có chắc muốn xóa comment chứ!")
         if (check === true) {
             commentService.deleteUserChapterComment(commentEd.id)
         }
         if (await confirm("Are your sure?")) {
             commentService.deleteUserChapterComment(commentEd.id)
-          }
+        }
     }
 
     const onEditComment = () => {
@@ -111,7 +112,7 @@ function Comment(props) {
 
     const sendEdit = () => {
         if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {
@@ -192,17 +193,16 @@ function Comment(props) {
                     }}
                 /> </> : <> {isLoading === false ? <Textarea
                     minRows={3}
-                    disabled
+                    readOnly
                     endDecorator={
                         <Box sx={{ justifyContent: 'space-between' }}>
-                            <Box>
-                                <IconButton color='error' onClick={deleteComment}>
-                                    <Delete /> /
-                                </IconButton>
-                                <IconButton color='primary' onClick={onEditComment}>
-                                    <Edit />
-                                </IconButton>
-                            </Box>
+                            <IconButton color='error' onClick={deleteComment}>
+                                <Delete />
+                            </IconButton>
+                            /
+                            <IconButton color='primary' onClick={onEditComment}>
+                                <Edit />
+                            </IconButton>
                         </Box>
                     }
                     value={commentEd.text}
@@ -258,12 +258,12 @@ function Review(props) {
     }, [])
 
     const sendReview = () => {
-        if( edit === true ){
+        if (edit === true) {
             sendEdit()
             return
         }
         if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {
@@ -309,7 +309,7 @@ function Review(props) {
 
     const sendEdit = () => {
         if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập","Độ dài tối thiểu 5 ký tự", 3000)
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
             return
         }
         var data = {

@@ -83,9 +83,13 @@ const Chapter = () => {
                 setDateUpdate(a)
                 bookService.bookStatus(rs.data.bookId).then((rs) => {
                     console.log(rs)
-                    setStatus(rs)
-                }).catch(console.error)
-                setIsLoading(false)
+                    setStatus(rs.data)
+                    setIsLoading(false)
+                }).catch((e) => {
+                    setIsLoading(false)
+                    console.error(e)
+                })
+                
             }
         ).catch((err) => {
             console.log(err)
@@ -100,7 +104,7 @@ const Chapter = () => {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, marginTop: "1em" }}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
@@ -112,8 +116,8 @@ const Chapter = () => {
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             {status.buyed === true || status.canEdit === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
-                                : <IconButton color="primary" onClick={buyBook}>
-                                    <LockPerson /> Hãy mua truyện này.
+                                : <IconButton sx={{ color: "#89D5C9" }} onClick={buyBook}>
+                                    <LockPerson style={{ marginLeft: "1em"}} /> Hãy mua truyện này.
                                 </IconButton>
                             }
                         </div>
