@@ -45,18 +45,18 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function SearchBook() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState([])
     const [sortBy, setSortBy] = useState("Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
-    const [searchInput, setSearchInput] = useState('')
+    const [searchInput, setSearchInput] = useState(searchParams.get("search"))
     const [pageNumber, setPageNumber] = useState(1)
     const [simple, setSimple] = useState(false)
 
     const [isSearching, setIsSearching] = useState(false)
-    const [searchParams, setSearchParams] = useSearchParams();
     const [range, setRange] = React.useState([0, 1000000]);
 
     const [mangaList, setMangaList] = useState({

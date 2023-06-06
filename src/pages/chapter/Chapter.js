@@ -12,13 +12,16 @@ import { bookService } from "../../services/books.services";
 import { LockPerson } from "@mui/icons-material";
 
 const data = {
-    "bookId": "643656848e27bd8b116546e9",
-    "chapterId": "643656888e27bd8b116546fa",
-    "name": "Tập 17",
-    "chapterNumber": 17,
-    "created": "2023-04-12T06:58:16.574Z",
-    "updated": "2023-04-12T06:58:16.574Z",
-    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656848e27bd8b116546e9%2F643656888e27bd8b116546fa.html?alt=media&token=776995dd-485f-48ed-ac04-8dcff7984a92"
+    "bookId": "643657ac8e27bd8b11654e30",
+    "chapterId": "643657ad8e27bd8b11654e35",
+    "canEdit": true,
+    "name": "Tập 5",
+    "chapterNumber": 5,
+    "created": "2023-04-12T07:03:09.654Z",
+    "updated": "2023-04-12T07:03:09.654Z",
+    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643657ac8e27bd8b11654e30%2F643657ad8e27bd8b11654e35.html?alt=media&token=2c6d0b9d-a614-4fad-9b37-9039dd97edf4",
+    "isDemo": false,
+    "state": true
 }
 
 const Chapter = () => {
@@ -114,7 +117,7 @@ const Chapter = () => {
                             <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
-                            {status.buyed === true || status.canEdit === true ?
+                            {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
                                 : <IconButton sx={{ color: "#89D5C9" }} onClick={buyBook}>
                                     <LockPerson style={{ marginLeft: "1em"}} /> Hãy mua truyện này.

@@ -11,12 +11,13 @@ import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCartOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { AddShoppingCartOutlined, LoginOutlined, StarBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
 import ForumIcon from '@mui/icons-material/Forum';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ShareIcon from '@mui/icons-material/Share';
 import { NotificationManager } from 'react-notifications';
+import { DescriptionImage } from "../../components/DescriptionImage";
 
 export default function BookDetail() {
     const { id } = useParams();
@@ -43,6 +44,7 @@ export default function BookDetail() {
     })
     const [preview, setPreivew] = useState("")
     const [isLoading, setIsLoading] = useState(true)
+    const userName = localStorage.getItem("Name")
     const uid = localStorage.getItem("UserId");
     const [showMore, setShowMore] = useState(false);
 
@@ -107,10 +109,16 @@ export default function BookDetail() {
                                 <div className='container'>
                                     <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <Typography variant='h5'>{book.name} </Typography>
-                                        {status.canEdit ?
-                                            <IconButton onClick={() => { navigate('/book/edit/' + id) }}>
-                                                <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
-                                            </IconButton> : <></>
+                                        {
+                                            status.canEdit ?
+                                                <IconButton onClick={() => {
+                                                    var data = {
+                                                        bookId: id
+                                                    }
+                                                    navigate('/book/edit', { state: data })
+                                                }}>
+                                                    <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
+                                                </IconButton> : <></>
                                         }
                                     </div>
                                     <div className='container-body'>
@@ -129,14 +137,27 @@ export default function BookDetail() {
                                                     <BookInfo book={{ bookDetail: book }}></BookInfo>
                                                 </div>
                                                 <div style={{ marginBottom: `2em` }}>
-                                                    {book.authorId !== uid ? <>
+                                                    {book.authorId !== uid || !userName ? <>
                                                         <Button variant="outlined" startIcon={status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
                                                         {book.price > 0 ?
                                                             <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
                                                                 {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
-                                                            </Button> : <></>} </> : <></>
+                                                            </Button>
+                                                            :
+                                                            <></>
+                                                        }
+                                                    </>
+                                                        :
+                                                        <>
+                                                            {
+                                                                !userName ?
+                                                                    <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
+                                                                        Đăng nhập
+                                                                    </Button> : <> </>
+                                                            }
+                                                        </>
                                                     }
                                                 </div>
                                                 <Grid container>
@@ -177,13 +198,17 @@ export default function BookDetail() {
                                     </div>
                                     <div className='container-bottom'>
                                         {showMore ?
-                                            <div style={{ padding: "1em"}} dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div>
-                                            : <div style={{ padding: "1em"}} dangerouslySetInnerHTML={{ __html: preview }}></div>
+                                            <div style={{ padding: "1em" }} dangerouslySetInnerHTML={{ __html: `${preview.substring(0, 250)}}` }}></div>
+                                            : <div style={{ padding: "1em" }} dangerouslySetInnerHTML={{ __html: preview }}></div>
                                         }
                                         {preview.length < 250 ? <></> :
                                             <button className="btn" onClick={() => setShowMore(!showMore)}>{showMore ? "Ít hơn" : "Mở rộng"}</button>
                                         }
                                     </div>
+                                </div>
+
+                                <div className='container'>
+                                    <DescriptionImage bookId={id} status={status} />
                                 </div>
 
                                 <div id='chapter-list' className='container'>

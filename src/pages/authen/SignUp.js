@@ -69,19 +69,30 @@ const SignUp = () => {
   const [password, setPassword] = useState("")
   const [notifyText, setNotifyText] = useState('')
 
+  const [checkPass, setCheckPass] = useState(false)
+  const [checkMail, setCheckMail] = useState(false)
+
+  function isValidPassword(pass) {
+    return /^([a-zA-Z]*\d*).{10,}/.test(pass);
+  }
+
+  function isValidEmail(email) {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+  }
+
   const validate = (key, values) => {
     const EMAIL_FORMAT = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    const PASSWORD_FORMAT = /^(?=.*\d)(?=.*[a-zA-Z]).{10,}$/
+    const PASSWORD_FORMAT = /^([a-zA-Z]*\d*).{10,}/
     if(key === "userName" || userName.length > 30){
-        setNotifyText('Tên không hợp lệ')
+        NotificationManager.error('Tên không hợp lệ')
         return true
     }
-    if (key === 'email' && !EMAIL_FORMAT.test(values)) {
-      setNotifyText('Email không hợp lệ')
+    if (key === 'email' && !isValidEmail(values)) {
+      NotificationManager.error('Email không hợp lệ')
       return true
     }
-    if (key === 'password' && !PASSWORD_FORMAT.test(values)) {
-      setNotifyText('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
+    if (key === 'password' && !isValidPassword(values)) {
+      NotificationManager.error('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
       return true
     }
     return false
@@ -174,7 +185,11 @@ const SignUp = () => {
           <TextField
             fullWidth
             size='small' margin="normal" type={'email'} variant='outlined' placeholder='Email'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { 
+              isValidEmail(e.target.value) ? setCheckMail(true) : setCheckMail(false)
+              setEmail(e.target.value)} 
+            }
+            error = {!checkMail}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -185,7 +200,12 @@ const SignUp = () => {
           <TextField
             fullWidth
             size='small' margin="normal" type={'password'} variant='outlined' placeholder='Mật khẩu'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => { 
+              isValidPassword(e.target.value)? setCheckPass(true) : setCheckPass(false)
+              setPassword(e.target.value)} 
+            }
+            helperText={'Mật khẩu phải có ít nhất 10 ký tự và không bắt đầu bằng ký tự đặc biệt'}
+            error = {!checkPass}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -95,7 +95,7 @@ function Header() {
         setAnchorElUser(null);
     };
 
-    const handleChoseNav = (event, setting) =>{
+    const handleChoseNav = (event, setting) => {
         switch (setting) {
             case 'HOT': navigate('/book/search/true')
                 break;
@@ -132,7 +132,7 @@ function Header() {
         if (localStorage.getItem("UserId")) {
             setIsLoadingAva(true);
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
-        }else{
+        } else {
             setIsLoadingAva(false)
         }
     }, [])
@@ -248,6 +248,7 @@ function Header() {
                                     type="text"
                                     placeholder="Tìm kiếm sách"
                                     onChange={(e) => search(e.target.value)}
+                                    onBlur={() => setIsLoading(true)}
                                 />
                             </div>
                             <div className='header__toolbar-search-history'>
@@ -273,7 +274,7 @@ function Header() {
                             </div>
                             <button className='header__toolbar-search-btn'>
                                 <SearchIcon className='header__toolbar-search-btn-icon' onClick={(e) => {
-                                    navigate("/book/search/true")
+                                    navigate("/book/search/true?search=" + searchTerm)
                                 }
                                 }></SearchIcon>
                             </button>
@@ -319,9 +320,9 @@ function Header() {
                             </Box>
                         }
                     </Toolbar>
-                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{ zIndex: 1 }} onMouseLeave={() => { setIsHover(!isHover); }}>
+                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{ zIndex: 100 }} onMouseLeave={() => { setIsHover(!isHover); }}>
                         {categories.map((cate) => (
-                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories=${cate.id}`) }}>{cate.name}</div>
+                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories=${cate.id}&search=`) }}>{cate.name}</div>
                         ))}
                     </div> : <></>}
                 </Container>
