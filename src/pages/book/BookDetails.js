@@ -46,6 +46,11 @@ export default function BookDetail() {
     const [isLoading, setIsLoading] = useState(true)
     const userName = localStorage.getItem("Name")
     const uid = localStorage.getItem("UserId");
+    var isLogin = false
+    if(userName){
+        isLogin = true
+    }
+    console.log("Login", isLogin)
     const [showMore, setShowMore] = useState(false);
 
     let navigate = useNavigate();
@@ -137,7 +142,7 @@ export default function BookDetail() {
                                                     <BookInfo book={{ bookDetail: book }}></BookInfo>
                                                 </div>
                                                 <div style={{ marginBottom: `2em` }}>
-                                                    {book.authorId !== uid || !userName ? <>
+                                                    {book.authorId !== uid && isLogin === true ? <>
                                                         <Button variant="outlined" startIcon={status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
@@ -152,10 +157,10 @@ export default function BookDetail() {
                                                         :
                                                         <>
                                                             {
-                                                                !userName ?
-                                                                    <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
-                                                                        Đăng nhập
-                                                                    </Button> : <> </>
+                                                                isLogin === true ? <> </> 
+                                                                : <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
+                                                                     Đăng nhập
+                                                                 </Button>
                                                             }
                                                         </>
                                                     }
