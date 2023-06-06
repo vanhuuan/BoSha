@@ -274,7 +274,7 @@ function Header() {
                             </div>
                             <button className='header__toolbar-search-btn'>
                                 <SearchIcon className='header__toolbar-search-btn-icon' onClick={(e) => {
-                                    navigate("/book/search/true?search="+search)
+                                    navigate("/book/search/true?search=" + searchTerm)
                                 }
                                 }></SearchIcon>
                             </button>
