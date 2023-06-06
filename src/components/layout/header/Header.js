@@ -95,7 +95,7 @@ function Header() {
         setAnchorElUser(null);
     };
 
-    const handleChoseNav = (event, setting) =>{
+    const handleChoseNav = (event, setting) => {
         switch (setting) {
             case 'HOT': navigate('/book/search/true')
                 break;
@@ -132,7 +132,7 @@ function Header() {
         if (localStorage.getItem("UserId")) {
             setIsLoadingAva(true);
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
-        }else{
+        } else {
             setIsLoadingAva(false)
         }
     }, [])
