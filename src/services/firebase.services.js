@@ -1,5 +1,5 @@
 import { storage } from "../firebase";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable, listAll } from "firebase/storage";
 
 export const firebaseService = {
     getChapter: async (bookid, chapterId, callback) => {
@@ -57,7 +57,7 @@ export const firebaseService = {
             });
     },
     getAva: async (uid, callback) => {
-        console.log( `users/ava/${uid}.jpg`)
+        console.log(`users/ava/${uid}.jpg`)
         getDownloadURL(ref(storage, `users/ava/${uid}.jpg`))
             .then((url) => {
                 callback(url)
@@ -68,6 +68,33 @@ export const firebaseService = {
                 console.log(error)
                 callback("")
                 return `https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656a08e27bd8b1165478b%2Fcover.png?alt=media&token=20cfb7d8-6e42-4426-b026-c0443d8cb793`
+            });
+    },
+    getDecriptionImages: async (bookId, callback) => {
+        const myPicks = ref(storage, `books/${bookId}/Images/`)
+
+        listAll(myPicks)
+            .then(async (res) => {
+                const { items } = res;
+                console.log(items)
+                const urls = await Promise.all(
+                    items.map( async (item) =>  {
+                        let u = ""
+                        await getDownloadURL(item).then((downloadURL) => {
+                            console.log(downloadURL)
+                            u = downloadURL
+                        })
+                        return {
+                            url: u,
+                            ref: item
+                        }
+                    })
+                );
+                console.log(urls);
+                callback(urls)
+            })
+            .catch((error) => {
+                console.error(error)
             });
     },
     uploadPreview: async (bookId, text) => {
@@ -141,6 +168,32 @@ export const firebaseService = {
                 }
             );
         })
+    },
+    uploadDesciptionImages: async (bookId, img) => {
+        if (img == null)
+            return;
+
+        getFileBlob(img, blob => {
+            const storageRef = ref(storage, `books/${bookId}/Images/`+makeid(img.name.length) + ".png");
+            const metadata = {
+                contentType: 'image/png',
+            };
+            const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+            uploadTask.on("state_changed",
+                (snapshot) => {
+
+                },
+                (error) => {
+                    console.log("Upload desc img", error)
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log(downloadURL)
+                        return downloadURL
+                    });
+                }
+            );
+        })
 
     },
     uploadAva: async (uid, img, callback) => {
@@ -183,4 +236,15 @@ var getFileBlob = function (url, cb) {
     xhr.send();
 };
 
+function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
 
