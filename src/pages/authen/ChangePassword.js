@@ -3,17 +3,27 @@ import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/materia
 import { authService } from '../../services/auth.services';
 import { useNavigate } from "react-router-dom"
 import { useSearchParams } from "react-router-dom";
+import { NotificationManager } from 'react-notifications';
 const ChangePassword = () => {
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [searchParams, setSearchParams] = useSearchParams();
+  const [check, setCheck] = useState(false)
   const email =  searchParams.get("email");
   const token =  searchParams.get("token");
   const [ok, setOk] = useState(false)
   let navigate = useNavigate()
   console.log(token);
+
+  function isValidPassword(pass) {
+    return /^([a-zA-Z]*\d*).{10,}/.test(pass);
+  }
+
   async function handleChangePass(){
     if (ok) {
+      if(!isValidPassword(password)){
+        NotificationManager.error("Sai định dạng mật khẩu", "Sai định dạng", 2000)
+      }
       let acc = {
         Email: email, 
         Password: password, 
@@ -47,7 +57,17 @@ const ChangePassword = () => {
           fullWidth
           margin="normal" type={'password'}
           variant='outlined' placeholder='Nhập mật khẩu mới'
-          onChange={(e) => { setPassword(e.target.value); setConfirmPass("") }}
+          onChange={(e) => {
+            if(isValidPassword(e.target.value)){
+              setCheck(false)
+            }else{
+              setCheck(true)
+            }
+            setPassword(e.target.value); 
+            setConfirmPass("") 
+          }}
+          error = {check}
+          helperText={check?'Mật khẩu phải có ít nhất 10 ký tự và không bắt đầu bằng ký tự đặc biệt':''}
         ></TextField>
         <TextField
           fullWidth
