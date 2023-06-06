@@ -11,7 +11,7 @@ import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCartOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { AddShoppingCartOutlined, LoginOutlined, StarBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
 import ForumIcon from '@mui/icons-material/Forum';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -44,6 +44,7 @@ export default function BookDetail() {
     })
     const [preview, setPreivew] = useState("")
     const [isLoading, setIsLoading] = useState(true)
+    const userName = localStorage.getItem("Name")
     const uid = localStorage.getItem("UserId");
     const [showMore, setShowMore] = useState(false);
 
@@ -136,14 +137,27 @@ export default function BookDetail() {
                                                     <BookInfo book={{ bookDetail: book }}></BookInfo>
                                                 </div>
                                                 <div style={{ marginBottom: `2em` }}>
-                                                    {book.authorId !== uid ? <>
+                                                    {book.authorId !== uid || !userName ? <>
                                                         <Button variant="outlined" startIcon={status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
                                                         {book.price > 0 ?
                                                             <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
                                                                 {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
-                                                            </Button> : <></>} </> : <></>
+                                                            </Button>
+                                                            :
+                                                            <></>
+                                                        }
+                                                    </>
+                                                        :
+                                                        <>
+                                                            {
+                                                                !userName ?
+                                                                    <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
+                                                                        Đăng nhập
+                                                                    </Button> : <> </>
+                                                            }
+                                                        </>
                                                     }
                                                 </div>
                                                 <Grid container>
