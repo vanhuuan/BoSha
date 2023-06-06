@@ -3,7 +3,6 @@ import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import Textarea from '@mui/joy/Textarea';
 import { useState } from 'react';
 import { IconButton, Paper, Rating, Typography } from '@mui/material';
 import Picker, { Categories, EmojiStyle, SuggestionMode } from 'emoji-picker-react';
@@ -12,6 +11,7 @@ import { commentService } from '../services/comment.services';
 import { Delete, Edit } from '@mui/icons-material';
 import { NotificationManager } from 'react-notifications';
 import { confirm } from './prompt/Confirmation';
+import { Textarea } from '@mui/joy';
 
 function Comment(props) {
     const [italic, setItalic] = React.useState(false);
@@ -93,11 +93,6 @@ function Comment(props) {
     }
 
     const deleteComment = async () => {
-        console.log("Hiii")
-        var check = window.confirm("Bạn có chắc muốn xóa comment chứ!")
-        if (check === true) {
-            commentService.deleteUserChapterComment(commentEd.id)
-        }
         if (await confirm("Are your sure?")) {
             commentService.deleteUserChapterComment(commentEd.id)
         }
@@ -293,10 +288,9 @@ function Review(props) {
         setInput(text + emoji);
     };
 
-    const deleteReview = () => {
-        var check = window.confirm("Bạn có chắc muốn xóa review chứ!")
-        if (check === true) {
-            commentService.deleteUserBookReview(id)
+    const deleteReview = async () => {
+        if (await confirm("Bạn có chắc muốn xóa review ?")) {
+            commentService.deleteUserBookReview(review.id)
         }
     }
 
@@ -399,7 +393,7 @@ function Review(props) {
                     }}
                 />
                 : <Textarea value={review.text}
-                    disabled
+                    readOnly
                     endDecorator={
                         <Box sx={{ justifyContent: 'space-between' }}>
                             <Rating
@@ -409,8 +403,9 @@ function Review(props) {
                             />
                             <Box>
                                 <IconButton color='error' onClick={deleteReview}>
-                                    <Delete /> /
+                                    <Delete /> 
                                 </IconButton>
+                                /
                                 <IconButton color='primary' onClick={onEditReview}>
                                     <Edit />
                                 </IconButton>

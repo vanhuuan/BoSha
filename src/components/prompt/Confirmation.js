@@ -53,8 +53,8 @@ Confirmation.propTypes = {
 
 export function confirm(
     confirmation,
-    proceedLabel = "OK",
-    cancelLabel = "cancel",
+    proceedLabel = "Đồng ý",
+    cancelLabel = "Hủy",
     options = {}
 ) {
     return createConfirmation(confirmable(Confirmation))({
