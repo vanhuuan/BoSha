@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <> 
       <BrowserRouter>
         <Routes>
           <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>

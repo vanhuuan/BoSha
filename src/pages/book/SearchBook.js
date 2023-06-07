@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slider, TextField } from "@mui/material";
+import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slider, TextField, InputAdornment } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { userBookService } from "../../services/userBook.services";
@@ -79,19 +79,20 @@ export default function SearchBook() {
     const { isSimple } = useParams();
 
     useEffect(() => {
-        
+
         load()
-        if (isSimple) {
+        if (isSimple === true) {
             setSimple(true)
         } else {
             setSimple(false)
         }
-        if(searchParams.get("categories")){
+        if (searchParams.get("categories")) {
             findBooks([searchParams.get("categories")])
-        }else{
+            setCategory([searchParams.get("categories")])
+        } else {
             findBook()
         }
-        
+
     }, [])
 
     const findBook = () => {
@@ -156,7 +157,7 @@ export default function SearchBook() {
                                                 } else {
                                                     setCategory(category.filter(item => item !== cate.id))
                                                 }
-                                            }} name={cate.id} />}
+                                            }} name={cate.id} defaultChecked={searchParams.get("categories") === cate.id} />}
                                                 label={cate.name} className="category_item" />
                                         )
                                     })}
@@ -218,7 +219,7 @@ export default function SearchBook() {
                                 findBook();
                             }}>
                                 <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên sách' className='searchManga' />
-                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em"}}></Search></IconButton>
+                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
                             </form>
                         </div>
                     </div>
@@ -244,8 +245,8 @@ export default function SearchBook() {
                                         })
                                     }
                                 </Grid>
-                            </InfiniteScroll>                     
-                            </>
+                            </InfiniteScroll>
+                        </>
                             : <LinearProgress />}
                     </div>
                 </Grid>
@@ -284,8 +285,10 @@ function PriceSlider(props) {
                     className="number-range"
                     label="Thấp nhất"
                     type="number"
-                    variant="outlined"
-                    InputLabelProps={{ shrink: true }}
+                    InputProps={{ 
+                        readOnly: true, 
+                        endAdornment: <InputAdornment position="end">VND</InputAdornment>
+                    }}
                     value={priceRangeValue[0]}
                     onChange={(e) => {
                         setPriceRangeValue([Number(e.target.value), priceRangeValue[1]]);
@@ -296,8 +299,10 @@ function PriceSlider(props) {
                     className="number-range"
                     label="Cao nhất"
                     type="number"
-                    variant="outlined"
-                    InputLabelProps={{ shrink: true }}
+                    InputProps={{ 
+                        readOnly: true, 
+                        endAdornment: <InputAdornment position="end">VND</InputAdornment>
+                    }}
                     value={priceRangeValue[1]}
                     onChange={(e) => {
                         setPriceRangeValue([priceRangeValue[0], Number(e.target.value)]);

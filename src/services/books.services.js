@@ -15,6 +15,9 @@ export const bookService = {
     },
     findBook: async (pageNumber, pageSize, name, categories, state, min, max, sort) => {
         var textCate = "?Categories="
+        if(name === null){
+            name = ""
+        }
         if (categories && categories.length > 0) {
             categories.forEach(element => {
                 textCate = textCate.concat("&Categories=" + element)
