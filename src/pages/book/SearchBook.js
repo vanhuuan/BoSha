@@ -48,7 +48,7 @@ export default function SearchBook() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [categories, setCategories] = useState([])
-    const [category, setCategory] = useState([])
+    const [category, setCategory] = useState(searchParams.get("categories") ? [searchParams.get("categories")] : [])
     const [sortBy, setSortBy] = useState(searchParams.get("hot") ? "HotWeek" :"Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
@@ -79,21 +79,19 @@ export default function SearchBook() {
     const { isSimple } = useParams();
 
     useEffect(() => {
-        console.log(isSimple)
         load()
         if (isSimple === "true") {
             setSimple(true)
         } else {
             setSimple(false)
         }
-        if (searchParams.get("categories")) {
-            findBooks([searchParams.get("categories")])
-            setCategory([searchParams.get("categories")])
-        } else {
-            findBook()
+        var search = ""
+        if(searchParams.get("search")){
+            search = searchParams.get("search")
+            setSearchInput(search)
         }
-
-    }, [])
+        findBooks([searchParams.get("categories")], search)
+    }, [searchParams])
 
     const findBook = () => {
         setIsSearching(true)
@@ -106,10 +104,10 @@ export default function SearchBook() {
         })
     }
 
-    const findBooks = (cate) => {
+    const findBooks = (cate, search = "") => {
         setIsSearching(true)
         setPageNumber(1)
-        bookService.findBook(1, 12, searchInput, cate, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(1, 12, search, cate, state, range[0], range[1], sortBy).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
@@ -218,7 +216,7 @@ export default function SearchBook() {
                                 e.preventDefault();
                                 findBook();
                             }}>
-                                <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên sách' className='searchManga' />
+                                <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên truyện' className='searchManga' />
                                 <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
                             </form>
                         </div>

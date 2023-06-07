@@ -303,7 +303,7 @@ function Review(props) {
     };
 
     const deleteReview = async () => {
-        if (await confirm("Bạn có chắc muốn xóa review ?")) {
+        if (await confirm("Bạn có chắc muốn xóa đánh giá ?")) {
             commentService.deleteUserBookReview(review.id).then((e) => {
                 setIsReviewed(false)
                 setEdit(false)
