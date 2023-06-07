@@ -22,10 +22,7 @@ export default function UserInfo() {
         "accessToken": null,
         "refreshToken": null
     })
-    const [avaState, setAvaState] = useState({
-        preview: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05",
-        src: "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/users%2Fava%2FIMG_0017.jpg?alt=media&token=feb2403d-d713-4ea9-bef8-2a1981af0d05"
-    })
+    
     const [ava, setAva] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 

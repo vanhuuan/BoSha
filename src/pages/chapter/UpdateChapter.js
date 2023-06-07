@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import { chapterService } from "../../services/chapter.services";
 import { NotificationManager } from 'react-notifications';
 
-const data = {
+const dataDefault = {
     "bookId": "645368d5eb07b12be11f0271",
     "chapterId": "64536d07eb07b12be11f0272",
     "canEdit": false,
@@ -64,7 +64,7 @@ const UpdateChapter = () => {
     const [chap, setChap] = React.useState("");
     const [demo, setDemo] = React.useState(true);
     const [states, setStates] = React.useState(true);
-    const [chapterDetail, setChapterDetail] = useState(data)
+    const [chapterDetail, setChapterDetail] = useState(dataDefault)
     const [isLoading, setIsLoading] = useState(true)
     const location = useLocation();
     const data = location.state;

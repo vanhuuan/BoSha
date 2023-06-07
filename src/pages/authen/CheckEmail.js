@@ -1,12 +1,11 @@
 import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { authService } from '../../services/auth.services';
-import { NavLink, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Mail } from '@mui/icons-material';
 import { NotificationManager } from 'react-notifications';
 const ForgotPassword = () => {
   const [email, setEmail] = useState('')
-  let navigate = useNavigate()
   const [check, setCheck] = useState(false)
 
   function isValidEmail(email) {

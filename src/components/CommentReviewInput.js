@@ -4,7 +4,7 @@ import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import { useState } from 'react';
-import { IconButton, Paper, Rating, Typography } from '@mui/material';
+import { IconButton, Rating, Typography } from '@mui/material';
 import Picker, { Categories, EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import "../css/Comment.css";
 import { commentService } from '../services/comment.services';
@@ -106,7 +106,7 @@ function Comment(props) {
     }
 
     const onEditComment = () => {
-        if (isCommented == true) {
+        if (isCommented === true) {
             setIsCommented(false)
             setEdit(true)
         }
@@ -317,7 +317,7 @@ function Review(props) {
     }
 
     const onEditReview = () => {
-        if (isReviewed == true) {
+        if (isReviewed === true) {
             setIsReviewed(false)
             setEdit(true)
         }

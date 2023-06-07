@@ -7,41 +7,6 @@ import { imgService } from "../services/image.services";
 import { Remove } from "@mui/icons-material";
 import { confirm } from "./prompt/Confirmation";
 
-var settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
-    ]
-};
-
 function throttle(cb, delay = 10) {
     let shouldWait = false
     let waitingArgs
@@ -130,17 +95,10 @@ function DescriptionImage({ bookId, status }) {
     }, 250)
 
     const [imgs, setImgs] = useState([])
-    const [numSlide, setNumSlide] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
 
     const changeImgs = (listImg) => {
         setImgs(listImg)
-        if (listImg.length >= 3) {
-            setNumSlide(3)
-        }
-        else {
-            setNumSlide(listImg.length)
-        }
     }
 
     const LoadImages = () => {
@@ -177,7 +135,7 @@ function DescriptionImage({ bookId, status }) {
                         <div class="slider">
                             {imgs.map(p => (
                                 <span style={{ margin: "1em" }}>
-                                    <img style={{ aspectRatio: '10/16', width: '6em' }} src={p.url} />
+                                    <img style={{ aspectRatio: '10/16', width: '6em' }} src={p.url} alt="Mô tả"/>
                                 </span>
                             ))}
                         </div>
@@ -229,18 +187,11 @@ function DescriptionImageEdit({ bookId }) {
     }, 250)
 
     const [imgs, setImgs] = useState([])
-    const [numSlide, setNumSlide] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
 
     const changeImgs = (listImg) => {
         console.log("list", listImg)
         setImgs(listImg)
-        if (listImg.length > 3) {
-            setNumSlide(3)
-        }
-        else {
-            setNumSlide(2)
-        }
     }
 
     const LoadImages = () => {
@@ -361,7 +312,7 @@ function DescriptionImageEdit({ bookId }) {
                                     >
                                         <Remove fontSize="small" />
                                     </IconButton>
-                                    <img style={{ aspectRatio: '10/16', width: '6em' }} src={p.url} />
+                                    <img style={{ aspectRatio: '10/16', width: '6em' }} src={p.url} alt="Mô tả" />
                                 </span>
                             ))}
                             <span style={{ margin: "1em", verticalAlign: 'center' }} onClick={onChangeFile}>

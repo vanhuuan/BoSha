@@ -158,7 +158,7 @@ export default function UserStatistic() {
     ])
 
     const onChangeDateValue = (value) => {
-        if (value.length == 2) {
+        if (value.length === 2) {
             setValues(value)
         }
     }
@@ -171,7 +171,6 @@ export default function UserStatistic() {
     };
 
     useEffect(() => {
-        var dateObj = new Date();
         loadStatisticCard()
         loadChartData(sortChart)
     }, [values])

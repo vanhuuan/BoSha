@@ -7,7 +7,7 @@ import { EditorDescription } from '../../components/editor/editor';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
     useNavigate
 } from "react-router-dom";
@@ -18,17 +18,6 @@ import { firebaseService } from '../../services/firebase.services';
 import AlertRoot from '../../components/notification/AlertRoot';
 import { NotificationManager } from 'react-notifications';
 import { DescriptionImageEdit } from '../../components/DescriptionImage';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
 
 const EditBook = () => {
     const [book, setBook] = useState({

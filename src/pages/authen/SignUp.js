@@ -81,8 +81,8 @@ const SignUp = () => {
   }
 
   const validate = (key, values) => {
-    const EMAIL_FORMAT = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    const PASSWORD_FORMAT = /^([a-zA-Z]*\d*).{10,}/
+    // const EMAIL_FORMAT = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    // const PASSWORD_FORMAT = /^([a-zA-Z]*\d*).{10,}/
     if(key === "userName" || userName.length > 30){
         NotificationManager.error('Tên không hợp lệ')
         return true
