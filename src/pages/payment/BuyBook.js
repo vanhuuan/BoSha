@@ -121,14 +121,18 @@ const BuyBook = () => {
         buyBookService.checkOut(bookId).then((rs) => {
             console.log(rs)
             setCheckoutInfo(rs.data)
-            
             if (rs.data.buyLink) {
                 window.open(rs.data.buyLink, '_top', 'noopener,noreferrer');
             }
             setIsLoading(false)
         }).catch((e) => {
             console.log(e)
-            navigate(-1)
+            if(localStorage.getItem("AccessToken")){
+                navigate(-1)
+            }else{
+                navigate("/login")
+            }
+            
         })
     }, [])
 

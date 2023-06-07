@@ -1,5 +1,6 @@
+import { NotificationManager } from "react-notifications";
 import { storage } from "../firebase";
-import { ref, getDownloadURL, uploadBytesResumable, listAll } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable, listAll, deleteObject } from "firebase/storage";
 
 export const firebaseService = {
     getChapter: async (bookid, chapterId, callback) => {
@@ -78,7 +79,7 @@ export const firebaseService = {
                 const { items } = res;
                 console.log(items)
                 const urls = await Promise.all(
-                    items.map( async (item) =>  {
+                    items.map(async (item) => {
                         let u = ""
                         await getDownloadURL(item).then((downloadURL) => {
                             console.log(downloadURL)
@@ -169,27 +170,33 @@ export const firebaseService = {
             );
         })
     },
-    uploadDesciptionImages: async (bookId, img) => {
+    uploadDesciptionImages: async (bookId, img, callback) => {
         if (img == null)
             return;
 
+        console.log(img)
         getFileBlob(img, blob => {
-            const storageRef = ref(storage, `books/${bookId}/Images/`+makeid(img.name.length) + ".png");
+            const storageRef = ref(storage, `books/${bookId}/Images/` + makeid(8) + ".png");
             const metadata = {
                 contentType: 'image/png',
             };
             const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
             uploadTask.on("state_changed",
                 (snapshot) => {
-
+                    console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100, "%")
                 },
                 (error) => {
-                    console.log("Upload desc img", error)
+                    console.error("Upload desc img", error)
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log(downloadURL)
-                        return downloadURL
+                        var data = {
+                            url: downloadURL,
+                            ref: storageRef
+                        }
+                        callback(data)
+                        return data
                     });
                 }
             );
@@ -222,7 +229,14 @@ export const firebaseService = {
                 }
             );
         })
-
+    },
+    deleteDescImg: async (imgRef, callBack) => {
+        deleteObject(imgRef.ref).then(() => {
+            callBack(imgRef.url)
+        }).catch((error) => {
+            console.log("Loi up anh", error)
+            NotificationManager.error("Xóa ảnh không thành công", "Không thành công", 2000)
+        });
     }
 }
 
@@ -238,12 +252,12 @@ var getFileBlob = function (url, cb) {
 
 function makeid(length) {
     let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // 61
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
     }
     return result;
 }

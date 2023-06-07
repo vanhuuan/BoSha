@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgress, Pagination } from "@mui/material";
 
-import {Avatar, Grid, Paper } from "@mui/material";
+import { Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
 import { commentService } from "../services/comment.services";
@@ -61,13 +61,15 @@ function ReviewList(props) {
             setCommentsList(rs.data.data)
             setTotal(rs.data.count)
             setIsLoading(false)
-        }).catch((err) => { console.log(err)})
+        }).catch((err) => { console.log(err) })
     }, [page])
 
     return (
         <div style={{ padding: 14 }} className="App">
-            <h1>Đánh giá</h1>
+
             {isLoading === false ? <>
+                {commentsList.length === 0 ? <h3>Chưa có đánh giá</h3> :
+                    <h3>Đánh giá</h3>}
                 {commentsList.map((item, index) => (
                     <Paper style={{ padding: "40px 20px" }}>
                         <Grid container wrap="nowrap" spacing={2}>
@@ -95,8 +97,10 @@ function ReviewList(props) {
                         </Grid>
                     </Paper>
                 ))}
-
-                <Pagination count={total /10 + 1} page={page+1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                {commentsList.length !== 0 ?
+                    <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                    : <> </>
+                }
             </> :
                 <CircularProgress></CircularProgress>
             }

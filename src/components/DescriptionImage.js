@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { firebaseService } from "../services/firebase.services";
-import { LinearProgress } from "@mui/material";
+import { IconButton, LinearProgress } from "@mui/material";
 import addimg from '../assets/images/add-image.png'
 import { NotificationManager } from "react-notifications";
 import { imgService } from "../services/image.services";
+import { Remove } from "@mui/icons-material";
+import { confirm } from "./prompt/Confirmation";
 
 var settings = {
     dots: true,
@@ -268,48 +270,69 @@ function DescriptionImageEdit({ bookId }) {
     }
 
     const onChangeFile = event => {
-        if(isDisa === true){
+        if (isDisa === true) {
             return
         }
-        setIsDisa(true)
-        const image = event.target.files[0];
-        if (!image) {
-            NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
-            return false;
-        }
-        if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
-            NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
-            return false;
-        }
-
-        const fileSizeKiloBytes = image.size / 1024
-
-        if (fileSizeKiloBytes < MIN_FILE_SIZE) {
-            NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 100 Kb", 2000);
-            return
-        }
-        if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-            NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
-            return
-        }
-        imgService.checkImg(image).then((rs) => {
-            if(rs.data){
-                console.log(rs)
-                if(rs.data.status === "Oke"){
-                    NotificationManager.success("Ảnh phù hợp", "Kiểm tra ảnh thành công", 2000);
-                    firebaseService.uploadDesciptionImages(bookId, image, uploadOke)
-                }else{
-                    NotificationManager.error("Ảnh không phù hợp", "Kiểm tra ảnh thành công", 2000);
-                }
-            }else{
-                NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
+        
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = "image/png, image/jpeg image/jpg"
+        input.onchange = _ => {
+            let files = Array.from(input.files);
+            const imag = files[0];
+            console.log(imag)
+            if (!imag) {
+                NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
+                return false;
             }
-            setIsDisa(false);
-        }).catch((err) => {
-            console.log(err)
-            NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
-            setIsDisa(false);
-        })     
+            if (!imag.name.match(/\.(jpg|jpeg|png)$/)) {
+                NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
+                return false;
+            }
+
+            const fileSizeKiloBytes = imag.size / 1024
+
+            if (fileSizeKiloBytes < MIN_FILE_SIZE) {
+                NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 100 Kb", 2000);
+                return
+            }
+            if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+                NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
+                return
+            }
+            setIsDisa(true)
+            imgService.checkImg(imag).then((rs) => {
+                if (rs.data) {
+                    console.log(rs)
+                    if (rs.data.status === "Oke") {
+                        NotificationManager.success("Ảnh phù hợp", "Kiểm tra ảnh thành công", 2000);
+                        firebaseService.uploadDesciptionImages(bookId, URL.createObjectURL(imag), uploadOke)
+                    } else {
+                        NotificationManager.error("Ảnh không phù hợp", "Kiểm tra ảnh thành công", 2000);
+                    }
+                } else {
+                    NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
+                }
+                setIsDisa(false);
+            }).catch((err) => {
+                console.log(err)
+                NotificationManager.error("Có lỗi khi kiểm tra ảnh", "Kiểm tra ảnh không thành công", 2000);
+                setIsDisa(false);
+            })
+        };
+        input.click();
+    }
+
+    const onDeleteDescImg = async (img) => {
+        if (await confirm("Bạn có chắc muốn xóa ảnh này chứ")) {
+            setIsDisa(true);
+            firebaseService.deleteDescImg(img, (u) => {
+                setImgs(imgs.filter(x => x.url !== u))
+                NotificationManager.success("Xóa ảnh thành công", "Thành công", 2000)
+            }).finally(() => {
+                setIsDisa(false);
+            })
+        }
     }
 
 
@@ -329,7 +352,15 @@ function DescriptionImageEdit({ bookId }) {
                         </button>
                         <div class="slider">
                             {imgs.map(p => (
-                                <span style={{ margin: "1em" }}>
+                                <span style={{ margin: "1em", position: "relative" }}>
+                                    <IconButton sx={{ backgroundColor: "red", color: "white", "&:hover": { backgroundColor: "#B31312" } }}
+                                        size="small"
+                                        style={{ position: "absolute", right: "-0.5em", top: "-0.5em" }}
+                                        onClick={(e) => { onDeleteDescImg(p) }}
+                                        disabled={isDisa}
+                                    >
+                                        <Remove fontSize="small" />
+                                    </IconButton>
                                     <img style={{ aspectRatio: '10/16', width: '6em' }} src={p.url} />
                                 </span>
                             ))}

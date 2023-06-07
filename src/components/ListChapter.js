@@ -27,9 +27,9 @@ export default function ListChapter(props) {
     console.log(props.book.canBuyed)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
-    
+
     if (rs) {
-      if(props.book.canEdit !== true){
+      if (props.book.canEdit !== true) {
         rs.data = rs.data.filter((x) => { return x.state === true })
       }
       setChapters(rs.data)
@@ -72,7 +72,7 @@ export default function ListChapter(props) {
   }, [])
 
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%', bgcolor: 'background.paper', margin: 0 }}>
       {showMore === true ?
         chapters.slice(0, 10).map((value) => {
           const labelId = `checkbox-list-label-${value.chapterNumber}`;
@@ -83,7 +83,7 @@ export default function ListChapter(props) {
               key={value}
               secondaryAction={
                 <div style={{ display: "flex" }}>
-                  
+
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();
@@ -117,7 +117,7 @@ export default function ListChapter(props) {
             <ListItem
               key={value}
               secondaryAction={
-                <div style={{ display: "flex" }}>``
+                <div style={{ display: "flex" }}>
                   {
                     canBuyed || value.isDemo || canEdit ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                   }
@@ -144,8 +144,18 @@ export default function ListChapter(props) {
         })
       }
       {chapters.length < 10 ? <></> :
-        <Typography textAlign={"center"} mt={"1em"} onClick={() => { setShowMore(!showMore)}}> { showMore === false ? "Bớt": "Xem thêm" }</Typography>
+        <Typography textAlign={"center"} mt={"1em"}
+          onClick={() => { setShowMore(!showMore) }}
+          sx={{
+            '&:hover': {
+              backgroundColor: "#ebf2f0",
+            },
+            borderRadius: "10px",
+            margin: "1em 25% 0",
+          }}
+        > {showMore === false ? "Bớt " : "Xem thêm"
+          }</Typography>
       }
-    </List>
+    </List >
   );
 }

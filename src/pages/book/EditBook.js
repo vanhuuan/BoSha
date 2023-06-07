@@ -104,6 +104,7 @@ const EditBook = () => {
             "state": state
         }
         console.log(data)
+        setIsLoading(true)
         userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
                 if (imgChange) {
@@ -115,8 +116,13 @@ const EditBook = () => {
                     navigate(`/book/${rs.data.id}`)
                 }
             }).catch((err) => console.log(err))
+                .finally(() => {
+                    setIsLoading(false)
+                })
         }).catch((err) => {
             console.log(err)
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
@@ -199,7 +205,7 @@ const EditBook = () => {
                                 </div>
                             </div>
                             <div className='container'>
-                                <DescriptionImageEdit 
+                                <DescriptionImageEdit
                                     bookId={id}
                                 />
                             </div>
@@ -208,7 +214,7 @@ const EditBook = () => {
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
                                 <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>
-                                <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/"+id) }} >Trở về</Button>
+                                <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/" + id) }} >Trở về</Button>
                             </div> </> : <></>
                         }
                     </Grid>
