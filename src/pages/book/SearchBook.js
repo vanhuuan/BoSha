@@ -49,7 +49,7 @@ export default function SearchBook() {
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState(searchParams.get("categories") ? [searchParams.get("categories")] : [])
-    const [sortBy, setSortBy] = useState(searchParams.get("hot") ? "HotWeek" :"Newest")
+    const [sortBy, setSortBy] = useState(searchParams.get("hot") ? "HotWeek" : "Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
     const [searchInput, setSearchInput] = useState(searchParams.get("search"))
@@ -86,7 +86,7 @@ export default function SearchBook() {
             setSimple(false)
         }
         var search = ""
-        if(searchParams.get("search")){
+        if (searchParams.get("search")) {
             search = searchParams.get("search")
             setSearchInput(search)
         }
@@ -259,6 +259,19 @@ function PriceSlider(props) {
     const maxmax = 1000000;
     const [priceRangeValue, setPriceRangeValue] = useState([0, 1000000]);
 
+    const marks = [
+        {
+            value: minmin,
+            label: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                .format(minmin),
+        },
+        {
+            value: maxmax,
+            label: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                .format(maxmax),
+        }
+    ];
+
     const handlePriceRangeChange = (event, newValue) => {
         setPriceRangeValue(newValue);
         sendData(newValue)
@@ -274,18 +287,21 @@ function PriceSlider(props) {
                 getAriaLabel={() => "Khoảng giá"}
                 value={priceRangeValue}
                 onChange={handlePriceRangeChange}
-                valueLabelDisplay="auto"
                 step={500}
                 min={minmin}
                 max={maxmax}
+                valueLabelDisplay="auto"
+                marks={marks}
+                valueLabelFormat={value => <div>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                    .format(value)}</div>}
             />
             <Stack direction="row" justifyContent="space-evenly" alignItems="center">
                 <TextField
                     className="number-range"
                     label="Thấp nhất"
                     type="number"
-                    InputProps={{ 
-                        readOnly: true, 
+                    InputProps={{
+                        readOnly: true,
                         endAdornment: <InputAdornment position="end">VND</InputAdornment>
                     }}
                     value={priceRangeValue[0]}
@@ -298,8 +314,8 @@ function PriceSlider(props) {
                     className="number-range"
                     label="Cao nhất"
                     type="number"
-                    InputProps={{ 
-                        readOnly: true, 
+                    InputProps={{
+                        readOnly: true,
                         endAdornment: <InputAdornment position="end">VND</InputAdornment>
                     }}
                     value={priceRangeValue[1]}
