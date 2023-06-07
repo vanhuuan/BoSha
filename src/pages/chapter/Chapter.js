@@ -102,6 +102,7 @@ const Chapter = () => {
 
     const buyBook = (e) => {
         if (status.buyed === false) {
+            var data = { bookId: chapterDetail.bookId, bookName: "Buy book" }
             navigate("/BuyBook", { state: data })
         }
     }
@@ -113,9 +114,8 @@ const Chapter = () => {
                 <Grid item xs={10}>
                     {isLoading === false ? <>
                         <div style={{ textAlign: "center" }}>
-                            <Typography>{`${chapterDetail.name}`}</Typography>
-                            <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
-                            <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
+                            <Typography>{`Tập ${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
+                            <Typography>{`Dài ${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length} ký tự, cập nhật ${dateUpdate}`}</Typography>
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>

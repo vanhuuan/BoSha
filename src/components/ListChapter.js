@@ -83,7 +83,7 @@ export default function ListChapter(props) {
               key={value}
               secondaryAction={
                 <div style={{ display: "flex" }}>
-                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
+                  
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();
@@ -93,7 +93,7 @@ export default function ListChapter(props) {
                       }
                       navigate(`/chapter/updateChapter`, { state: data })
                     }}> <BorderColorIcon /> </IconButton> : <> {
-                      canBuyed || value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
+                      canBuyed || value.isDemo ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                     }</>
                   }
                 </div>
@@ -117,11 +117,10 @@ export default function ListChapter(props) {
             <ListItem
               key={value}
               secondaryAction={
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex" }}>``
                   {
-                    canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
+                    canBuyed || value.isDemo || canEdit ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                   }
-                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();

@@ -93,8 +93,15 @@ function Comment(props) {
     }
 
     const deleteComment = async () => {
-        if (await confirm("Are your sure?")) {
-            commentService.deleteUserChapterComment(commentEd.id)
+        if (await confirm("Bạn có chắc muốn xóa bình luận không!")) {
+            commentService.deleteUserChapterComment(commentEd.id).then((rs) => {
+                setText(" ")
+                setIsCommented(false)
+                setEdit(false)
+            }).catch((e) => {
+                console.log(e)
+                NotificationManager.error("Có lỗi xảy ra khi xóa bình luận")
+            })
         }
     }
 
@@ -115,16 +122,23 @@ function Comment(props) {
             "text": text
         }
         commentService.updateCommentChapter(data).then((rs) => {
-            commentService.getUserBookReview(id).then((rs) => {
+            setIsLoading(true)
+            commentService.getUserChapterComment(id).then((rs) => {
                 console.log("comment:", rs.data)
                 setCommentEd(rs.data)
                 setText(rs.data.text)
+                setEdit(false)
                 setIsCommented(true)
             }).catch((err) => {
-                setIsCommented(false)
+                setIsCommented(true)
                 console.log(err)
+            }).finally(() => {
+                setEdit(false)
+                setIsLoading(false)
             })
         }).catch((err) => {
+            setIsCommented(true)
+            setEdit(false)
             console.log(err)
         })
     }
@@ -290,7 +304,15 @@ function Review(props) {
 
     const deleteReview = async () => {
         if (await confirm("Bạn có chắc muốn xóa review ?")) {
-            commentService.deleteUserBookReview(review.id)
+            commentService.deleteUserBookReview(review.id).then((e) => {
+                setIsReviewed(false)
+                setEdit(false)
+                setStar(5)
+                setEdit(false)
+            }).then((e) => {
+                console.log(e)
+                NotificationManager.error("Có lỗi khi xóa đánh giá")
+            })
         }
     }
 
@@ -319,8 +341,11 @@ function Review(props) {
             }).catch((err) => {
                 setIsReviewed(false)
                 console.log(err)
+            }).finally(() => {
+                setEdit(false)
             })
         }).catch((err) => {
+            setEdit(false)
             console.log(err)
         })
     }
