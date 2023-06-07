@@ -79,9 +79,9 @@ export default function SearchBook() {
     const { isSimple } = useParams();
 
     useEffect(() => {
-
+        console.log(isSimple)
         load()
-        if (isSimple === true) {
+        if (isSimple === "true") {
             setSimple(true)
         } else {
             setSimple(false)
@@ -175,7 +175,7 @@ export default function SearchBook() {
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={sortBy}
-                                    onChange={(e) => { setSortBy(e.target.value) }}
+                                    onChange={(e) => { setSortBy(e.target.value); findBook() }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"Newest"}>Cập nhật mới</MenuItem>
@@ -196,7 +196,7 @@ export default function SearchBook() {
                                     labelId="state"
                                     id="demo-simple-select-helper"
                                     value={state}
-                                    onChange={(e) => { setState(e.target.value) }}
+                                    onChange={(e) => { setState(e.target.value); findBook() }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"All"}>Tất cả</MenuItem>
