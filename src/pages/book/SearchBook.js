@@ -49,7 +49,7 @@ export default function SearchBook() {
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState([])
-    const [sortBy, setSortBy] = useState("Newest")
+    const [sortBy, setSortBy] = useState(searchParams.get("hot") ? "HotWeek" :"Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
     const [searchInput, setSearchInput] = useState(searchParams.get("search"))
@@ -277,6 +277,7 @@ function PriceSlider(props) {
                 value={priceRangeValue}
                 onChange={handlePriceRangeChange}
                 valueLabelDisplay="auto"
+                step={500}
                 min={minmin}
                 max={maxmax}
             />

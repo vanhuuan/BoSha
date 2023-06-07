@@ -97,7 +97,7 @@ function Header() {
 
     const handleChoseNav = (event, setting) => {
         switch (setting) {
-            case 'HOT': navigate('/book/search/true')
+            case 'HOT': navigate('/book/search/true?hot=hot')
                 break;
             case 'Đang theo dõi': navigate('/book/likeBook')
                 break;
