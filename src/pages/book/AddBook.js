@@ -11,6 +11,7 @@ import { NotificationManager } from 'react-notifications';
 import '../../css/AddBook.css'
 import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
+import { DescriptionImageCreate } from '../../components/DescriptionImage';
 
 const AddBook = () => {
   let navigate = useNavigate()
@@ -19,6 +20,7 @@ const AddBook = () => {
   const [listCategory, setListCategory] = useState([])
   const [desc, setDesc] = useState("")
   const [img, setImg] = useState("")
+  const [descImg, setDescImg] = useState([])
 
   const limitChar = 100;
   const handleChange = (e) => {
@@ -49,6 +51,11 @@ const AddBook = () => {
       firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
         firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
           console.log(rs3)
+          if(descImg.length > 0){
+            descImg.forEach(x => {
+              firebaseService.uploadDesciptionImages(rs.data.id, URL.createObjectURL(x), (data) => { console.log(data) })
+            })
+          }
           navigate(`/book/${rs.data.id}`)
         }).catch((err) => console.log(err))
       }).catch((err) => console.log(err))
@@ -80,6 +87,10 @@ const AddBook = () => {
   const callbackImg = (childData) => {
     setImg(childData)
     console.log(childData)
+  }
+
+  const callBackDescImgs = (childData) => {
+    setDescImg(childData)
   }
 
   return (
@@ -117,6 +128,11 @@ const AddBook = () => {
                     <MultipleSelect parentCallback={callbackCategory}></MultipleSelect>
                     <div sx={{ marginTop: '4px' }}>
                       <RadioPrice book={{ price: price }} parentCallback={callbackPrice}></RadioPrice>
+                    </div>
+                    <div className='container'>
+                      <DescriptionImageCreate
+                        sendData={callBackDescImgs}
+                      />
                     </div>
                   </Grid>
                 </Grid>
