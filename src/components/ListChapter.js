@@ -153,7 +153,7 @@ export default function ListChapter(props) {
             borderRadius: "10px",
             margin: "1em 25% 0",
           }}
-        > {showMore === false ? "Bớt " : "Xem thêm"
+        > {showMore === false ? "Ẩn bớt " : "Xem thêm"
           }</Typography>
       }
     </List >
