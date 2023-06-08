@@ -5,7 +5,7 @@ import { Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
 import { commentService } from "../services/comment.services";
-import { StarBorderOutlined } from "@mui/icons-material";
+import { Star, StarBorderOutlined } from "@mui/icons-material";
 
 const moment = require('moment');
 moment.updateLocale('vi', {
@@ -84,8 +84,9 @@ function ReviewList(props) {
                                 </p>
                                 <div className="comment-bottom">
                                     <span className="comment-icon">
-                                        <StarBorderOutlined className="icon-star" />
-                                        <span>{item.star}</span>
+                                        {[...Array(item.star).keys()].map((x) => 
+                                            <Star className="icon-star" />
+                                        )}
                                     </span>
                                     <p style={{ textAlign: "left", color: "gray" }}>
                                         {
