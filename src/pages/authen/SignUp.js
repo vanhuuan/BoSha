@@ -178,7 +178,7 @@ const SignUp = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PersonOutlineSharpIcon sx={{ color: "#89D5C9" }} />
+                  <PersonOutlineSharpIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
@@ -193,7 +193,7 @@ const SignUp = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon sx={{ color: "#89D5C9" }} />
+                  <EmailIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
@@ -209,11 +209,11 @@ const SignUp = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PasswordIcon sx={{ color: "#89D5C9" }} />
+                  <PasswordIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
-          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#89D5C9", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleSignUp} >ĐĂNG KÝ</Button>
+          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#4F709C", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleSignUp} >ĐĂNG KÝ</Button>
           <Typography sx={{ marginTop: 2, fontSize: 13, fontStyle: "bold" }}>Nếu bạn đã có tài khoản, hãy <a sx={{marginTop: 2, fontSize: 13, fontStyle: "bold"}} href="/login">đăng nhập</a></Typography>
           <Divider sx={{margin:2}}>Hoặc</Divider>
           <GoogleOAuthProvider clientId={cleintId}>

@@ -3,7 +3,7 @@
   }
   
 .container {
-    border: 1px solid #ccc;
+    border: 1px solid #D8C4B6;
     border-radius: 4px;
     margin: 1em 0;
     padding: 0;
@@ -11,9 +11,9 @@
 }
 
 .container-header {
-    background-color: rgba(204, 204, 204, 0.5);
+    background-color: #F5EFE7;
     padding: 0.5em 1em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #D8C4B6;
 }
 
 .container-body {
@@ -21,7 +21,7 @@
 }
 
 .container-bottom {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #D8C4B6;
 }
 
 .info-item {

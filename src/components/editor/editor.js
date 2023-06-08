@@ -55,7 +55,7 @@ function EditorImage(props) {
 
 
     return (
-        <Grid container spacing={2} border={'1px solid #ccc;'} marginTop={"2em"}>
+        <Grid container spacing={2} border={'1px solid #D8C4B6;'} marginTop={"2em"}>
             <Grid item xs={12}>
                 <Editor
                     editorState={editorState}
@@ -117,7 +117,7 @@ function EditorDescription(props) {
 
             <Grid item xs={12}>
                 <div style={{ marginTop: `1rem`, border: '1px solid gray', borderRadius: '4px' }}>
-                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>
+                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `#F5EFE7`, color: `black`, padding: '0.5em' }}>
                         Miêu tả
                     </Typography>
                     <Editor

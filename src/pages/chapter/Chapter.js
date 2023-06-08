@@ -119,7 +119,7 @@ const Chapter = () => {
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
-                                : <IconButton sx={{ color: "#89D5C9" }} onClick={buyBook}>
+                                : <IconButton sx={{ color: "#4F709C" }} onClick={buyBook}>
                                     <LockPerson style={{ marginLeft: "1em"}} /> Hãy mua truyện này.
                                 </IconButton>
                             }

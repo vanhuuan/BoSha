@@ -11,7 +11,7 @@ import ReviewList from "../../components/Review";
 import { Review } from "../../components/CommentReviewInput";
 import { bookService } from "../../services/books.services";
 import { firebaseService } from "../../services/firebase.services";
-import { AddShoppingCartOutlined, LoginOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { AddShoppingCartOutlined, Favorite, FavoriteBorder, LoginOutlined, StarBorderOutlined } from "@mui/icons-material";
 import StarIcon from '@mui/icons-material/Star';
 import ForumIcon from '@mui/icons-material/Forum';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -113,7 +113,7 @@ export default function BookDetail() {
                             <div>
                                 <div className='container'>
                                     <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <Typography variant='h5'>{book.name} </Typography>
+                                        <Typography variant='h5' onClick={window.location.reload}>{book.name} </Typography>
                                         {
                                             status.canEdit ?
                                                 <IconButton onClick={() => {
@@ -122,7 +122,7 @@ export default function BookDetail() {
                                                     }
                                                     navigate('/book/edit', { state: data })
                                                 }}>
-                                                    <EditIcon style={{ color: "#89D5C9" }}></EditIcon>
+                                                    <EditIcon style={{ color: "#4F709C" }}></EditIcon>
                                                 </IconButton> : <></>
                                         }
                                     </div>
@@ -143,7 +143,7 @@ export default function BookDetail() {
                                                 </div>
                                                 <div style={{ marginBottom: `2em` }}>
                                                     {book.authorId !== uid && isLogin === true ? <>
-                                                        <Button variant="outlined" startIcon={status.liked ? <StarIcon style={{ color: "#faaf00" }} /> : <StarBorderOutlined style={{ color: "#faaf00" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
+                                                        <Button variant="outlined" startIcon={status.liked ? <Favorite style={{ color: "#F266AB" }} /> : <FavoriteBorder style={{ color: "#F266AB" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
                                                         {book.price > 0 ?
