@@ -57,7 +57,7 @@ const LikeBook = () => {
 
     useEffect(() => {
         load().catch(console.error)
-        document.getElementById("like").style.color = "rgb(157, 23, 77)";
+        document.getElementById("like").style.color = "#D8C4B6";
         document.getElementById("buy").style.color = "gray";
     }, [isLike])
 
@@ -94,14 +94,14 @@ const LikeBook = () => {
                             <h1 className='title' id='like' style={{ textAlign: 'left', marginTop: "2em", display: "inline-block", width: "45%" }} onClick={() => {
                                 if (isLike === false) {
                                     changeLike(true)
-                                    document.getElementById("like").style.color = "rgb(157, 23, 77)";
+                                    document.getElementById("like").style.color = "#D8C4B6";
                                     document.getElementById("buy").style.color = "gray";
                                 }
                             }}>Truyện đang theo dõi</h1>
                             <h1 className='title' id='buy' style={{ textAlign: 'right', marginTop: "2em", display: "inline-block", width: "45%" }} onClick={() => {
                                 if (isLike === true) {
                                     changeLike(false)
-                                    document.getElementById("buy").style.color = "rgb(157, 23, 77)";
+                                    document.getElementById("buy").style.color = "#D8C4B6";
                                     document.getElementById("like").style.color = "gray";
                                 }
                             }}>Truyện đã mua</h1>
