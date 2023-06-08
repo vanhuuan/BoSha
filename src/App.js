@@ -56,10 +56,11 @@ function App() {
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header /><AddBook /></>}></Route>
           <Route path="/book/likeBook" element={<><Header /><LikeBook /></>}></Route>
+          <Route path="/book" element={<><Header /><Home /></>}></Route>
           <Route path="/book/:id" element={<><Header /><BookDetail /></>}></Route>
           <Route path="/book/edit" element={<><Header /><EditBook /></>}></Route>
           <Route path="/book/search/:isSimple" element={<><Header /><SearchBook/></>}></Route>
-          <Route path="/chapter/:id" element={<><Header /><Chapter /></>}></Route>
+          <Route path="/chapter/:book/:id" element={<><Header /><Chapter /></>}></Route>
           <Route path="/chapter/addChapter" element={<><Header /><AddChapter /></>}></Route>
           <Route path="/chapter/updateChapter" element={<><Header /><UpdateChapter /></>}></Route>
           <Route path="/hot" element={<><Header /><Chapter /></>}></Route>

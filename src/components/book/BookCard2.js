@@ -18,7 +18,7 @@ const BookCard2 = (props) => {
     }
 
     const handleChoseBook = (e) => {
-        navigate("/book/" + props.manga.id)
+        navigate("/book/" + props.manga.name.replaceAll(" ", "-") + "-" + props.manga.id)
     }
 
     return (

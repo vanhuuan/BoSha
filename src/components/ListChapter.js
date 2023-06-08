@@ -102,7 +102,10 @@ export default function ListChapter(props) {
               className='chapter-item'
 
             >
-              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
+                if (canBuyed || value.isDemo || canEdit)
+                  navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+              }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>
             </ListItem>
@@ -136,7 +139,10 @@ export default function ListChapter(props) {
               disablePadding
               className='chapter-item'
             >
-              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
+                if (canBuyed || value.isDemo || canEdit)
+                  navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+              }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>
             </ListItem>

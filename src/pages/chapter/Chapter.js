@@ -25,7 +25,7 @@ const data = {
 }
 
 const Chapter = () => {
-    const { id } = useParams();
+    const { book, id } = useParams();
     const [chap, setChap] = useState("5")
     const [isLoading, setIsLoading] = useState(true)
     const [chapterDetail, setChapterDetail] = useState(data)
@@ -36,8 +36,7 @@ const Chapter = () => {
         "canEdit": false
     })
     const resultRef = useRef(null);
-    const [chapterId, setChapterId] = useState(id)
-
+    const [chapterId, setChapterId] = useState(id.split("-").slice(-1)[0])
     let navigate = useNavigate()
     const moment = require('moment');
     moment.updateLocale('vi', {
@@ -116,7 +115,7 @@ const Chapter = () => {
                         <div style={{ textAlign: "center" }}>
                             <Typography>{`Tập ${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
                             <Typography>{`Dài ${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length} ký tự, cập nhật ${dateUpdate}`}</Typography>
-                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
+                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: chapterId }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
                                 : <IconButton sx={{ color: "#4F709C" }} onClick={buyBook}>

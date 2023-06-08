@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Select, MenuItem } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import "../css/ChapterNav.css";
 import { useNavigate } from "react-router-dom";
 import { chapterService } from "../services/chapter.services";
 
 const ChapterNav = (props) => {
+    const { book, _ } = useParams();
     const [isLoading, setIsLoading] = useState(true)
     const id = props.chapter.book;
     const chapId = props.chapter.chap;
@@ -53,10 +54,10 @@ const ChapterNav = (props) => {
             {pre === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8249;
-                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${pre}`); onChange(pre)}}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${pre}`); onChange(pre) }}>
                     &#8249;
                 </button>
-                }
+            }
 
             <Select
                 displayEmpty
@@ -65,7 +66,11 @@ const ChapterNav = (props) => {
             >
                 {isLoading === false ?
                     chapters.map((item) => (
-                        <MenuItem onClick={(e) => { navigate("/chapter/" + item.chapterId); onChange(item.chapterId) }} value={item.chapterId} key={item.chapterId}>
+                        <MenuItem onClick={(e) => {
+                            navigate(`/chapter/${book}/${item.chapterName.replaceAll(" ", "-")}-${item.chapterId}`);
+                            onChange(item.chapterId)
+                        }}
+                            value={item.chapterId} key={item.chapterId}>
                             {`${item.chapterNumber} - ${item.chapterName}`}
                         </MenuItem>
                     )) : <></>}
@@ -74,11 +79,11 @@ const ChapterNav = (props) => {
             {next === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8250;
-                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${next}`); onChange(next)}}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${next}`); onChange(next) }}>
                     &#8250;
                 </button>
-                }
-            <button className="chapter-nav__comment"  onClick={() => {resultRef.current.scrollIntoView({ behavior: "smooth" })}}>
+            }
+            <button className="chapter-nav__comment" onClick={() => { resultRef.current.scrollIntoView({ behavior: "smooth" }) }}>
                 <ChatBubbleIcon style={{ fontSize: `18px` }}></ChatBubbleIcon>
                 <span className="chapter-nav__comment-text">Bình luận</span>
             </button>

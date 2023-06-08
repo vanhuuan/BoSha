@@ -44,6 +44,7 @@ export default function BookDetail() {
     })
     const [preview, setPreivew] = useState("")
     const [isLoading, setIsLoading] = useState(true)
+    const [bookId, setBookId] = useState(id.split("-").slice(-1))
     const userName = localStorage.getItem("Name")
     const uid = localStorage.getItem("UserId");
     var isLogin = false
@@ -68,11 +69,11 @@ export default function BookDetail() {
 
     useEffect(() => {
         setIsLoading(true)
-        userBookService.bookDetail(id).then(
+        userBookService.bookDetail(bookId).then(
             (rs) => {
-                firebaseService.gerPreview(id, setPreviewText)
+                firebaseService.gerPreview(bookId, setPreviewText)
                 setBook(rs.data)
-                bookService.bookStatus(id).then((rs) => {
+                bookService.bookStatus(bookId).then((rs) => {
                     console.log("status", rs)
                     setStatus(rs.data)
                     setIsLoading(false)
@@ -96,7 +97,7 @@ export default function BookDetail() {
     }
 
     const likeBook = () => {
-        userBookService.likeBook(id).then(() => {
+        userBookService.likeBook(bookId).then(() => {
             const liked = status.liked;
             setStatus(prevState => ({
                 ...prevState, "liked": !liked
@@ -121,7 +122,7 @@ export default function BookDetail() {
                                             status.canEdit ?
                                                 <IconButton onClick={() => {
                                                     var data = {
-                                                        bookId: id
+                                                        bookId: bookId
                                                     }
                                                     navigate('/book/edit', { state: data })
                                                 }}>
@@ -216,7 +217,7 @@ export default function BookDetail() {
                                 </div>
 
                                 <div className='container'>
-                                    <DescriptionImage bookId={id} status={status} />
+                                    <DescriptionImage bookId={bookId} status={status} />
                                 </div>
 
                                 <div id='chapter-list' className='container'>
@@ -227,12 +228,12 @@ export default function BookDetail() {
                                         }
                                     </div>
                                     <div className='container-body'>
-                                        <ListChapter book={{ id: id, canEdit: status.canEdit, canBuyed: status.buyed }}></ListChapter>
+                                        <ListChapter book={{ name: book.name, id: bookId, canEdit: status.canEdit, canBuyed: status.buyed }}></ListChapter>
                                     </div>
                                 </div>
                                 <div id='review'>
                                     {book.price === 0 || status.buyed === true ?
-                                        <Review book={{ bookId: id }}></Review>
+                                        <Review book={{ bookId: bookId }}></Review>
                                         : <></>}
                                     <ReviewList book={{ bookId: id }}></ReviewList>
                                 </div>
