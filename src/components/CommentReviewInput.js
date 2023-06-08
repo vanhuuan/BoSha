@@ -8,7 +8,7 @@ import { IconButton, Rating, Typography } from '@mui/material';
 import Picker, { Categories, EmojiStyle, SuggestionMode } from 'emoji-picker-react';
 import "../css/Comment.css";
 import { commentService } from '../services/comment.services';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, Send } from '@mui/icons-material';
 import { NotificationManager } from 'react-notifications';
 import { confirm } from './prompt/Confirmation';
 import { Textarea } from '@mui/joy';
@@ -181,8 +181,8 @@ function Comment(props) {
                                             showPreview: false
                                         }}
                                         height={"20em"}
-                                        width={"100%"} 
-                                        />
+                                        width={"100%"}
+                                    />
                                 </div>
                             )}
                             <Typography level="body3" color={"red"}>
@@ -194,7 +194,13 @@ function Comment(props) {
                             {edit === true ?
                                 <Button sx={{}} onClick={() => { setIsCommented(true); setEdit(false); setText(commentEd.text) }}>Bỏ</Button>
                                 : <></>}
-                            <Button sx={{ ml: 'auto' }} onClick={sendComment}>Gửi</Button>
+                            <IconButton sx={{
+                                marginRight: "1em",
+                                color: "#213555",
+                                '&:hover': {
+                                    backgroundColor: "transparent"
+                                }
+                            }} onClick={sendComment}> <Send /> </IconButton>
                         </Box>
                     }
                     sx={{
@@ -412,7 +418,13 @@ function Review(props) {
                             {edit === true ?
                                 <Button sx={{}} onClick={() => { setIsReviewed(true); setEdit(false); setText(review.text) }}>Bỏ</Button>
                                 : <></>}
-                            <Button sx={{ marginRight: "1em" }} onClick={sendReview}>Gửi</Button>
+                            <IconButton sx={{
+                                marginRight: "1em",
+                                color: "#213555",
+                                '&:hover': {
+                                    backgroundColor: "transparent"
+                                }
+                            }} onClick={sendReview}> <Send /> </IconButton>
                         </Box>
                     }
                     sx={{
@@ -434,7 +446,7 @@ function Review(props) {
                             />
                             <Box>
                                 <IconButton color='error' onClick={deleteReview}>
-                                    <Delete /> 
+                                    <Delete />
                                 </IconButton>
                                 /
                                 <IconButton color='primary' onClick={onEditReview}>

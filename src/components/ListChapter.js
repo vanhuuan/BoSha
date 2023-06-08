@@ -148,10 +148,12 @@ export default function ListChapter(props) {
           onClick={() => { setShowMore(!showMore) }}
           sx={{
             '&:hover': {
-              backgroundColor: "#ebf2f0",
+              backgroundColor: "#e6d7c3",
             },
             borderRadius: "10px",
             margin: "1em 25% 0",
+            padding: "0.25em",
+            cursor: "pointer"
           }}
         > {showMore === false ? "Ẩn bớt " : "Xem thêm"
           }</Typography>
