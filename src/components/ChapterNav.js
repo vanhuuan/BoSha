@@ -12,8 +12,14 @@ const ChapterNav = (props) => {
     const [isLoading, setIsLoading] = useState(true)
     const id = props.chapter.book;
     const chapId = props.chapter.chap;
-    const [next, setNext] = React.useState(chapId);
-    const [pre, setPre] = React.useState(chapId)
+    const [next, setNext] = React.useState({
+        id: chapId,
+        name: "null"
+    });
+    const [pre, setPre] = React.useState({
+        id: chapId,
+        name: "null"
+    })
     const resultRef = props.resultRef
     const [chapters, setChapters] = React.useState([])
     let navigate = useNavigate()
@@ -28,10 +34,16 @@ const ChapterNav = (props) => {
 
             if (rs.data[i].chapterId === chapId) {
                 if (i - 1 >= 0) {
-                    setPre(rs.data[i - 1].chapterId)
+                    setPre({
+                            id: rs.data[i - 1].chapterId,
+                            name: rs.data[i - 1].chapterName
+                        })
                 }
                 if (i + 1 < rs.data.length) {
-                    setNext(rs.data[i + 1].chapterId)
+                    setNext({
+                        id: rs.data[i + 1].chapterId,
+                        name: rs.data[i + 1].chapterName
+                    })
                 }
             }
         }
@@ -51,10 +63,13 @@ const ChapterNav = (props) => {
             <Link to={`/book/${id}`} className="chapter-nav__icon">
                 <HomeIcon></HomeIcon>
             </Link>
-            {pre === chapId ?
+            {pre.id === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8249;
-                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${pre}`); onChange(pre) }}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => {
+                    navigate(`/chapter/${book}/${pre.name.replaceAll(" ", "-")}-${pre.id}`);
+                    onChange(pre)
+                }}>
                     &#8249;
                 </button>
             }
@@ -74,12 +89,14 @@ const ChapterNav = (props) => {
                             {`${item.chapterNumber} - ${item.chapterName}`}
                         </MenuItem>
                     )) : <></>}
-
             </Select>
-            {next === chapId ?
+            {next.id === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
                     &#8250;
-                </button> : <button className="chapter-nav__page" onClick={(e) => { navigate(`/chapter/${next}`); onChange(next) }}>
+                </button> : <button className="chapter-nav__page" onClick={(e) => {
+                    navigate(`/chapter/${book}/${next.name.replaceAll(" ", "-")}-${next.id}`);
+                    onChange(next)
+                }}>
                     &#8250;
                 </button>
             }

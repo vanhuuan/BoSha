@@ -58,8 +58,8 @@ export default function BookDetail() {
 
     const share = () => {
         NotificationManager.success(book.name, 'Đã sao chép', 1000);
-        var host = window.location.host;
-        navigator.clipboard.writeText(`${host}/Book/${book.id}`);
+        var host = window.location.href
+        navigator.clipboard.writeText(`${host}`);
     }
 
     const setPreviewText = (data) => {
@@ -71,6 +71,7 @@ export default function BookDetail() {
         setIsLoading(true)
         userBookService.bookDetail(bookId).then(
             (rs) => {
+                document.title = rs.data.name;
                 firebaseService.gerPreview(bookId, setPreviewText)
                 setBook(rs.data)
                 bookService.bookStatus(bookId).then((rs) => {
@@ -235,7 +236,7 @@ export default function BookDetail() {
                                     {book.price === 0 || status.buyed === true ?
                                         <Review book={{ bookId: bookId }}></Review>
                                         : <></>}
-                                    <ReviewList book={{ bookId: id }}></ReviewList>
+                                    <ReviewList book={{ bookId: bookId }}></ReviewList>
                                 </div>
                             </div> : <></>
                         }

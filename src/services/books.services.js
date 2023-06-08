@@ -2,10 +2,10 @@ import api from "./api";
 const baseURL = "https://boshaapi.site";
 export const bookService = {
     booksNew: async (pageNumber, pageSize, queryType, queryString) => {
-        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=Newest&SortType=Desc`)
+        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=&MinPrice=0&MaxPrice=10000000&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=Newest&SortType=Desc`)
     },
     booksHotWeek: async (pageNumber, pageSize, queryType, queryString) => {
-        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=Susspend&MinPrice=0&MaxPrice=10000000&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=HotWeek&SortType=Desc`)
+        return await api.get(`${baseURL}/Books?Categories=&Name=&State=&NotState=&MinPrice=0&MaxPrice=10000000&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=${queryType}&QueryString=${queryString}&SortBy=HotWeek&SortType=Desc`)
     },
     bookDetail: async (id) => {
         return await api.get(`${baseURL}/Book?id=${id}`)
@@ -24,7 +24,7 @@ export const bookService = {
             });
         }
 
-        const url = `${baseURL}/Books${textCate}&Name=${name}&State=${state}&NotState=Susspend&MinPrice=${min}&MaxPrice=${max}&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=fgsdgsdfgdfg&QueryString=sdfgsdfgdfg&SortBy=${sort}&SortType=Desc`
+        const url = `${baseURL}/Books${textCate}&Name=${name}&State=${state}&NotState=&MinPrice=${min}&MaxPrice=${max}&PageNumber=${pageNumber}&PageSize=${pageSize}&QueryType=fgsdgsdfgdfg&QueryString=sdfgsdfgdfg&SortBy=${sort}&SortType=Desc`
         console.log(url)
         return await api.get(url)
     },

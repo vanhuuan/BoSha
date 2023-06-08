@@ -36,6 +36,7 @@ const Chapter = () => {
         "canEdit": false
     })
     const resultRef = useRef(null);
+    console.log(id.split("-").slice(-1)[0])
     const [chapterId, setChapterId] = useState(id.split("-").slice(-1)[0])
     let navigate = useNavigate()
     const moment = require('moment');
@@ -68,7 +69,7 @@ const Chapter = () => {
     }
 
     const changeChapter = (chap) => {
-        setChapterId(chap)
+        setChapterId(chap.id)
     }
 
     useEffect(() => {
@@ -76,11 +77,12 @@ const Chapter = () => {
         setIsLoading(true)
         chapterService.chapterDetail(chapterId).then(
             (rs) => {
+                document.title = `${book.replaceAll("-", " ").substring(0, book.lastIndexOf("-"))} - ${rs.data.name}`;
                 console.log(rs.data)
                 setChapterDetail(rs.data)
                 setChap(rs.data.textLink)
                 firebaseService.getChapter(rs.data.bookId, rs.data.chapterId, setChapText)
-                const date1 = new Date(chapterDetail.updated);
+                const date1 = new Date(rs.data.updated);
                 let a = moment().from(date1);
                 setDateUpdate(a)
                 bookService.bookStatus(rs.data.bookId).then((rs) => {
@@ -95,7 +97,7 @@ const Chapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            navigate("/NotFound");
+            // navigate("/NotFound");
         })
     }, [chapterId])
 
