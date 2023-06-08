@@ -52,8 +52,8 @@ export default function UserInfo() {
                     {isLoading === false ?
                         <div className="container" padding={"1em"}>
                             <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }}> <Person color="primary" />Thông tin tài khoản </Typography>
-                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }} onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện <BarChart /></Typography>
+                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }}> <Person color="primary" />Thông tin tài khoản </Typography>
+                                <Typography sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }} onClick={(e) => { navigate("/user/statistic") }} >Thống kê truyện <BarChart /></Typography>
                             </div>
                             <div className='container-body' style={{ display: "flex", justifyContent: "center" }}>
                                 {ava ?
