@@ -34,7 +34,7 @@
     border-radius: 0;
     flex-grow: 0;
     flex-shrink: 0;
-    background-color: white;
+    background-color: #F5F5F7;
     z-index: 10;
     margin: var(--img-gap) 0;
     width: var(--handle-size);

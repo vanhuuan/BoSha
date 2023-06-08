@@ -71,7 +71,7 @@ function ReviewList(props) {
                 {commentsList.length === 0 ? <h3>Chưa có đánh giá</h3> :
                     <h3>Đánh giá</h3>}
                 {commentsList.map((item, index) => (
-                    <Paper style={{ padding: "40px 20px" }}>
+                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F5F5F7" }}>
                         <Grid container wrap="nowrap" spacing={2}>
 
                             <Grid item>

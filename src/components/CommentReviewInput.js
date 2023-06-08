@@ -160,6 +160,7 @@ function Comment(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
+                                background: "#F5F5F7",
                                 flex: "auto"
                             }}
                         >
@@ -180,7 +181,8 @@ function Comment(props) {
                                             showPreview: false
                                         }}
                                         height={"20em"}
-                                        width={"100%"} />
+                                        width={"100%"} 
+                                        />
                                 </div>
                             )}
                             <Typography level="body3" color={"red"}>
@@ -199,6 +201,7 @@ function Comment(props) {
                         minWidth: 300,
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
+                        background: "#F5F5F7",
                     }}
                 /> </> : <> {isLoading === false ? <Textarea
                     minRows={3}
@@ -215,7 +218,7 @@ function Comment(props) {
                         </Box>
                     }
                     value={commentEd.text}
-                    style={{ color: `black` }}>
+                    style={{ color: `black`, background: "#F5F5F7" }}>
                 </Textarea> : <> </>
                 }</>
             }
@@ -366,6 +369,7 @@ function Review(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
+                                background: "#F5F5F7",
                                 justifyContent: "space-between",
                                 flex: "auto"
                             }}
@@ -415,10 +419,12 @@ function Review(props) {
                         minWidth: 300,
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
+                        background: "#F5F5F7",
                     }}
                 />
                 : <Textarea value={review.text}
                     readOnly
+                    sx={{ background: "#F5F5F7" }}
                     endDecorator={
                         <Box sx={{ justifyContent: 'space-between' }}>
                             <Rating

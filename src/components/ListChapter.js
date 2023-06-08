@@ -72,7 +72,7 @@ export default function ListChapter(props) {
   }, [])
 
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper', margin: 0 }}>
+    <List sx={{ width: '100%', bgcolor: '#F5F5F7', margin: 0 }}>
       {showMore === true ?
         chapters.slice(0, 10).map((value) => {
           const labelId = `checkbox-list-label-${value.chapterNumber}`;

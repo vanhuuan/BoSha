@@ -36,6 +36,7 @@ import VnpayStatus from "./pages/payment/VnPayStatus";
 function App() {
   useEffect(() => {
     document.title = 'BoSha';
+    document.body.style.backgroundColor = "#F5F5F7"
   }, []);
 
   return (
