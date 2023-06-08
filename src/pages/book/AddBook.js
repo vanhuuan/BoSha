@@ -51,7 +51,7 @@ const AddBook = () => {
       firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
         firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
           console.log(rs3)
-          if(descImg.length > 0){
+          if (descImg.length > 0) {
             descImg.forEach(x => {
               firebaseService.uploadDesciptionImages(rs.data.id, URL.createObjectURL(x), (data) => { console.log(data) })
             })
@@ -129,14 +129,14 @@ const AddBook = () => {
                     <div sx={{ marginTop: '4px' }}>
                       <RadioPrice book={{ price: price }} parentCallback={callbackPrice}></RadioPrice>
                     </div>
-                    <div className='container'>
-                      <DescriptionImageCreate
-                        sendData={callBackDescImgs}
-                      />
-                    </div>
                   </Grid>
                 </Grid>
               </div>
+            </div>
+            <div className='container'>
+              <DescriptionImageCreate
+                sendData={callBackDescImgs}
+              />
             </div>
             <div>
               <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: "<p></p>" }} parentCallback={callbackDesc} />
