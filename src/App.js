@@ -37,6 +37,7 @@ function App() {
   useEffect(() => {
     document.title = 'BoSha';
     document.body.style.backgroundColor = "#F5F5F7"
+    document.body.style.color = "#1d1d1f";
   }, []);
 
   return (
