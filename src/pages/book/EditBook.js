@@ -173,7 +173,7 @@ const EditBook = () => {
                                                 <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
                                             </div>
                                             <div>
-                                                {state === "Block" ? <>Truyện đã bị người quản trị chặn vì </> : <>
+                                                {state === "Block" ? <>Truyện đã bị người quản trị chặn </> : <>
                                                     <InputLabel id="demo-select-small-label">Tình trạng</InputLabel>
                                                     <Select
                                                         labelId="demo-select-small-label"

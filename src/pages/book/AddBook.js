@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import FileInput from '../../components/UploadImg';
-import { Grid, Typography, TextField, Box, Button } from '@mui/material';
+import { Grid, Typography, TextField, Box, Button, LinearProgress } from '@mui/material';
 import RadioPrice from '../../components/RadioPrice';
 import MultipleSelect from '../../components/SelectMulti';
 import { EditorDescription } from '../../components/editor/editor';
@@ -21,7 +21,7 @@ const AddBook = () => {
   const [desc, setDesc] = useState("")
   const [img, setImg] = useState("")
   const [descImg, setDescImg] = useState([])
-
+  const [isLoading, setIsLoading] = useState(false)
   const limitChar = 100;
   const handleChange = (e) => {
     if (e.target.value.toString().length >= 5 && e.target.value.toString().length <= limitChar) {
@@ -47,19 +47,23 @@ const AddBook = () => {
       "categories": listCategory,
       "price": price
     }
+    setIsLoading(true)
     userBookService.addBook(data).then((rs) => {
       firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
         firebaseService.uploadCover(rs.data.id, img).then((rs3) => {
           console.log(rs3)
           if (descImg.length > 0) {
             descImg.forEach(x => {
-              firebaseService.uploadDesciptionImages(rs.data.id, URL.createObjectURL(x), (data) => { console.log(data) })
+              firebaseService.uploadDesciptionImages(rs.data.id, URL.createObjectURL(x), (data) => { console.log(data); navigate(`/book/${rs.data.id}`) })
             })
+          } else {
+            navigate(`/book/${rs.data.id}`)
           }
-          navigate(`/book/${rs.data.id}`)
+          NotificationManager.success("Thêm truyện thành công", "Thành công", 2000)
         }).catch((err) => console.log(err))
       }).catch((err) => console.log(err))
     }).catch((err) => {
+      NotificationManager.error("Thêm truyện không thành công", "Lỗi", 2000)
       console.log(err)
     })
   }
@@ -141,10 +145,15 @@ const AddBook = () => {
             <div>
               <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: "<p></p>" }} parentCallback={callbackDesc} />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
-              <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={addBook}>Thêm truyện</Button>
-              <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={reset}>Trở về</Button>
-            </div>
+
+            {
+              isLoading == true ? <LinearProgress /> :
+                <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
+                  <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={addBook}>Thêm truyện</Button>
+                  <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={reset}>Trở về</Button>
+                </div>
+            }
+
           </Grid>
           <Grid item xs={1}>
             {/* <div>xs=2</div> */}

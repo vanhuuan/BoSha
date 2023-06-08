@@ -83,7 +83,7 @@ export default function RadioPrice(props) {
                     label="Có phí"
                 />
             </RadioGroup>
-            {selectedValue === 2 ?
+            {selectedValue === "2" ?
                 <FormControl fullWidth margin="normal">
                     <InputLabel htmlFor="outlined-adornment-amount">Giá tiền</InputLabel>
                     <OutlinedInput
