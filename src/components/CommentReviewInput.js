@@ -160,7 +160,7 @@ function Comment(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                background: "#F5F5F7",
+                                background: "#F9F9F9",
                                 flex: "auto"
                             }}
                         >
@@ -207,7 +207,7 @@ function Comment(props) {
                         minWidth: 300,
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
-                        background: "#F5F5F7",
+                        background: "#F9F9F9",
                     }}
                 /> </> : <> {isLoading === false ? <Textarea
                     minRows={3}
@@ -224,7 +224,7 @@ function Comment(props) {
                         </Box>
                     }
                     value={commentEd.text}
-                    style={{ color: `black`, background: "#F5F5F7" }}>
+                    style={{ color: `black`, background: "#F9F9F9" }}>
                 </Textarea> : <> </>
                 }</>
             }
@@ -375,7 +375,7 @@ function Review(props) {
                                 pt: 'var(--Textarea-paddingBlock)',
                                 borderTop: '1px solid',
                                 borderColor: 'divider',
-                                background: "#F5F5F7",
+                                background: "#F9F9F9",
                                 justifyContent: "space-between",
                                 flex: "auto"
                             }}
@@ -401,15 +401,16 @@ function Review(props) {
                                             width={"100%"} />
                                     </div>
                                 )}
-                                <Typography level="body3" color={"red"}>
+                                <Typography sx={{ marginTop: "1em" }} level="body3" color={"red"}>
                                     {message}
                                 </Typography>
-                                <Typography level="body3">
+                                <Typography sx={{ marginTop: "1em" }} level="body3">
                                     {text.length} / 1000 từ
                                 </Typography>
                                 <Rating
                                     name="simple-controlled"
                                     value={star}
+                                    sx={{ marginLeft: "0.5em", marginTop: "0.5em" }}
                                     onChange={(event, newValue) => {
                                         setStar(newValue);
                                     }}
@@ -431,12 +432,12 @@ function Review(props) {
                         minWidth: 300,
                         fontWeight,
                         fontStyle: italic ? 'italic' : 'initial',
-                        background: "#F5F5F7",
+                        background: "#F9F9F9",
                     }}
                 />
                 : <Textarea value={review.text}
                     readOnly
-                    sx={{ background: "#F5F5F7" }}
+                    sx={{ background: "#F9F9F9" }}
                     endDecorator={
                         <Box sx={{ justifyContent: 'space-between' }}>
                             <Rating

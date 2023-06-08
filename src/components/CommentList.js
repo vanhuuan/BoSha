@@ -68,7 +68,7 @@ const CommentList = forwardRef((props, ref) =>  {
             <h1>Bình luận</h1>
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
-                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F5F5F7"  }}>
+                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9"  }}>
                         <Grid container wrap="nowrap" spacing={2}>
                             <Grid item>
                                 <Avatar alt={item.userName} src={item.userAva} />
