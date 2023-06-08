@@ -47,7 +47,7 @@ export default function BookDetail() {
     const userName = localStorage.getItem("Name")
     const uid = localStorage.getItem("UserId");
     var isLogin = false
-    if(userName){
+    if (userName) {
         isLogin = true
     }
     console.log("Login", isLogin)
@@ -81,7 +81,10 @@ export default function BookDetail() {
                     setIsLoading(false)
                 })
             }
-        ).catch((err) => console.log(err))
+        ).catch((err) => {
+            console.log(err)
+            navigate("/NotFound")
+        })
     }, [id])
 
     const data = { bookId: book.id, bookName: book.name }
@@ -157,10 +160,10 @@ export default function BookDetail() {
                                                         :
                                                         <>
                                                             {
-                                                                isLogin === true ? <> </> 
-                                                                : <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
-                                                                     Đăng nhập
-                                                                 </Button>
+                                                                isLogin === true ? <> </>
+                                                                    : <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
+                                                                        Đăng nhập
+                                                                    </Button>
                                                             }
                                                         </>
                                                     }
