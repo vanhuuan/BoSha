@@ -49,7 +49,7 @@ const EditBook = () => {
     let navigate = useNavigate()
     const location = useLocation();
     const data = location.state;
-    const id = data.bookId
+    const id = data.bookId[0]
 
     useEffect(() => {
         setIsLoading(true)

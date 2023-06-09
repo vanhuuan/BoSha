@@ -170,6 +170,39 @@ export const firebaseService = {
             );
         })
     },
+
+    uploadChapterImg: async (bookId, chapId, img, callBack) => {
+        if (img == null)
+            return;
+
+        getFileBlob(img, blob => {
+            const storageRef = ref(storage, `books/${bookId}/${chapId}/${makeid(8)}.png`);
+            const metadata = {
+                contentType: 'image/png',
+            };
+            const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+            uploadTask.on("state_changed",
+                (snapshot) => {
+
+                },
+                (error) => {
+                    console.log("Upload chap img", error)
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log(downloadURL)
+                        callBack({ 
+                            data: { 
+                                link: downloadURL
+                            }
+                        })
+                        return downloadURL
+                    });
+                }
+            );
+        })
+    },
+
     uploadDesciptionImages: async (bookId, img, callback) => {
         if (img == null)
             return;

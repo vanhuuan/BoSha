@@ -191,10 +191,12 @@ const UpdateChapter = () => {
                                     control={<Android12Switch checked={!states} onChange={(e) => setStates(!states)} />}
                                     label="Ẩn chương"
                                 />
-                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} okeCallback={callBackOke} chap={{ text: chap }} >
+                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap}
+                                    okeCallback={callBackOke}
+                                    chap={{ text: chap, bookId: chapterDetail.bookId, chapId: chapterDetail.chapterId }} >
                                 </EditorImage>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1em" }}>
-                                    <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/"+chapterDetail.bookId) }}>Trở về</Button>
+                                    <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/" + chapterDetail.bookId) }}>Trở về</Button>
                                     <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
                                 </div>
                             </FormControl>
