@@ -1,79 +1,8 @@
-import React from "react";
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CircularProgress, SvgIcon } from "@mui/material";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { styled, alpha } from '@mui/material/styles';
-import { PaymentOutlined } from "@mui/icons-material";
-import { Grid } from "@mui/material";
-import { useEffect } from "react";
-import { buyBookService } from "../../services/buybook.services";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { NotificationManager } from 'react-notifications';
-import "../../css/BuyBook.css"
-import VnPayIcon from '../../assets/images/vnpay-logo-inkythuatso.svg'
-import PayPalIcon from '../../assets/images/paypal-seeklogo.com.svg'
-import Icon from "react-multi-date-picker/components/icon";
-const steps = ['Thông tin thanh toán'];
-
-const StyledMenu = styled((props) => (
-    <Menu
-        elevation={0}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        {...props}
-    />
-))(({ theme }) => ({
-    '& .MuiPaper-root': {
-        borderRadius: 6,
-        marginTop: theme.spacing(1),
-        minWidth: 180,
-        color:
-            theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-        boxShadow:
-            'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-        '& .MuiMenu-list': {
-            padding: '4px 0',
-        },
-        '& .MuiMenuItem-root': {
-            '& .MuiSvgIcon-root': {
-                fontSize: 18,
-                color: theme.palette.text.secondary,
-                marginRight: theme.spacing(1.5),
-            },
-            '&:active': {
-                backgroundColor: alpha(
-                    theme.palette.primary.main,
-                    theme.palette.action.selectedOpacity,
-                ),
-            },
-        },
-    },
-}));
-
-const VnPayLogo = () => (
-    <SvgIcon>
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 630.383 630.383" enable-background="new 0 0 630.383 630.383" xmlSpace="preserve">
-            <path fill-rule="evenodd" clip-rule="evenodd" fill="#005AAA" d="M535.045,301.644h-14.943l7.247-20.648L535.045,301.644z
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 630.383 630.383" enable-background="new 0 0 630.383 630.383" xml:space="preserve">
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#005AAA" d="M535.045,301.644h-14.943l7.247-20.648L535.045,301.644z
 	 M121.868,278.384l-15.106,15.106l-0.753,0.742l-8.378,8.389l-7.636,7.638l-0.744,0.752h-0.008l-7.08,7.07v0.01l-0.743,0.742
 	c-2.122,2.123-4.468,3.863-6.961,5.241c-1.262,0.695-2.552,1.29-3.872,1.798c-2.943,1.135-6.032,1.8-9.141,1.996
 	c-1.906,0.128-3.842,0.078-5.739-0.156c-4.106-0.491-8.135-1.8-11.811-3.93c-1.574-0.909-3.187-1.858-4.528-3.188
@@ -91,7 +20,7 @@ const VnPayLogo = () => (
 	c-1.335-1.181-2.183-2.589-2.496-4.265c-0.279-1.531-0.27-2.105,0.063-3.578l3.648-11.331h20.894l3.257,8.73
 	c0.342,0.915,0.535,1.765,0.622,2.746c0.284,3.26-0.761,5.945-3.349,7.84h28.146c-2.761-2.459-5.296-5.034-6.727-8.159
 	l-20.547-55.114H517.139z"/>
-            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ED1C24" d="M285.557,276.327l23.091-13.242l4.553,8.36l-22.255,8.177
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#ED1C24" d="M285.557,276.327l23.091-13.242l4.553,8.36l-22.255,8.177
 	L285.557,276.327z M291.457,319.813v-26.717c0-2.043-0.248-3.59-0.743-4.645c-0.465-1.022-1.27-2.072-2.416-3.156v-0.371h11.522
 	c1.797,0,3.314-0.082,4.554-0.236c1.146-0.12,2.23-0.496,3.252-1.113h0.372v36.61c0,2.108,0.216,3.717,0.65,4.833
 	c0.432,1.27,1.331,2.401,2.694,3.391v0.372h-23.231v-0.372c1.457-1.239,2.386-2.478,2.787-3.719
@@ -120,7 +49,7 @@ const VnPayLogo = () => (
 	c3.657-1.732,6.385-4.126,7.685-5.398c0.509-0.5,0.89-0.919,1.047-1.105l12.867-12.641l0.049,0.058l44.241-43.526l0.235-0.284
 	l21.491-21.149c2.894-2.829,7.412-3.2,10.696-0.94l5.094,5.093c0.011,0,0.011,0.01,0.011,0.01l27.63,27.63
 	c0.244,0.246,0.479,0.501,0.694,0.761C212.318,297.442,212.083,303.133,208.495,306.709z"/>
-            <path fill="#009EDB" d="M117.312,282.943l-2.836,2.833l-4.976-5.007c-0.783-0.79-0.773-2.062,0.009-2.833
+<path fill="#009EDB" d="M117.312,282.943l-2.836,2.833l-4.976-5.007c-0.783-0.79-0.773-2.062,0.009-2.833
 	c0.793-0.781,2.054-0.781,2.836,0.01L117.312,282.943z M108.923,291.332l-2.836,2.824l-15.643-15.762
 	c-5.808-5.845-14.285-7.898-22.136-5.358c-1.046,0.342-2.179-0.231-2.523-1.277c-0.342-1.06,0.235-2.192,1.29-2.535
 	c9.288-3.012,19.34-0.578,26.214,6.346L108.923,291.332z M92.155,308.099l-2.836,2.836l-15.712-15.83
@@ -187,192 +116,4 @@ const VnPayLogo = () => (
 	c-1.166-0.555-1.773-1.497-1.773-2.825c0-1.884,1.166-2.998,3.498-3.341c-2.419-0.986-3.624-3.083-3.624-6.254v-0.512
 	c0-4.669,3.325-7.409,8.977-7.409c1.686,0,3.151,0.297,4.448,0.855l2.462-2.184c0.732-0.643,1.075-0.643,1.768,0l0.299,0.298
 	c0.694,0.643,0.694,0.985,0,1.67l-1.942,1.973c1.253,1.155,1.903,2.741,1.903,4.797V362.368z"/>
-        </svg>
-
-    </SvgIcon>
-)
-
-const theme = createTheme();
-
-const BuyBook = () => {
-    const [activeStep, setActiveStep] = React.useState(0);
-
-    const handleNext = () => {
-        setActiveStep(activeStep + 1);
-    };
-
-    let navigate = useNavigate()
-
-    const [isLoading, setIsLoading] = useState(true)
-
-    const location = useLocation();
-    const data = location.state;
-    const bookId = data.bookId;
-
-    const [checkoutInfo, setCheckoutInfo] = useState()
-    const [buyLink, setBuyLink] = useState("")
-    const [paymentMethod, setPaymentMethod] = useState("Phương thức thanh toán")
-
-
-    const handleBuyBook = () => {
-        const data = {
-            "bookId": bookId,
-            "paymentMethod": paymentMethod
-        }
-        if (paymentMethod === "Phương thức thanh toán") {
-            NotificationManager.error("Hãy chọn phương thức thanh toán")
-            return
-        }
-        setIsLoading(true)
-        buyBookService.buyBook(data).then((rs) => {
-            setIsLoading(false)
-            handleNext()
-            window.open(rs.data, '_top', 'noopener,noreferrer');
-            setBuyLink(rs.data)
-            setActiveStep(activeStep - 1);
-        })
-    }
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    useEffect(() => {
-        buyBookService.checkOut(bookId).then((rs) => {
-            console.log(rs)
-            setCheckoutInfo(rs.data)
-            document.title = "Mua sách " + rs.data.bookName
-            if (rs.data.buyLink) {
-                window.open(rs.data.buyLink, '_top', 'noopener,noreferrer');
-            }
-            setIsLoading(false)
-        }).catch((e) => {
-            console.log(e)
-            if (localStorage.getItem("AccessToken")) {
-                navigate(-1)
-            } else {
-                navigate("/login")
-            }
-
-        })
-    }, [])
-
-    return (
-        <div className="buybook">
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <AppBar
-                    position="absolute"
-                    color="default"
-                    elevation={0}
-                    sx={{
-                        position: 'relative',
-                        borderBottom: (t) => `1px solid ${t.palette.divider}`,
-                    }}
-                >
-                </AppBar>
-                <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
-                    <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                        <Typography component="h1" variant="h4" align="center">
-                            Xác nhận thanh toán
-                        </Typography>
-                        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                        {activeStep === steps.length ? (
-                            <React.Fragment>
-                                <Typography variant="h5" gutterBottom>
-                                    Cảm ơn bạn đã mua truyện của chúng tôi.
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    Truyện sẽ được thêm vào danh sách đã mua của bạn sau khi bạn thanh toán ngay sau đây.
-                                    Nếu trang không tự động chuyển, hãy truy cập vào đường dẫn : {buyLink}
-                                </Typography>
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <Box>
-                                    {isLoading === false ?
-                                        <Grid container spacing={2}>
-
-                                            <Grid item xs={12} sm={4} md={4}>
-                                                <img src={checkoutInfo.cover} alt="ảnh truyện" style={{ maxWidth: "15em" }}></img>
-                                            </Grid>
-                                            <Grid item xs={12} sm={6} md={8}>
-                                                <div className="infoCard">
-                                                    <Typography className="info" variant="h5"><b>Người mua: </b>{checkoutInfo.userName}</Typography>
-                                                    <Typography className="info" variant="h5"><b>Truyện: </b>{checkoutInfo.bookName}</Typography>
-                                                    <Typography className="info" variant="h5"><b>Giá tiền: </b>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(checkoutInfo.price)} </Typography>
-                                                    <Button
-                                                        id="demo-customized-button"
-                                                        aria-controls={open ? 'demo-customized-menu' : undefined}
-                                                        aria-haspopup="true"
-                                                        aria-expanded={open ? 'true' : undefined}
-                                                        variant="contained"
-                                                        disableElevation
-                                                        onClick={handleClick}
-                                                        endIcon={<KeyboardArrowDownIcon />}
-                                                    >
-                                                        <PaymentOutlined />
-                                                        {paymentMethod}
-                                                    </Button>
-                                                    <StyledMenu
-                                                        id="demo-customized-menu"
-                                                        MenuListProps={{
-                                                            'aria-labelledby': 'demo-customized-button',
-                                                        }}
-                                                        anchorEl={anchorEl}
-                                                        open={open}
-                                                        onClose={handleClose}
-                                                        
-                                                    >
-                                                        {/* <MenuItem onClick={handleClose} disableRipple onClickCapture={(e) => { setPaymentMethod("Paypal") }}>
-                                                            <SvgIcon component={PayPalIcon}></SvgIcon> 
-                                                            Paypal
-                                                        </MenuItem> */}
-                                                        <MenuItem sx={{ minWidth: 180}} onClick={handleClose} disableRipple selected={true} onClickCapture={(e) => { setPaymentMethod("VnPay") }}>
-                                                            <VnPayLogo /> VnPay
-                                                        </MenuItem>
-                                                    </StyledMenu>
-                                                </div>
-                                            </Grid>
-                                        </Grid> : <CircularProgress></CircularProgress>
-                                    }
-                                    <div>
-                                        <Button
-                                            variant="contained"
-                                            sx={{ mt: 3, ml: 1 }}
-                                            color="warning"
-                                            onClick={(e) => { navigate(-1) }}
-                                        >
-                                            Hủy
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            onClick={handleBuyBook}
-                                            sx={{ mt: 3, ml: 1 }}
-                                            color="success"
-                                        >
-                                            Mua truyện
-                                        </Button>
-                                    </div>
-                                </Box>
-                            </React.Fragment>
-                        )}
-                    </Paper>
-                </Container>
-            </ThemeProvider>
-        </div>
-    )
-}
-
-export default BuyBook
+</svg>

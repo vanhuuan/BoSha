@@ -111,6 +111,7 @@ function Header() {
     const handleAvaMenuClick = (event, setting) => {
         switch (setting) {
             case 'Đăng xuất': logout()
+                setAva("")
                 break;
             case 'Tài khoản': navigate('/user/userInfo')
                 break;
