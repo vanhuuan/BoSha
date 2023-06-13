@@ -92,12 +92,30 @@ export default function BookDetail() {
     const data = { bookId: book.id, bookName: book.name }
 
     const buyBook = (e) => {
+        if(isLogin === false){
+            navigate(
+                {
+                    pathname: '/login',
+                    search: '?callBack='+window.location.href,
+                }
+            )
+            return
+        }
         if (status.buyed === false) {
             navigate("/BuyBook", { state: data })
         }
     }
 
     const likeBook = () => {
+        if(isLogin === false){
+            navigate(
+                {
+                    pathname: '/login',
+                    search: '?callBack='+window.location.href,
+                }
+            )
+            return
+        }
         userBookService.likeBook(bookId).then(() => {
             const liked = status.liked;
             setStatus(prevState => ({
@@ -147,7 +165,7 @@ export default function BookDetail() {
                                                     <BookInfo book={{ bookDetail: book }}></BookInfo>
                                                 </div>
                                                 <div style={{ marginBottom: `2em` }}>
-                                                    {book.authorId !== uid && isLogin === true ? <>
+                                                    {book.authorId !== uid ? <>
                                                         <Button variant="outlined" startIcon={status.liked ? <Favorite style={{ color: "#F266AB" }} /> : <FavoriteBorder style={{ color: "#F266AB" }} />} style={{ marginRight: `1em`, marginBottom: "0.5em", minWidth: "170px" }} onClick={likeBook}>
                                                             {status.liked ? 'Hủy theo dõi' : 'Theo dõi'}
                                                         </Button>
@@ -160,14 +178,7 @@ export default function BookDetail() {
                                                         }
                                                     </>
                                                         :
-                                                        <>
-                                                            {
-                                                                isLogin === true ? <> </>
-                                                                    : <Button variant="contained" startIcon={<LoginOutlined />} onClick={() => navigate("/login")} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
-                                                                        Đăng nhập
-                                                                    </Button>
-                                                            }
-                                                        </>
+                                                        <></>
                                                     }
                                                 </div>
                                                 <Grid container>

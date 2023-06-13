@@ -10,9 +10,12 @@ import { Divider } from '@mui/material';
 import { authService } from '../../services/auth.services';
 import { useNavigate } from "react-router-dom"
 import { NotificationManager } from 'react-notifications';
+import { useSearchParams } from "react-router-dom";
 
 const Login = () => {
   let navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const cleintId = "156185449724-pillmeqb703h7ops42o9n80bh9agkckd.apps.googleusercontent.com"
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -57,6 +60,10 @@ const Login = () => {
         localStorage.setItem("RefreshToken", login.data.refreshToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
+        if(searchParams.get("callBack")){
+          console.log(searchParams.get("callBack"))
+          window.location.replace(searchParams.get("callBack"))
+        }
         navigate("/")
       } else {
         NotificationManager.error("Đăng nhập không thành công", "Tên đăng nhập hoặc mật khẩu không đúng!", 2000)
