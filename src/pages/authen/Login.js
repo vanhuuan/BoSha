@@ -58,6 +58,7 @@ const Login = () => {
         localStorage.setItem("UserId", login.data.id)
         localStorage.setItem("AccessToken", login.data.accessToken)
         localStorage.setItem("RefreshToken", login.data.refreshToken)
+        localStorage.setItem("FirebaseToken", login.data.firebaseToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
         if(searchParams.get("callBack")){
@@ -86,6 +87,7 @@ const Login = () => {
         localStorage.setItem("UserId", login.data.id)
         localStorage.setItem("AccessToken", login.data.accessToken)
         localStorage.setItem("RefreshToken", login.data.refreshToken)
+        localStorage.setItem("FirebaseToken", login.data.firebaseToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
         localStorage.setItem("Ava", login.data.photo)

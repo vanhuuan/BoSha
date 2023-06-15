@@ -40,7 +40,8 @@ instance.interceptors.response.use(
                     const rs = await instance.get(`/Authen/GetAccessToken?token=${refreshToken}`);
                     if(rs.data){
                         const accessToken = rs.data.accessToken;
-                        TokenService.updateLocalAccessToken(accessToken);
+                        const firebase = rs.data.firebaseToken;
+                        TokenService.updateLocalAccessToken(accessToken, firebase);
                         return instance(originalConfig);
                     }else{
                         NotificationManager.error("Hãy đăng nhập để thực hiện","Chưa đăng nhập", 2000)

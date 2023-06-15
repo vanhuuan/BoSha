@@ -1,6 +1,6 @@
 import { NotificationManager } from "react-notifications";
 import { storage } from "../firebase";
-import { ref, getDownloadURL, uploadBytesResumable, listAll, deleteObject } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable, listAll, deleteObject, uploadBytes } from "firebase/storage";
 
 export const firebaseService = {
     getChapter: async (bookid, chapterId, callback) => {
@@ -101,7 +101,7 @@ export const firebaseService = {
     uploadPreview: async (bookId, text) => {
         const storageRef = ref(storage, `books/${bookId}/preview.html`);
         const metadata = {
-            contentType: 'text/html; charset=utf-8',
+            contentType: 'text/html; charset=utf-8'
         };
         console.log(text)
         const blob = new Blob([text], { type: 'plain/text' });
