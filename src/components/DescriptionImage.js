@@ -128,11 +128,13 @@ function DescriptionImage({ bookId, status }) {
                             <div className='progress-bar'></div>
                         </div>
                         <div className='container-book-hot' style={{ padding: 0 }}>
-                            <button class="handle left-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickLeft()}
-                            >
-                                <div class="text">&#8249;</div>
-                            </button>
+                            {imgs.length > 6 ?
+                                <button class="handle left-handle" style={{ padding: 0 }}
+                                    onClick={() => onHandleClickLeft()}
+                                >
+                                    <div class="text">&#8249;</div>
+                                </button>
+                                : <></> }
                             <div class="slider">
                                 {imgs.map(p => (
                                     <span style={{ margin: "1em" }}>
@@ -140,11 +142,13 @@ function DescriptionImage({ bookId, status }) {
                                     </span>
                                 ))}
                             </div>
-                            <button class="handle right-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickRight()}
-                            >
-                                <div class="text">&#8250;</div>
-                            </button>
+                            {imgs.length > 6 ?
+                                <button class="handle right-handle" style={{ padding: 0 }}
+                                    onClick={() => onHandleClickRight()}
+                                >
+                                    <div class="text">&#8250;</div>
+                                </button>
+                                : <></>}
                         </div>
 
                     </div>
