@@ -9,11 +9,12 @@ const ForgotPassword = () => {
   const [check, setCheck] = useState(false)
 
   function isValidEmail(email) {
+    console.log(/\S+@\S+\.\S+/.test(email))
     return /\S+@\S+\.\S+/.test(email);
   }
 
   const handleSendEmail = () => {
-    if(isValidEmail(Mail)){
+    if(isValidEmail(email)){
       authService.forgetPass(email);
       alert("Vui lòng kiểm tra Email đã đăng ký để có hướng dẫn tiếp theo");
     }else{

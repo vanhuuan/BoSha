@@ -292,8 +292,11 @@ function PriceSlider(props) {
                 max={maxmax}
                 valueLabelDisplay="auto"
                 marks={marks}
-                valueLabelFormat={value => <div>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                    .format(value)}</div>}
+                valueLabelFormat={value => 
+                <div>
+                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                    .format(value)}
+                </div>}
             />
             <Stack direction="row" justifyContent="space-evenly" alignItems="center">
                 <TextField

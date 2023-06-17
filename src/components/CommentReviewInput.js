@@ -254,7 +254,9 @@ function Review(props) {
     })
     const [message, setMessage] = useState("")
 
-    const id = props.book.bookId
+    const id = props.book.bookId[0]
+
+    console.log("bookId", id)
 
     const setInput = (texts) => {
         if (texts.length < 1001) {
