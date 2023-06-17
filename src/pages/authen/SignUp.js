@@ -118,9 +118,11 @@ const SignUp = () => {
       return
     }
     if (validate('email', email)) {
+      NotificationManager.error("Lỗi định dạng email", "Lỗi định dạng", 2000)
       return
     }
     if (validate('password', password)) {
+      NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 2000)
       return
     }
     try {
