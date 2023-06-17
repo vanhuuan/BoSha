@@ -236,7 +236,7 @@ export default function BookDetail() {
                                     <div className='container-header' style={{ display: "flex", justifyContent: "space-between" }}>
                                         <Typography variant='h6'> Danh sách tập </Typography>
                                         {book.authorId === uid ?
-                                            <Button><span style={{ color: "black" }} onClick={(e) => navigate("/chapter/addChapter", { state: data })}>Thêm chương mới</span></Button> : <></>
+                                            <Button><span style={{ color: "black" }} onClick={(e) => navigate("/chapter/addChapter", { state: data })}>Thêm tập mới</span></Button> : <></>
                                         }
                                     </div>
                                     <div className='container-body'>

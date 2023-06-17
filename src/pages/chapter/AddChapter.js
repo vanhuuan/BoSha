@@ -48,7 +48,7 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 
 
 const AddChapter = () => {
-    const [name, setName] = React.useState('Tên chương');
+    const [name, setName] = React.useState('Tên tập');
     const [stt, setStt] = React.useState(0);
     const [chap, setChap] = React.useState("");
     const [demo, setDemo] = React.useState(true);
@@ -73,7 +73,7 @@ const AddChapter = () => {
             return
         }
         if(!okeChap){
-            NotificationManager.error("Dữ liệu lỗi", "Nội dung chương phải từ 100 kí tự đến 15000 ký tự!", 2000)
+            NotificationManager.error("Dữ liệu lỗi", "Nội dung tập phải từ 100 kí tự đến 15000 ký tự!", 2000)
             return
         }
         userBookService.addChapter(data).then((rs) => {
@@ -131,7 +131,7 @@ const AddChapter = () => {
                     <Grid item xs={1}></Grid>
                     <Grid item xs={10}>
                         <FormControl>
-                            <Typography variant="h5">Thêm chương mới cho truyện <b>"{bookName}"</b></Typography>
+                            <Typography variant="h5">Thêm tập mới cho truyện <b>"{bookName}"</b></Typography>
                             <TextField
                                 id="outlined-uncontrolled"
                                 label="Số thứ tự truyện"
@@ -151,7 +151,7 @@ const AddChapter = () => {
                                     onNameChange(event.target.value);
                                 }}
                                 sx={{ width: "100%", margin: "1em" }}
-                                helperText="Tên chương phải từ 5 đến 50 ký tự"
+                                helperText="Tên tập phải từ 5 đến 50 ký tự"
                                 error={error}
                             />
                             <FormControlLabel
@@ -167,7 +167,7 @@ const AddChapter = () => {
                         </EditorImage>
                         <div style={{ display: "flex", justifyContent: "space-between", margin: "1em 0" }}>
                             <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/"+bookId) }}>Quay lại</Button>
-                            <Button variant="contained" color="success" onClick={AddChapter}>Thêm chương</Button>
+                            <Button variant="contained" color="success" onClick={AddChapter}>Thêm tập</Button>
                         </div>
                     </Grid>
                     <Grid item xs={1}></Grid>

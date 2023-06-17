@@ -68,7 +68,7 @@ const columns = [
     },
     {
         id: 'NumOfChapter',
-        label: 'Số chương',
+        label: 'Số tập',
         minWidth: 100,
         align: 'right',
         format: (value) => value.toLocaleString('en-US'),
@@ -313,12 +313,12 @@ export default function UserStatistic() {
                             {isLoadingChart === false ?
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                     <FormControl sx={{ m: 1, minWidth: 300 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp theo top 10</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp theo top 10</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-jhelper"
                                             value={sortChart}
-                                            label="Xắp sếp theo top 10"
+                                            label="Sắp xếp theo top 10"
                                             onChange={(e) => {
                                                 setSortChart(e.target.value);
                                                 loadChartData(e.target.value)
@@ -336,12 +336,12 @@ export default function UserStatistic() {
                             {showMore ?
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                     <FormControl sx={{ m: 1, minWidth: 300 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp theo</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp theo</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-helper"
                                             value={sortBy}
-                                            label="Xắp sếp theo"
+                                            label="Sắp xếp theo"
                                             onChange={(e) => {
                                                 setSortBy(e.target.value);
                                             }}
@@ -353,12 +353,12 @@ export default function UserStatistic() {
                                         </Select>
                                     </FormControl>
                                     <FormControl sx={{ m: 1, minWidth: 150 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-helper"
                                             value={sortType}
-                                            label="Xắp sếp"
+                                            label="Sắp xếp"
                                             onChange={(e) => {
                                                 setSortType(e.target.value);
                                             }}
