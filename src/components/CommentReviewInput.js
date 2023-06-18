@@ -410,7 +410,7 @@ function Review(props) {
                                     {message}
                                 </Typography>
                                 <Typography sx={{ marginTop: "1em" }} level="body3">
-                                    {text.length} / 1000 từ
+                                    {text.length} / 1000 ký tự
                                 </Typography>
                                 <Rating
                                     name="simple-controlled"
