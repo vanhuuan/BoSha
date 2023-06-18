@@ -94,6 +94,7 @@ export default function EditUser() {
         userService.updateUserInfo(data).then((rs) => {
             firebaseService.uploadAva(userInfo.id, imageUrl, back).then((rs) => {
                 NotificationManager.success("Cập nhật", 'thành công', 1000);
+                navigate("/user/userInfo")
             }).catch((e) => {
                 console.log(e)
                 NotificationManager.error("Cập nhật", 'Thất bại', 1000);
