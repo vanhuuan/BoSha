@@ -113,8 +113,8 @@ function Comment(props) {
     }
 
     const sendEdit = () => {
-        if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
+        if (text.length < 5 || text.length > 300 ) {
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự và tối đa 300 ký tự", 3000)
             return
         }
         var data = {
@@ -191,7 +191,7 @@ function Comment(props) {
                                     {message}
                                 </Typography>
                                 <Typography level="body3">
-                                    {text.length} / 300 từ
+                                    {text.length} / 300 ký tự
                                 </Typography>
                             </div>
                             {edit === true ?
@@ -338,8 +338,8 @@ function Review(props) {
     }
 
     const sendEdit = () => {
-        if (text.length < 5) {
-            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự", 3000)
+        if (text.length < 5 || text.length > 1000) {
+            NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự và tối đa 1000 ký tự", 3000)
             return
         }
         var data = {
