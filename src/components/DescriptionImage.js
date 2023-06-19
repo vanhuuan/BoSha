@@ -241,7 +241,7 @@ function DescriptionImageEdit({ bookId }) {
                 NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
                 return false;
             }
-            if (!imag.name.match(/\.(jpg|jpeg|png)$/)) {
+            if (!imag.name.toLowerCase().match(/\.(jpg|jpeg|png)$/)) {
                 NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
                 return false;
             }
@@ -407,7 +407,7 @@ function DescriptionImageCreate({ sendData }) {
                 NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
                 return false;
             }
-            if (!imag.name.match(/\.(jpg|jpeg|png)$/)) {
+            if (!imag.name.toLowerCase().match(/\.(jpg|jpeg|png)$/)) {
                 NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
                 return false;
             }
