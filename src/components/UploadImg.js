@@ -32,7 +32,7 @@ const FileInput = (props) => {
         if(isDisa === true){
             return
         }
-        setIsDisa(true)
+
         const image = event.target.files[0];
         if (!image) {
             NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
@@ -53,6 +53,7 @@ const FileInput = (props) => {
             NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
             return
         }
+        setIsDisa(true)
         imgService.checkImg(image).then((rs) => {
             if(rs.data){
                 console.log(rs)
