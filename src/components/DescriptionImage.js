@@ -232,7 +232,7 @@ function DescriptionImageEdit({ bookId }) {
 
         let input = document.createElement('input');
         input.type = 'file';
-        input.accept = "image/png, image/jpeg image/jpg"
+        input.accept = "image/*"
         input.onchange = _ => {
             let files = Array.from(input.files);
             const imag = files[0];
@@ -398,7 +398,7 @@ function DescriptionImageCreate({ sendData }) {
 
         let input = document.createElement('input');
         input.type = 'file';
-        input.accept = "image/png, image/jpeg image/jpg"
+        input.accept = "image/*"
         input.onchange = _ => {
             let files = Array.from(input.files);
             const imag = files[0];
