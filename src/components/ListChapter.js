@@ -83,7 +83,6 @@ export default function ListChapter(props) {
               key={value}
               secondaryAction={
                 <div style={{ display: "flex" }}>
-
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();

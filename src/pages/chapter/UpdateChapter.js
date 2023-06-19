@@ -197,7 +197,7 @@ const UpdateChapter = () => {
                                 </EditorImage>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1em" }}>
                                     <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/" + chapterDetail.bookId) }}>Trở về</Button>
-                                    <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật tậ</Button>
+                                    <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật tập</Button>
                                 </div>
                             </FormControl>
                             : <LinearProgress></LinearProgress>}
