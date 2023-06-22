@@ -32,10 +32,8 @@ const BottomInfo = (props) => {
         relativeTime: {
             future: "%s",
             past: "%s giây trước",
-            s: function (number, withoutSuffix, key, isFuture) {
-                return '00:' + (number < 10 ? '0' : '')
-                    + number + ' giây trước';
-            },
+            s: "vài giây trước",
+            ss: "vài giây trước",
             m: "01 phút trước",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')

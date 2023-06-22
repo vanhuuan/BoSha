@@ -47,10 +47,10 @@ export default function ListChapter(props) {
       future: "%s",
       past: "%s giây trước",
       s: function (number, withoutSuffix, key, isFuture) {
-        return (number < 10 ? '0' : '')
-          + number + ' phút trước';
+        return "Vài giây trước"
       },
-      m: "01:00 phút trước",
+      ss: "Vài giây trước",
+      m: "01 phút trước",
       mm: function (number, withoutSuffix, key, isFuture) {
         return (number < 10 ? '0' : '')
           + number + ' phút trước';

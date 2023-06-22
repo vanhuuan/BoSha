@@ -44,11 +44,9 @@ const Chapter = () => {
         relativeTime: {
             future: "%s",
             past: "%s giây trước",
-            s: function (number, withoutSuffix, key, isFuture) {
-                return '00:' + (number < 10 ? '0' : '')
-                    + number + ' phút trước';
-            },
-            m: "01:00 minutes",
+            s: "vài giây trước",
+            ss: "vài giây trước",
+            m: "01 phú trước",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
                     + number + ' phút trước';

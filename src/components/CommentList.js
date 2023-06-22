@@ -10,11 +10,9 @@ moment.updateLocale('vi', {
     relativeTime: {
         future: "%s",
         past: "%s giây trước",
-        s: function (number, withoutSuffix, key, isFuture) {
-            return (number < 10 ? '0' : '')
-                + number + ' giây trước';
-        },
-        m: "01:00 phút trước",
+        s: "vài giây trước",
+        ss: "vài giây trước",
+        m: "01 phút trước",
         mm: function (number, withoutSuffix, key, isFuture) {
             return (number < 10 ? '0' : '')
                 + number + ' phút trước';
