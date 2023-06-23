@@ -118,23 +118,25 @@ const SignUp = () => {
       return
     }
     if (validate('email', email)) {
-      NotificationManager.error("Lỗi định dạng email", "Lỗi định dạng", 2000)
+      NotificationManager.error("Lỗi định dạng email", "Lỗi định dạng", 5000)
       return
     }
     if (validate('password', password)) {
-      NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 2000)
+      NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 5000)
       return
     }
     try {
       const login = await authService.register(account);
       if(login.status >= 200 && login.status < 300){
+        NotificationManager.error("Đăng ký thành công", "Thành công", 5000)
         navigate("/login")
         handleClickOpen()
       }else{
-        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 5000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
+      NotificationManager.error("Có lỗi xảy ra", "Lỗi đã xảy ra", 5000)
       console.log(error.response.data)
     }
   }
@@ -153,7 +155,7 @@ const SignUp = () => {
             handleClickOpen()
         }
       }else{
-        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 5000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
