@@ -79,10 +79,12 @@ export default function EditUser() {
 
     const update = async () => {
         if (nameHelp.length > 0) {
-            NotificationManager.error("Tên", 'không đúng định dạng', 1000);
+            NotificationManager.error("Tên", 'không đúng định dạng', 5000);
+            return
         }
         if (phoneHelp.length > 0) {
-            NotificationManager.error("Số điện thoại", 'không đúng định dạng', 1000);
+            NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);
+            return
         }
         const data = {
             "name": userInfo.name,
@@ -93,16 +95,16 @@ export default function EditUser() {
 
         userService.updateUserInfo(data).then((rs) => {
             firebaseService.uploadAva(userInfo.id, imageUrl, back).then((rs) => {
-                NotificationManager.success("Cập nhật", 'thành công', 1000);
+                NotificationManager.success("Cập nhật", 'thành công', 5000);
                 navigate("/user/userInfo")
             }).catch((e) => {
                 console.log(e)
-                NotificationManager.error("Cập nhật", 'Thất bại', 1000);
+                NotificationManager.error("Cập nhật", 'Thất bại', 5000);
                 navigate("/user/userInfo")
             })
         }).catch((e) => {
             console.log(e)
-            NotificationManager.error("Cập nhật", 'Thất bại', 1000);
+            NotificationManager.error("Cập nhật", 'Thất bại', 5000);
             navigate("/user/userInfo")
         })
     }

@@ -115,8 +115,12 @@ const LikeBook = () => {
                                     <Grid container spacing={2}>
                                         {
                                             data.map((item, index) => {
+                                                var stars = 0;
+                                                if (item.numOfReview !== 0) {
+                                                    stars = item.numOfStar / item.numOfReview
+                                                }
                                                 return <Grid item xs={6} sm={4} md={2}>
-                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
+                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                                 </Grid>
                                             })
                                         }
@@ -131,8 +135,12 @@ const LikeBook = () => {
                                     <Grid container spacing={2}>
                                         {
                                             data.map((item, index) => {
+                                                var stars = 0;
+                                                if (item.numOfReview !== 0) {
+                                                    stars = item.numOfStar / item.numOfReview
+                                                }
                                                 return <Grid item xs={6} sm={4} md={2}>
-                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: item.numOfStar / (item.numOfReview + 1), view: item.numOfView }} />
+                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                                 </Grid>
                                             })
                                         }
