@@ -85,6 +85,7 @@ function Comment(props) {
                 setText(rs.data.text)
                 setIsCommented(true)
                 setIsLoading(false)
+                props.onUpdate()
             }
             )
         }).catch((err) => {
@@ -98,6 +99,7 @@ function Comment(props) {
                 setText(" ")
                 setIsCommented(false)
                 setEdit(false)
+                props.onUpdate()
             }).catch((e) => {
                 console.log(e)
                 NotificationManager.error("Có lỗi xảy ra khi xóa bình luận")
@@ -113,7 +115,7 @@ function Comment(props) {
     }
 
     const sendEdit = () => {
-        if (text.length < 5 || text.length > 300 ) {
+        if (text.length < 5 || text.length > 300) {
             NotificationManager.error("Lỗi nhập", "Độ dài tối thiểu 5 ký tự và tối đa 300 ký tự", 3000)
             return
         }
@@ -129,6 +131,7 @@ function Comment(props) {
                 setText(rs.data.text)
                 setEdit(false)
                 setIsCommented(true)
+                props.onUpdate()
             }).catch((err) => {
                 setIsCommented(true)
                 console.log(err)
@@ -298,6 +301,7 @@ function Review(props) {
             commentService.getUserBookReview(id).then((rs) => {
                 console.log("comment:", rs.data)
                 setReview(rs.data)
+                props.onChangeReview()
                 setIsReviewed(true)
             }).catch((err) => {
                 setIsReviewed(false)
@@ -323,6 +327,7 @@ function Review(props) {
                 setEdit(false)
                 setStar(5)
                 setEdit(false)
+                props.onChangeReview()
             }).then((e) => {
                 console.log(e)
                 NotificationManager.error("Có lỗi khi xóa đánh giá")
@@ -352,6 +357,7 @@ function Review(props) {
                 console.log("comment:", rs.data)
                 setReview(rs.data)
                 setIsReviewed(true)
+                props.onChangeReview()
             }).catch((err) => {
                 setIsReviewed(false)
                 console.log(err)

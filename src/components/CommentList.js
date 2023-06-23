@@ -59,7 +59,7 @@ const CommentList = forwardRef((props, ref) => {
         }).catch((err) => {
             console.log(err)
         })
-    }, [page])
+    }, [page, props.isLoad])
 
     return (
         <div style={{ padding: 14 }} className="App" ref={ref}>

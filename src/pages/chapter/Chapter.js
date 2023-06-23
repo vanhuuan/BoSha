@@ -28,6 +28,7 @@ const Chapter = () => {
     const { book, id } = useParams();
     const [chap, setChap] = useState("5")
     const [isLoading, setIsLoading] = useState(true)
+    const [isFetchComment, setIsFetchComment] = useState(true)
     const [chapterDetail, setChapterDetail] = useState(data)
     const [dateUpdate, setDateUpdate] = useState("")
     const [status, setStatus] = useState({
@@ -46,7 +47,7 @@ const Chapter = () => {
             past: "%s giây trước",
             s: "vài giây trước",
             ss: "vài giây trước",
-            m: "01 phú trước",
+            m: "01 phút trước",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
                     + number + ' phút trước';
@@ -68,6 +69,11 @@ const Chapter = () => {
 
     const changeChapter = (chap) => {
         setChapterId(chap.id)
+    }
+
+    const changeComment = () => {
+        setIsFetchComment(!isFetchComment)
+        console.log("changeee")
     }
 
     useEffect(() => {
@@ -95,7 +101,7 @@ const Chapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            // navigate("/NotFound");
+            navigate("/NotFound");
         })
     }, [chapterId])
 
@@ -124,8 +130,8 @@ const Chapter = () => {
                             }
                         </div>
 
-                        <Comment chap={{ chapId: chapterId }}></Comment>
-                        <CommentList chap={{ chapId: chapterId }} ref={resultRef}></CommentList> </> :
+                        <Comment chap={{ chapId: chapterId }} onUpdate={changeComment}></Comment>
+                        <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList> </> :
                         <>
                             <LinearProgress />
                         </>

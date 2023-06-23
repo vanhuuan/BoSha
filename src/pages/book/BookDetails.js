@@ -124,6 +124,12 @@ export default function BookDetail() {
         })
     }
 
+    const [isReviewChange, setIsReviewChange] = useState(true)
+ 
+    const onChangeReview = () =>{
+        setIsReviewChange(!isReviewChange)
+    }
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -245,9 +251,9 @@ export default function BookDetail() {
                                 </div>
                                 <div id='review'>
                                     {book.price === 0 || status.buyed === true ?
-                                        <Review book={{ bookId: bookId }}></Review>
+                                        <Review book={{ bookId: bookId }} onChange={onChangeReview}></Review>
                                         : <></>}
-                                    <ReviewList book={{ bookId: bookId }}></ReviewList>
+                                    <ReviewList book={{ bookId: bookId }} isLoad={isReviewChange}></ReviewList>
                                 </div>
                             </div> : <></>
                         }

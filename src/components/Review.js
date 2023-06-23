@@ -60,7 +60,7 @@ function ReviewList(props) {
             setTotal(rs.data.count)
             setIsLoading(false)
         }).catch((err) => { console.log(err) })
-    }, [page])
+    }, [page, props.isLoad])
 
     return (
         <div style={{ padding: 14 }} className="App">
