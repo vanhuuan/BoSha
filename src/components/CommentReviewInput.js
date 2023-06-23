@@ -326,7 +326,6 @@ function Review(props) {
                 setIsReviewed(false)
                 setEdit(false)
                 setStar(5)
-                setEdit(false)
                 props.onChangeReview()
             }).then((e) => {
                 console.log(e)
