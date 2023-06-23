@@ -27,22 +27,25 @@ const ChapterNav = (props) => {
         console.log(id)
         const rs = await chapterService.chapters(id);
         console.log(rs)
+        var data = []
         if (rs.data) {
-            setChapters(rs.data)
+            data = rs.data.filter(x => x.state === true)
+            setChapters(data)
         }
-        for (var i = 0; i < rs.data.length; i++) {
+        
+        for (var i = 0; i < data.length; i++) {
 
-            if (rs.data[i].chapterId === chapId) {
+            if (data[i].chapterId === chapId) {
                 if (i - 1 >= 0) {
                     setPre({
-                            id: rs.data[i - 1].chapterId,
-                            name: rs.data[i - 1].chapterName
-                        })
+                        id: data[i - 1].chapterId,
+                        name: data[i - 1].chapterName
+                    })
                 }
-                if (i + 1 < rs.data.length) {
+                if (i + 1 < data.length) {
                     setNext({
-                        id: rs.data[i + 1].chapterId,
-                        name: rs.data[i + 1].chapterName
+                        id: data[i + 1].chapterId,
+                        name: data[i + 1].chapterName
                     })
                 }
             }
@@ -80,15 +83,20 @@ const ChapterNav = (props) => {
                 value={chapId}
             >
                 {isLoading === false ?
-                    chapters.map((item) => (
-                        <MenuItem onClick={(e) => {
-                            navigate(`/chapter/${book}/${item.chapterName.replaceAll(" ", "-")}-${item.chapterId}`);
-                            onChange(item.chapterId)
-                        }}
-                            value={item.chapterId} key={item.chapterId}>
-                            {`${item.chapterNumber} - ${item.chapterName}`}
-                        </MenuItem>
-                    )) : <></>}
+                    chapters.map((item) => {
+                        if (item.state === false) {
+                            return <></>
+                        } else
+                            return <MenuItem onClick={(e) => {
+                                navigate(`/chapter/${book}/${item.chapterName.replaceAll(" ", "-")}-${item.chapterId}`);
+                                onChange({
+                                    "id": item.chapterId
+                                })
+                            }}
+                                value={item.chapterId} key={item.chapterId}>
+                                {`${item.chapterNumber} - ${item.chapterName}`}
+                            </MenuItem>
+                    }) : <></>}
             </Select>
             {next.id === chapId ?
                 <button className="chapter-nav__page" style={{ backgroundColor: "gray" }}>
