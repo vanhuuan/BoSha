@@ -128,6 +128,7 @@ const SignUp = () => {
     try {
       const login = await authService.register(account);
       if(login.status >= 200 && login.status < 300){
+        navigate("/login")
         handleClickOpen()
       }else{
         NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
