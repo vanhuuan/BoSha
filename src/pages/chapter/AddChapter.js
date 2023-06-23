@@ -90,7 +90,7 @@ const AddChapter = () => {
 
     const onNameChange = (e) => {
         setName(e)
-        if (e.length < 5 || e.length > 50) {
+        if (e.length < 5 || e.length > 100) {
             setError(true)
         }else{
             setError(false)
@@ -151,7 +151,7 @@ const AddChapter = () => {
                                     onNameChange(event.target.value);
                                 }}
                                 sx={{ width: "100%", margin: "1em" }}
-                                helperText="Tên tập phải từ 5 đến 50 ký tự"
+                                helperText="Tên tập phải từ 5 đến 100 ký tự"
                                 error={error}
                             />
                             <FormControlLabel
