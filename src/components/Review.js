@@ -96,7 +96,7 @@ function ReviewList(props) {
                         </Grid>
                     </Paper>
                 ))}
-                {commentsList.length !== 0 ?
+                {total >  10 ?
                     <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
                     : <> </>
                 }

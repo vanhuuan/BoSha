@@ -38,7 +38,7 @@ const comments = [
         "creatDate": "2023-05-02T08:22:33.893Z"
     }
 ]
-const CommentList = forwardRef((props, ref) =>  {
+const CommentList = forwardRef((props, ref) => {
     const [isLoading, setIsLoading] = useState(false)
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(10);
@@ -66,7 +66,7 @@ const CommentList = forwardRef((props, ref) =>  {
             <h1>Bình luận</h1>
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
-                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9"  }}>
+                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9" }}>
                         <Grid container wrap="nowrap" spacing={2}>
                             <Grid item>
                                 <Avatar alt={item.userName} src={item.userAva} />
@@ -87,7 +87,9 @@ const CommentList = forwardRef((props, ref) =>  {
                         </Grid>
                     </Paper>
                 ))}
-                <Pagination count={total /10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                {total > 10 ?
+                    <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                    : <></>}
             </> :
                 <CircularProgress></CircularProgress>
             }
