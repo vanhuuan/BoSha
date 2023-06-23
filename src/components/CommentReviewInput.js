@@ -327,7 +327,7 @@ function Review(props) {
                 setEdit(false)
                 setStar(5)
                 props.onChangeReview()
-            }).then((e) => {
+            }).catch((e) => {
                 console.log(e)
                 NotificationManager.error("Có lỗi khi xóa đánh giá")
             })
