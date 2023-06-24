@@ -82,7 +82,7 @@ export default function EditUser() {
             NotificationManager.error("Tên", 'không đúng định dạng', 5000);
             return
         }
-        if (phoneHelp.length > 0) {
+        if (isVietnamesePhoneNumberValid(userInfo.phone)) {
             NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);
             return
         }
