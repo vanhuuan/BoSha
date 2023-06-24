@@ -69,8 +69,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("")
   const [notifyText, setNotifyText] = useState('')
 
-  const [checkPass, setCheckPass] = useState(false)
-  const [checkMail, setCheckMail] = useState(false)
+  const [checkPass, setCheckPass] = useState(true)
+  const [checkMail, setCheckMail] = useState(true)
 
   function isValidPassword(pass) {
     return /^([a-zA-Z]*\d*).{10,}/.test(pass);

@@ -22,7 +22,8 @@ const ChangePassword = () => {
   async function handleChangePass(){
     if (ok) {
       if(!isValidPassword(password)){
-        NotificationManager.error("Sai định dạng mật khẩu", "Sai định dạng", 2000)
+        NotificationManager.error("Sai định dạng mật khẩu", "Sai định dạng", 5000)
+        return
       }
       let acc = {
         Email: email, 
