@@ -142,8 +142,7 @@ function Header() {
         <>
             <AppBar position="static" sx={{ backgroundColor: "#4F709C" }}>
                 <Container maxWidth="xl" >
-                    <Toolbar disableGutters>
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={() => { navigate("/") }} />
+                    <Toolbar disableGutters>           
                         <Typography
                             variant="h6"
                             noWrap
@@ -198,7 +197,7 @@ function Header() {
                                 ))}
                             </Menu>
                         </Box>
-                        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        
                         <Typography
                             variant="h5"
                             noWrap
