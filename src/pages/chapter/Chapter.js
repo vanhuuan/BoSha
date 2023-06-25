@@ -29,7 +29,7 @@ const Chapter = () => {
     const [status, setStatus] = useState({
         "buyed": false,
         "liked": false,
-        "canEdit": false
+        "cadnEdit": false
     })
     const resultRef = useRef(null);
     const [chapterId, setChapterId] = useState(id)
