@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const primary = '#89D5C9'; // #f44336
+const primary = '#4F709C'; // #f44336
 
 export default function PageNotFound() {
     let navigate = useNavigate()

@@ -12,7 +12,7 @@ import { Toolbar } from '@mui/material';
 const Sidebar = () => {
   const iconColor = '#FF8357'
   let activeStyle = {
-    background: '#89D5C9',
+    background: '#4F709C',
     color: 'white',
     fontWeight: 'bold',
     borderRadius: 10,

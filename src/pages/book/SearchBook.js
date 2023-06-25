@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slider, TextField } from "@mui/material";
+import { Box, Grid, Typography, FormGroup, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, IconButton, Slider, TextField, InputAdornment } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { userBookService } from "../../services/userBook.services";
@@ -45,18 +45,18 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function SearchBook() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isLoadingCate, setIsLoadingCate] = useState(true)
     const [categories, setCategories] = useState([])
-    const [category, setCategory] = useState([])
-    const [sortBy, setSortBy] = useState("Newest")
+    const [category, setCategory] = useState(searchParams.get("categories") ? [searchParams.get("categories")] : [])
+    const [sortBy, setSortBy] = useState(searchParams.get("hot") ? "HotWeek" : "Newest")
     const [state, setState] = useState("All")
     const [data, setData] = useState([])
-    const [searchInput, setSearchInput] = useState('')
+    const [searchInput, setSearchInput] = useState(searchParams.get("search"))
     const [pageNumber, setPageNumber] = useState(1)
     const [simple, setSimple] = useState(false)
 
     const [isSearching, setIsSearching] = useState(false)
-    const [searchParams, setSearchParams] = useSearchParams();
     const [range, setRange] = React.useState([0, 1000000]);
 
     const [mangaList, setMangaList] = useState({
@@ -79,20 +79,19 @@ export default function SearchBook() {
     const { isSimple } = useParams();
 
     useEffect(() => {
-        
         load()
-        if (isSimple) {
+        if (isSimple === "true") {
             setSimple(true)
         } else {
             setSimple(false)
         }
-        if(searchParams.get("categories")){
-            findBooks([searchParams.get("categories")])
-        }else{
-            findBook()
+        var search = ""
+        if (searchParams.get("search")) {
+            search = searchParams.get("search")
+            setSearchInput(search)
         }
-        
-    }, [])
+        findBooks([searchParams.get("categories")], search)
+    }, [searchParams])
 
     const findBook = () => {
         setIsSearching(true)
@@ -105,10 +104,10 @@ export default function SearchBook() {
         })
     }
 
-    const findBooks = (cate) => {
+    const findBooks = (cate, search = "") => {
         setIsSearching(true)
         setPageNumber(1)
-        bookService.findBook(1, 12, searchInput, cate, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(1, 12, search, cate, state, range[0], range[1], sortBy).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
@@ -156,7 +155,7 @@ export default function SearchBook() {
                                                 } else {
                                                     setCategory(category.filter(item => item !== cate.id))
                                                 }
-                                            }} name={cate.id} />}
+                                            }} name={cate.id} defaultChecked={searchParams.get("categories") === cate.id} />}
                                                 label={cate.name} className="category_item" />
                                         )
                                     })}
@@ -174,7 +173,7 @@ export default function SearchBook() {
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={sortBy}
-                                    onChange={(e) => { setSortBy(e.target.value) }}
+                                    onChange={(e) => { setSortBy(e.target.value); findBook() }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"Newest"}>Cập nhật mới</MenuItem>
@@ -195,7 +194,7 @@ export default function SearchBook() {
                                     labelId="state"
                                     id="demo-simple-select-helper"
                                     value={state}
-                                    onChange={(e) => { setState(e.target.value) }}
+                                    onChange={(e) => { setState(e.target.value); findBook() }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"All"}>Tất cả</MenuItem>
@@ -217,8 +216,8 @@ export default function SearchBook() {
                                 e.preventDefault();
                                 findBook();
                             }}>
-                                <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên sách' className='searchManga' />
-                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em"}}></Search></IconButton>
+                                <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên truyện' className='searchManga' />
+                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
                             </form>
                         </div>
                     </div>
@@ -244,8 +243,8 @@ export default function SearchBook() {
                                         })
                                     }
                                 </Grid>
-                            </InfiniteScroll>                     
-                            </>
+                            </InfiniteScroll>
+                        </>
                             : <LinearProgress />}
                     </div>
                 </Grid>
@@ -259,6 +258,19 @@ function PriceSlider(props) {
     const minmin = 0;
     const maxmax = 1000000;
     const [priceRangeValue, setPriceRangeValue] = useState([0, 1000000]);
+
+    const marks = [
+        {
+            value: minmin,
+            label: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                .format(minmin),
+        },
+        {
+            value: maxmax,
+            label: new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                .format(maxmax),
+        }
+    ];
 
     const handlePriceRangeChange = (event, newValue) => {
         setPriceRangeValue(newValue);
@@ -275,17 +287,26 @@ function PriceSlider(props) {
                 getAriaLabel={() => "Khoảng giá"}
                 value={priceRangeValue}
                 onChange={handlePriceRangeChange}
-                valueLabelDisplay="auto"
+                step={500}
                 min={minmin}
                 max={maxmax}
+                valueLabelDisplay="auto"
+                marks={marks}
+                valueLabelFormat={value => 
+                <div>
+                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                    .format(value)}
+                </div>}
             />
             <Stack direction="row" justifyContent="space-evenly" alignItems="center">
                 <TextField
                     className="number-range"
                     label="Thấp nhất"
                     type="number"
-                    variant="outlined"
-                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                        readOnly: true,
+                        endAdornment: <InputAdornment position="end">VND</InputAdornment>
+                    }}
                     value={priceRangeValue[0]}
                     onChange={(e) => {
                         setPriceRangeValue([Number(e.target.value), priceRangeValue[1]]);
@@ -296,8 +317,10 @@ function PriceSlider(props) {
                     className="number-range"
                     label="Cao nhất"
                     type="number"
-                    variant="outlined"
-                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                        readOnly: true,
+                        endAdornment: <InputAdornment position="end">VND</InputAdornment>
+                    }}
                     value={priceRangeValue[1]}
                     onChange={(e) => {
                         setPriceRangeValue([priceRangeValue[0], Number(e.target.value)]);

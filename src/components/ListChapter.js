@@ -27,7 +27,11 @@ export default function ListChapter(props) {
     console.log(props.book.canBuyed)
     const rs = await chapterService.chapters(props.book.id);
     console.log(rs)
+
     if (rs) {
+      if (props.book.canEdit !== true) {
+        rs.data = rs.data.filter((x) => { return x.state === true })
+      }
       setChapters(rs.data)
       if (rs.data.length > 10) {
         setShowMore(true)
@@ -43,10 +47,10 @@ export default function ListChapter(props) {
       future: "%s",
       past: "%s giây trước",
       s: function (number, withoutSuffix, key, isFuture) {
-        return (number < 10 ? '0' : '')
-          + number + ' phút trước';
+        return "Vài giây trước"
       },
-      m: "01:00 phút trước",
+      ss: "Vài giây trước",
+      m: "01 phút trước",
       mm: function (number, withoutSuffix, key, isFuture) {
         return (number < 10 ? '0' : '')
           + number + ' phút trước';
@@ -68,7 +72,7 @@ export default function ListChapter(props) {
   }, [])
 
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%', bgcolor: '#F9F9F9', margin: 0 }}>
       {showMore === true ?
         chapters.slice(0, 10).map((value) => {
           const labelId = `checkbox-list-label-${value.chapterNumber}`;
@@ -79,7 +83,6 @@ export default function ListChapter(props) {
               key={value}
               secondaryAction={
                 <div style={{ display: "flex" }}>
-                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();
@@ -89,7 +92,7 @@ export default function ListChapter(props) {
                       }
                       navigate(`/chapter/updateChapter`, { state: data })
                     }}> <BorderColorIcon /> </IconButton> : <> {
-                      canBuyed || value.isDemo ? <></> : <LockPersonIcon></LockPersonIcon>
+                      canBuyed || value.isDemo ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                     }</>
                   }
                 </div>
@@ -98,7 +101,10 @@ export default function ListChapter(props) {
               className='chapter-item'
 
             >
-              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
+                if (canBuyed || value.isDemo || canEdit)
+                  navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+              }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>
             </ListItem>
@@ -115,9 +121,8 @@ export default function ListChapter(props) {
               secondaryAction={
                 <div style={{ display: "flex" }}>
                   {
-                    canBuyed || value.isDemo || canEdit ? <></> : <LockPersonIcon></LockPersonIcon>
+                    canBuyed || value.isDemo || canEdit ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                   }
-                  <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} />
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
                       e.preventDefault();
@@ -133,7 +138,10 @@ export default function ListChapter(props) {
               disablePadding
               className='chapter-item'
             >
-              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => { if (canBuyed || value.isDemo || canEdit) navigate(`/chapter/${value.chapterId}`) }}>
+              <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
+                if (canBuyed || value.isDemo || canEdit)
+                  navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+              }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>
             </ListItem>
@@ -141,8 +149,20 @@ export default function ListChapter(props) {
         })
       }
       {chapters.length < 10 ? <></> :
-        <Typography textAlign={"center"} mt={"1em"} onClick={() => { setShowMore(!showMore)}}> { showMore === false ? "Bớt": "Xem thêm" }</Typography>
+        <Typography textAlign={"center"} mt={"1em"}
+          onClick={() => { setShowMore(!showMore) }}
+          sx={{
+            '&:hover': {
+              backgroundColor: "#e6d7c3",
+            },
+            borderRadius: "10px",
+            margin: "1em 25% 0",
+            padding: "0.25em",
+            cursor: "pointer"
+          }}
+        > {showMore === false ? "Ẩn bớt " : "Xem thêm"
+          }</Typography>
       }
-    </List>
+    </List >
   );
 }

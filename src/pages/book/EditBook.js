@@ -7,7 +7,7 @@ import { EditorDescription } from '../../components/editor/editor';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
     useNavigate
 } from "react-router-dom";
@@ -17,20 +17,9 @@ import { userBookService } from '../../services/userBook.services';
 import { firebaseService } from '../../services/firebase.services';
 import AlertRoot from '../../components/notification/AlertRoot';
 import { NotificationManager } from 'react-notifications';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
+import { DescriptionImageEdit } from '../../components/DescriptionImage';
 
 const EditBook = () => {
-    const { id } = useParams();
     const [book, setBook] = useState({
         "id": "643656a08e27bd8b1165478b",
         "name": "Overlord",
@@ -58,6 +47,9 @@ const EditBook = () => {
     const [titleText, setTitleText] = useState("Sai dữ liêu đầu vào")
     const [open, setOpen] = useState(false)
     let navigate = useNavigate()
+    const location = useLocation();
+    const data = location.state;
+    const id = data.bookId[0]
 
     useEffect(() => {
         setIsLoading(true)
@@ -101,6 +93,7 @@ const EditBook = () => {
             "state": state
         }
         console.log(data)
+        setIsLoading(true)
         userBookService.updateBook(data).then((rs) => {
             firebaseService.uploadPreview(rs.data.id, desc).then((rs2) => {
                 if (imgChange) {
@@ -112,8 +105,13 @@ const EditBook = () => {
                     navigate(`/book/${rs.data.id}`)
                 }
             }).catch((err) => console.log(err))
+                .finally(() => {
+                    setIsLoading(false)
+                })
         }).catch((err) => {
             console.log(err)
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
@@ -175,7 +173,7 @@ const EditBook = () => {
                                                 <RadioPrice book={{ price: book.price }} parentCallback={callbackPrice}></RadioPrice>
                                             </div>
                                             <div>
-                                                {state === "Block" ? <>Truyện đã bị người quản trị chặn vì </> : <>
+                                                {state === "Block" ? <>Truyện đã bị người quản trị chặn </> : <>
                                                     <InputLabel id="demo-select-small-label">Tình trạng</InputLabel>
                                                     <Select
                                                         labelId="demo-select-small-label"
@@ -195,12 +193,17 @@ const EditBook = () => {
                                     </Grid>
                                 </div>
                             </div>
+                            <div className='container'>
+                                <DescriptionImageEdit
+                                    bookId={id}
+                                />
+                            </div>
                             <div>
                                 <EditorDescription sx={{ margin: 100, border: '1px solid black' }} book={{ text: desc }} parentCallback={callbackDesc} />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
                                 <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>
-                                <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/"+id) }} >Trở về</Button>
+                                <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/" + id) }} >Trở về</Button>
                             </div> </> : <></>
                         }
                     </Grid>

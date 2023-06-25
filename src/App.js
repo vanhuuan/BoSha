@@ -36,10 +36,12 @@ import VnpayStatus from "./pages/payment/VnPayStatus";
 function App() {
   useEffect(() => {
     document.title = 'BoSha';
+    document.body.style.backgroundColor = "#F9F9F9"
+    document.body.style.color = "#1d1d1f";
   }, []);
 
   return (
-    <>
+    <> 
       <BrowserRouter>
         <Routes>
           <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
@@ -54,10 +56,12 @@ function App() {
           <Route path="/book/userBook" element={<><Header /><UserBook /></>}></Route>
           <Route path="/book/addBook" element={<><Header /><AddBook /></>}></Route>
           <Route path="/book/likeBook" element={<><Header /><LikeBook /></>}></Route>
+          <Route path="/book" element={<><Header /><Home /></>}></Route>
           <Route path="/book/:id" element={<><Header /><BookDetail /></>}></Route>
-          <Route path="/book/edit/:id" element={<><Header /><EditBook /></>}></Route>
+          <Route path="/chapter/:id" element={<><Header /><BookDetail /></>}></Route>
+          <Route path="/book/edit" element={<><Header /><EditBook /></>}></Route>
           <Route path="/book/search/:isSimple" element={<><Header /><SearchBook/></>}></Route>
-          <Route path="/chapter/:id" element={<><Header /><Chapter /></>}></Route>
+          <Route path="/chapter/:book/:id" element={<><Header /><Chapter /></>}></Route>
           <Route path="/chapter/addChapter" element={<><Header /><AddChapter /></>}></Route>
           <Route path="/chapter/updateChapter" element={<><Header /><UpdateChapter /></>}></Route>
           <Route path="/hot" element={<><Header /><Chapter /></>}></Route>

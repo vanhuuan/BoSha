@@ -10,7 +10,7 @@
 }
 
 .bookcard2-group:hover {
-    --gradient-to: rgb(157, 23, 77);
+    --gradient-to: #D8C4B6;
     transform: scale(1.02);
 }
 

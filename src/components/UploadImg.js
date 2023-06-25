@@ -32,13 +32,13 @@ const FileInput = (props) => {
         if(isDisa === true){
             return
         }
-        setIsDisa(true)
+
         const image = event.target.files[0];
         if (!image) {
             NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
             return false;
         }
-        if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
+        if (!image.name.toLowerCase().match(/\.(jpg|jpeg|png)$/)) {
             NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
             return false;
         }
@@ -53,6 +53,7 @@ const FileInput = (props) => {
             NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
             return
         }
+        setIsDisa(true)
         imgService.checkImg(image).then((rs) => {
             if(rs.data){
                 console.log(rs)

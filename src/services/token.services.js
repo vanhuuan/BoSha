@@ -9,8 +9,9 @@ class TokenService {
     return user;
   }
 
-  updateLocalAccessToken(token) {
+  updateLocalAccessToken(token, firebaseToken) {
     localStorage.setItem("AccessToken", token);
+    localStorage.setItem("FirebaseToken", firebaseToken);
   }
 
   removeUser() {

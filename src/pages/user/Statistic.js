@@ -68,7 +68,7 @@ const columns = [
     },
     {
         id: 'NumOfChapter',
-        label: 'Số chương',
+        label: 'Số tập',
         minWidth: 100,
         align: 'right',
         format: (value) => value.toLocaleString('en-US'),
@@ -158,7 +158,7 @@ export default function UserStatistic() {
     ])
 
     const onChangeDateValue = (value) => {
-        if (value.length == 2) {
+        if (value.length === 2) {
             setValues(value)
         }
     }
@@ -171,7 +171,6 @@ export default function UserStatistic() {
     };
 
     useEffect(() => {
-        var dateObj = new Date();
         loadStatisticCard()
         loadChartData(sortChart)
     }, [values])
@@ -238,10 +237,10 @@ export default function UserStatistic() {
                 <Grid xs={10}>
                     <div className="container">
                         <div className='container-header' style={{ display: 'flex', justifyContent: 'space-between', marginBottom: "1em" }}>
-                            <Typography onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' } }} ><Person /> Thông tin tài khoản </Typography>
-                            <Typography sx={{ typography: { md: 'h5', sm: 'h10' } }} >Thống kê truyện <BarChart color="primary" /> </Typography>
+                            <Typography onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }} ><Person /> Thông tin tài khoản </Typography>
+                            <Typography sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }} >Thống kê truyện <BarChart color="primary" /> </Typography>
                         </div>
-                        <Grid container spacing={3}>
+                        <Grid sx={{ padding: "0em 1em"}} container spacing={3}>
                             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <div style={{ display: "flex" }}>
                                     <Typography>Khoảng thời gian thống kê từ </Typography>
@@ -314,12 +313,12 @@ export default function UserStatistic() {
                             {isLoadingChart === false ?
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                     <FormControl sx={{ m: 1, minWidth: 300 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp theo top 10</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp theo top 10</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-jhelper"
                                             value={sortChart}
-                                            label="Xắp sếp theo top 10"
+                                            label="Sắp xếp theo top 10"
                                             onChange={(e) => {
                                                 setSortChart(e.target.value);
                                                 loadChartData(e.target.value)
@@ -337,12 +336,12 @@ export default function UserStatistic() {
                             {showMore ?
                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                     <FormControl sx={{ m: 1, minWidth: 300 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp theo</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp theo</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-helper"
                                             value={sortBy}
-                                            label="Xắp sếp theo"
+                                            label="Sắp xếp theo"
                                             onChange={(e) => {
                                                 setSortBy(e.target.value);
                                             }}
@@ -354,12 +353,12 @@ export default function UserStatistic() {
                                         </Select>
                                     </FormControl>
                                     <FormControl sx={{ m: 1, minWidth: 150 }}>
-                                        <InputLabel id="demo-simple-select-helper-label">Xắp sếp</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Sắp xếp</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-helper-label"
                                             id="demo-simple-select-helper"
                                             value={sortType}
-                                            label="Xắp sếp"
+                                            label="Sắp xếp"
                                             onChange={(e) => {
                                                 setSortType(e.target.value);
                                             }}

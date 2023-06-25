@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgress, Pagination } from "@mui/material";
 
-import {Avatar, Grid, Paper } from "@mui/material";
+import { Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
 import { commentService } from "../services/comment.services";
-import { StarBorderOutlined } from "@mui/icons-material";
+import { Star, StarBorderOutlined } from "@mui/icons-material";
 
 const moment = require('moment');
 moment.updateLocale('vi', {
     relativeTime: {
         future: "%s",
-        past: "%s giây trước",
-        s: function (number, withoutSuffix, key, isFuture) {
-            return '00:' + (number < 10 ? '0' : '')
-                + number + ' giây trước';
-        },
-        m: "01:00 minutes",
+        past: "%s",
+        s: "vài giây trước",
+        ss: "vài giây trước",
+        m: "01 phút trước",
         mm: function (number, withoutSuffix, key, isFuture) {
             return (number < 10 ? '0' : '')
                 + number + ' phút trước';
@@ -61,15 +59,17 @@ function ReviewList(props) {
             setCommentsList(rs.data.data)
             setTotal(rs.data.count)
             setIsLoading(false)
-        }).catch((err) => { console.log(err)})
-    }, [page])
+        }).catch((err) => { console.log(err) })
+    }, [page, props.isLoad])
 
     return (
         <div style={{ padding: 14 }} className="App">
-            <h1>Đánh giá</h1>
+
             {isLoading === false ? <>
+                {commentsList.length === 0 ? <h3>Chưa có đánh giá</h3> :
+                    <h3>Đánh giá</h3>}
                 {commentsList.map((item, index) => (
-                    <Paper style={{ padding: "40px 20px" }}>
+                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9" }}>
                         <Grid container wrap="nowrap" spacing={2}>
 
                             <Grid item>
@@ -82,10 +82,11 @@ function ReviewList(props) {
                                 </p>
                                 <div className="comment-bottom">
                                     <span className="comment-icon">
-                                        <StarBorderOutlined className="icon-star" />
-                                        <span>{item.star}</span>
+                                        {[...Array(item.star).keys()].map((x) => 
+                                            <Star className="icon-star" />
+                                        )}
                                     </span>
-                                    <p style={{ textAlign: "left", color: "gray" }}>
+                                    <p style={{ textAlign: "right", color: "gray" }}>
                                         {
                                             moment().from(new Date(item.creatDate))
                                         }
@@ -95,8 +96,10 @@ function ReviewList(props) {
                         </Grid>
                     </Paper>
                 ))}
-
-                <Pagination count={total /10 + 1} page={page+1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                {total >  10 ?
+                    <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                    : <> </>
+                }
             </> :
                 <CircularProgress></CircularProgress>
             }

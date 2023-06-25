@@ -9,12 +9,10 @@ const moment = require('moment');
 moment.updateLocale('vi', {
     relativeTime: {
         future: "%s",
-        past: "%s giây trước",
-        s: function (number, withoutSuffix, key, isFuture) {
-            return '00:' + (number < 10 ? '0' : '')
-                + number + ' giây trước';
-        },
-        m: "01:00 minutes",
+        past: "%s",
+        s: "vài giây trước",
+        ss: "vài giây trước",
+        m: "01 phút trước",
         mm: function (number, withoutSuffix, key, isFuture) {
             return (number < 10 ? '0' : '')
                 + number + ' phút trước';
@@ -40,7 +38,7 @@ const comments = [
         "creatDate": "2023-05-02T08:22:33.893Z"
     }
 ]
-const CommentList = forwardRef((props, ref) =>  {
+const CommentList = forwardRef((props, ref) => {
     const [isLoading, setIsLoading] = useState(false)
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(10);
@@ -61,16 +59,15 @@ const CommentList = forwardRef((props, ref) =>  {
         }).catch((err) => {
             console.log(err)
         })
-    }, [page])
+    }, [page, props.isLoad])
 
     return (
         <div style={{ padding: 14 }} className="App" ref={ref}>
             <h1>Bình luận</h1>
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
-                    <Paper style={{ padding: "40px 20px" }}>
+                    <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9" }}>
                         <Grid container wrap="nowrap" spacing={2}>
-
                             <Grid item>
                                 <Avatar alt={item.userName} src={item.userAva} />
                             </Grid>
@@ -90,7 +87,9 @@ const CommentList = forwardRef((props, ref) =>  {
                         </Grid>
                     </Paper>
                 ))}
-                <Pagination count={total /10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                {total > 10 ?
+                    <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
+                    : <></>}
             </> :
                 <CircularProgress></CircularProgress>
             }

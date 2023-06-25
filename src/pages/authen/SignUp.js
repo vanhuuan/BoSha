@@ -69,19 +69,30 @@ const SignUp = () => {
   const [password, setPassword] = useState("")
   const [notifyText, setNotifyText] = useState('')
 
+  const [checkPass, setCheckPass] = useState(true)
+  const [checkMail, setCheckMail] = useState(true)
+
+  function isValidPassword(pass) {
+    return /^([a-zA-Z]*\d*).{10,}/.test(pass);
+  }
+
+  function isValidEmail(email) {
+    return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+  }
+
   const validate = (key, values) => {
-    const EMAIL_FORMAT = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    const PASSWORD_FORMAT = /^(?=.*\d)(?=.*[a-zA-Z]).{10,}$/
+    // const EMAIL_FORMAT = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    // const PASSWORD_FORMAT = /^([a-zA-Z]*\d*).{10,}/
     if(key === "userName" || userName.length > 30){
-        setNotifyText('Tên không hợp lệ')
+        NotificationManager.error('Tên không hợp lệ')
         return true
     }
-    if (key === 'email' && !EMAIL_FORMAT.test(values)) {
-      setNotifyText('Email không hợp lệ')
+    if (key === 'email' && !isValidEmail(values)) {
+      NotificationManager.error('Email không hợp lệ')
       return true
     }
-    if (key === 'password' && !PASSWORD_FORMAT.test(values)) {
-      setNotifyText('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
+    if (key === 'password' && !isValidPassword(values)) {
+      NotificationManager.error('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
       return true
     }
     return false
@@ -107,20 +118,25 @@ const SignUp = () => {
       return
     }
     if (validate('email', email)) {
+      NotificationManager.error("Lỗi định dạng email", "Lỗi định dạng", 5000)
       return
     }
     if (validate('password', password)) {
+      NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 5000)
       return
     }
     try {
       const login = await authService.register(account);
       if(login.status >= 200 && login.status < 300){
+        NotificationManager.error("Đăng ký thành công", "Thành công", 5000)
+        navigate("/login")
         handleClickOpen()
       }else{
-        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 5000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
+      NotificationManager.error("Có lỗi xảy ra", "Lỗi đã xảy ra", 5000)
       console.log(error.response.data)
     }
   }
@@ -139,7 +155,7 @@ const SignUp = () => {
             handleClickOpen()
         }
       }else{
-        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 2000)
+        NotificationManager.error("Đăng ký không thành công", "Email đã tồn tại", 5000)
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
@@ -167,33 +183,42 @@ const SignUp = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PersonOutlineSharpIcon sx={{ color: "#89D5C9" }} />
+                  <PersonOutlineSharpIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
           <TextField
             fullWidth
             size='small' margin="normal" type={'email'} variant='outlined' placeholder='Email'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { 
+              isValidEmail(e.target.value) ? setCheckMail(true) : setCheckMail(false)
+              setEmail(e.target.value)} 
+            }
+            error = {!checkMail}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon sx={{ color: "#89D5C9" }} />
+                  <EmailIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
           <TextField
             fullWidth
             size='small' margin="normal" type={'password'} variant='outlined' placeholder='Mật khẩu'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => { 
+              isValidPassword(e.target.value)? setCheckPass(true) : setCheckPass(false)
+              setPassword(e.target.value)} 
+            }
+            helperText={'Mật khẩu phải có ít nhất 10 ký tự và không bắt đầu bằng ký tự đặc biệt'}
+            error = {!checkPass}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PasswordIcon sx={{ color: "#89D5C9" }} />
+                  <PasswordIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
-          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#89D5C9", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleSignUp} >ĐĂNG KÝ</Button>
+          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#4F709C", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleSignUp} >ĐĂNG KÝ</Button>
           <Typography sx={{ marginTop: 2, fontSize: 13, fontStyle: "bold" }}>Nếu bạn đã có tài khoản, hãy <a sx={{marginTop: 2, fontSize: 13, fontStyle: "bold"}} href="/login">đăng nhập</a></Typography>
           <Divider sx={{margin:2}}>Hoặc</Divider>
           <GoogleOAuthProvider clientId={cleintId}>

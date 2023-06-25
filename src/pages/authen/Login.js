@@ -10,9 +10,12 @@ import { Divider } from '@mui/material';
 import { authService } from '../../services/auth.services';
 import { useNavigate } from "react-router-dom"
 import { NotificationManager } from 'react-notifications';
+import { useSearchParams } from "react-router-dom";
 
 const Login = () => {
   let navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const cleintId = "156185449724-pillmeqb703h7ops42o9n80bh9agkckd.apps.googleusercontent.com"
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -55,8 +58,13 @@ const Login = () => {
         localStorage.setItem("UserId", login.data.id)
         localStorage.setItem("AccessToken", login.data.accessToken)
         localStorage.setItem("RefreshToken", login.data.refreshToken)
+        localStorage.setItem("FirebaseToken", login.data.firebaseToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
+        if(searchParams.get("callBack")){
+          console.log(searchParams.get("callBack"))
+          window.location.replace(searchParams.get("callBack"))
+        }
         navigate("/")
       } else {
         NotificationManager.error("Đăng nhập không thành công", "Tên đăng nhập hoặc mật khẩu không đúng!", 2000)
@@ -79,6 +87,7 @@ const Login = () => {
         localStorage.setItem("UserId", login.data.id)
         localStorage.setItem("AccessToken", login.data.accessToken)
         localStorage.setItem("RefreshToken", login.data.refreshToken)
+        localStorage.setItem("FirebaseToken", login.data.firebaseToken)
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
         localStorage.setItem("Ava", login.data.photo)
@@ -115,7 +124,7 @@ const Login = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon sx={{ color: "#89D5C9" }} />
+                  <EmailIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
@@ -126,11 +135,11 @@ const Login = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <PasswordIcon sx={{ color: "#89D5C9" }} />
+                  <PasswordIcon sx={{ color: "#4F709C" }} />
                 </InputAdornment>
               ),
             }}></TextField>
-          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#89D5C9", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleLogin} >ĐĂNG NHẬP</Button>
+          <Button sx={{ marginTop: 2, borderRadius: 5, backgroundColor: "#4F709C", fontSize: 16, fontStyle: "bold" }} variant="contained" onClick={handleLogin} >ĐĂNG NHẬP</Button>
           <a style={{ marginTop: 10, fontSize: 13, fontStyle: "bold" }} href="/forgotPassword">Quên mật khẩu?</a>
           <Divider >Hoặc</Divider>
           <GoogleOAuthProvider clientId={cleintId}>

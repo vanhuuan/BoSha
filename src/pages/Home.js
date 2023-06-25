@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import {
-  useNavigate
-} from "react-router-dom";
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Grid, LinearProgress } from '@mui/material';
 import BookCard2 from '../components/book/BookCard2'
@@ -83,7 +80,7 @@ const Home = () => {
       if (!pageNumber) {
         setPageNumber(1)
       }
-      const rs = bookService.booksNew(pageNumber, 12, "Name", "fghdf").then((rs) => {
+      bookService.booksNew(pageNumber, 12, "Name", "fghdf").then((rs) => {
         console.log(rs.data)
         setMangaList(rs.data)
         setData(rs.data.data)

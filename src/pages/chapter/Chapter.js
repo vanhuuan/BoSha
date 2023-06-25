@@ -1,4 +1,4 @@
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, IconButton } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CommentList from "../../components/CommentList";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -9,21 +9,26 @@ import { firebaseService } from "../../services/firebase.services";
 import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
 import { bookService } from "../../services/books.services";
+import { LockPerson } from "@mui/icons-material";
 
 const data = {
-    "bookId": "643656848e27bd8b116546e9",
-    "chapterId": "643656888e27bd8b116546fa",
-    "name": "Tập 17",
-    "chapterNumber": 17,
-    "created": "2023-04-12T06:58:16.574Z",
-    "updated": "2023-04-12T06:58:16.574Z",
-    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643656848e27bd8b116546e9%2F643656888e27bd8b116546fa.html?alt=media&token=776995dd-485f-48ed-ac04-8dcff7984a92"
+    "bookId": "643657ac8e27bd8b11654e30",
+    "chapterId": "643657ad8e27bd8b11654e35",
+    "canEdit": true,
+    "name": "Tập 5",
+    "chapterNumber": 5,
+    "created": "2023-04-12T07:03:09.654Z",
+    "updated": "2023-04-12T07:03:09.654Z",
+    "textLink": "https://firebasestorage.googleapis.com/v0/b/bosha-4df95.appspot.com/o/books%2F643657ac8e27bd8b11654e30%2F643657ad8e27bd8b11654e35.html?alt=media&token=2c6d0b9d-a614-4fad-9b37-9039dd97edf4",
+    "isDemo": false,
+    "state": true
 }
 
 const Chapter = () => {
-    const { id } = useParams();
+    const { book, id } = useParams();
     const [chap, setChap] = useState("5")
     const [isLoading, setIsLoading] = useState(true)
+    const [isFetchComment, setIsFetchComment] = useState(true)
     const [chapterDetail, setChapterDetail] = useState(data)
     const [dateUpdate, setDateUpdate] = useState("")
     const [status, setStatus] = useState({
@@ -32,19 +37,17 @@ const Chapter = () => {
         "cadnEdit": false
     })
     const resultRef = useRef(null);
-    const [chapterId, setChapterId] = useState(id)
-
+    console.log(id.split("-").slice(-1)[0])
+    const [chapterId, setChapterId] = useState(id.split("-").slice(-1)[0])
     let navigate = useNavigate()
     const moment = require('moment');
     moment.updateLocale('vi', {
         relativeTime: {
             future: "%s",
             past: "%s giây trước",
-            s: function (number, withoutSuffix, key, isFuture) {
-                return '00:' + (number < 10 ? '0' : '')
-                    + number + ' phút trước';
-            },
-            m: "01:00 minutes",
+            s: "vài giây trước",
+            ss: "vài giây trước",
+            m: "01 phút trước",
             mm: function (number, withoutSuffix, key, isFuture) {
                 return (number < 10 ? '0' : '')
                     + number + ' phút trước';
@@ -65,7 +68,12 @@ const Chapter = () => {
     }
 
     const changeChapter = (chap) => {
-        setChapterId(chap)
+        setChapterId(chap.id)
+    }
+
+    const changeComment = () => {
+        setIsFetchComment(!isFetchComment)
+        console.log("changeee")
     }
 
     useEffect(() => {
@@ -73,18 +81,23 @@ const Chapter = () => {
         setIsLoading(true)
         chapterService.chapterDetail(chapterId).then(
             (rs) => {
+                document.title = `${book.replaceAll("-", " ").substring(0, book.lastIndexOf("-"))} - ${rs.data.name}`;
                 console.log(rs.data)
                 setChapterDetail(rs.data)
                 setChap(rs.data.textLink)
                 firebaseService.getChapter(rs.data.bookId, rs.data.chapterId, setChapText)
-                const date1 = new Date(chapterDetail.updated);
+                const date1 = new Date(rs.data.updated);
                 let a = moment().from(date1);
                 setDateUpdate(a)
                 bookService.bookStatus(rs.data.bookId).then((rs) => {
                     console.log(rs)
-                    setStatus(rs)
-                }).catch(console.error)
-                setIsLoading(false)
+                    setStatus(rs.data)
+                    setIsLoading(false)
+                }).catch((e) => {
+                    setIsLoading(false)
+                    console.error(e)
+                })
+                
             }
         ).catch((err) => {
             console.log(err)
@@ -92,22 +105,33 @@ const Chapter = () => {
         })
     }, [chapterId])
 
+    const buyBook = (e) => {
+        if (status.buyed === false) {
+            var data = { bookId: chapterDetail.bookId, bookName: "Buy book" }
+            navigate("/BuyBook", { state: data })
+        }
+    }
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, marginTop: "1em" }}>
             <Grid container spacing={2}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
                     {isLoading === false ? <>
-                        <div style={{textAlign: "center" }}>
-                            <Typography>{`${chapterDetail.name}`}</Typography>
-                            <Typography>{`${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
-                            <Typography>{`${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length}, cập nhật ${dateUpdate}`}</Typography>
-                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: id }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
-                            <div dangerouslySetInnerHTML={{ __html: chap }} style={{textAlign: "left"}}></div>
+                        <div style={{ textAlign: "center" }}>
+                            <Typography>{`Tập ${chapterDetail.chapterNumber}: ${chapterDetail.name}`}</Typography>
+                            <Typography>{`Dài ${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length} ký tự, cập nhật ${dateUpdate}`}</Typography>
+                            <ChapterNav chapter={{ book: chapterDetail.bookId, chap: chapterId }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
+                            {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
+                                <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
+                                : <IconButton sx={{ color: "#4F709C" }} onClick={buyBook}>
+                                    <LockPerson style={{ marginLeft: "1em"}} /> Hãy mua truyện này.
+                                </IconButton>
+                            }
                         </div>
 
-                        <Comment chap={{ chapId: chapterId }}></Comment>
-                        <CommentList chap={{ chapId: chapterId }} ref={resultRef}></CommentList> </> :
+                        <Comment chap={{ chapId: chapterId }} onUpdate={changeComment}></Comment>
+                        <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList> </> :
                         <>
                             <LinearProgress />
                         </>

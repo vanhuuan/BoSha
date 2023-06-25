@@ -3,31 +3,12 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Grid from '@mui/material/Grid';
-import {  Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
+import { imgService } from '../../services/image.services';
+import { firebaseService } from '../../services/firebase.services';
 
-
-function uploadImageCallBack(file) {
-    return new Promise(
-        (resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://api.imgur.com/3/image');
-            xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
-            const data = new FormData();
-            data.append('image', file);
-            xhr.send(data);
-            xhr.addEventListener('load', () => {
-                const response = JSON.parse(xhr.responseText);
-                resolve(response);
-            });
-            xhr.addEventListener('error', () => {
-                const error = JSON.parse(xhr.responseText);
-                reject(error);
-            });
-        }
-    );
-}
 
 function EditorImage(props) {
     const [editorState, setEditorState] = useState(() => EditorState.createWithContent(
@@ -36,6 +17,43 @@ function EditorImage(props) {
     const maxLength = "15000"
     const minLength = "100"
     // const [convertedContent, setConvertedContent] = useState(null);
+
+    const uploadImageCallBack = (file) => {
+        console.log(file)
+        var imgFile = URL.createObjectURL(file)
+        return new Promise(
+            (resolve, reject) => {
+                imgService.checkImg(imgFile).then(() => {
+                    firebaseService.uploadChapterImg(props.chap.bookId, props.chap.chapId, imgFile, (url) => {
+                        resolve(url)
+                    })
+                }).catch(e => {
+                    reject(e)
+                })
+            }
+        );
+    }
+
+    const handleKeyCommand = (command, editorState) => {
+        if (command === 'backspace') {
+            const contentState = editorState.getCurrentContent();
+            const selectionState = editorState.getSelection();
+            const anchorKey = selectionState.getAnchorKey();
+            const currentContentBlock = contentState.getBlockForKey(anchorKey);
+            console.log(currentContentBlock)
+            const type = currentContentBlock.getType();
+            console.log(type)
+            if (type === 'atomic') {
+                const entityKey = currentContentBlock.getEntity();
+                if (entityKey) {
+                    contentState = contentState.deleteEntity(entityKey);
+                }
+            }
+            setEditorState(EditorState.set(editorState, {
+                currentContent: contentState
+            }));
+        }
+    };
 
     useEffect(() => {
         let raw = convertToRaw(editorState.getCurrentContent());
@@ -55,19 +73,33 @@ function EditorImage(props) {
 
 
     return (
-        <Grid container spacing={2} border={'1px solid #ccc;'} marginTop={"2em"}>
+        <Grid container spacing={2} border={'1px solid #D8C4B6;'} marginTop={"2em"}>
             <Grid item xs={12}>
                 <Editor
                     editorState={editorState}
                     onEditorStateChange={setEditorState}
+                    // handleKeyCommand={handleKeyCommand}
                     wrapperClassName="TextEditor"
                     editorClassName="TextEditor"
                     toolbar={{
-                        image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
-                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+                        // options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
+                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history']
+                        // image: {
+                        //     urlEnabled: false,
+                        //     uploadEnabled: true,
+                        //     alignmentEnabled: true,
+                        //     uploadCallback: uploadImageCallBack,
+                        //     previewImage: true,
+                        //     inputAccept: 'image/jpeg,image/jpg,image/png',
+                        //     alt: {
+                        //         present: true,
+                        //         mandatory: false
+                        //     }
+                        // }
                     }}
                     editorStyle={{ height: '30em' }}
                     handleBeforeInput={val => {
+                        console.log(val)
                         const textLength = editorState.getCurrentContent().getPlainText().length;
                         if (val && textLength >= maxLength) {
                             sendDataOke(false)
@@ -75,12 +107,13 @@ function EditorImage(props) {
                         }
                         if (val && textLength < minLength) {
                             sendDataOke(false)
-                        }else{
+                        } else {
                             sendDataOke(true)
                         }
                         return 'not-handled';
                     }}
                     handlePastedText={val => {
+                        console.log("Paset", val)
                         const textLength = editorState.getCurrentContent().getPlainText().length;
                         return ((val.length + textLength) >= maxLength);
                     }}
@@ -117,7 +150,7 @@ function EditorDescription(props) {
 
             <Grid item xs={12}>
                 <div style={{ marginTop: `1rem`, border: '1px solid gray', borderRadius: '4px' }}>
-                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `rgba(204, 204, 204, 0.5)`, color: `black`, padding: '0.5em' }}>
+                    <Typography variant="h6" gutterBottom style={{ backgroundColor: `#F5EFE7`, color: `black`, padding: '0.5em' }}>
                         Miêu tả
                     </Typography>
                     <Editor

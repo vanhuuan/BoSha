@@ -1,7 +1,7 @@
 .bookcardhot-group {
     display: inline-block;
     position: relative;
-    background-color: rgb(157, 23, 77);
+    background-color: #D8C4B6;
     border-radius: 10px;
     overflow: hidden;
     --gradient-to: rgb(0, 0, 0);
@@ -9,7 +9,7 @@
 }
 
 .bookcardhot-group:hover {
-    --gradient-to: rgb(157, 23, 77);
+    --gradient-to: #D8C4B6;
 }
 
 .from-transparent {

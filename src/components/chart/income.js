@@ -87,7 +87,7 @@ export default function Income({ chartsData, title, label }) {
       theme: {
         monochrome: {
           enabled: true,
-          color: '#89D5C9',
+          color: '#4F709C',
           shadeTo: 'light',
           shadeIntensity: 0.65
         }
@@ -124,7 +124,7 @@ export default function Income({ chartsData, title, label }) {
       flexDirection={'column'}
       justifyContent={'center'}
       sx={{ backgroundColor: 'white', boxShadow: '0px 0px 3px grey', padding: "2em" }}>
-      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>Thống kê theo {titleText}</Typography>
+      <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>Thống kê theo {labelText}</Typography>
       {
         isLoading ? <CircularProgress sx={{ alignSelf: 'center' }} /> :
           <ReactApexChart options={c.options} series={c.series} type="bar" width={'100%'} height={"250%"} />

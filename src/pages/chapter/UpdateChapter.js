@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import { chapterService } from "../../services/chapter.services";
 import { NotificationManager } from 'react-notifications';
 
-const data = {
+const dataDefault = {
     "bookId": "645368d5eb07b12be11f0271",
     "chapterId": "64536d07eb07b12be11f0272",
     "canEdit": false,
@@ -59,12 +59,12 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 const UpdateChapter = () => {
-    const [name, setName] = React.useState('Tên chương');
+    const [name, setName] = React.useState('Tên tập');
     const [stt, setStt] = React.useState(0);
     const [chap, setChap] = React.useState("");
     const [demo, setDemo] = React.useState(true);
     const [states, setStates] = React.useState(true);
-    const [chapterDetail, setChapterDetail] = useState(data)
+    const [chapterDetail, setChapterDetail] = useState(dataDefault)
     const [isLoading, setIsLoading] = useState(true)
     const location = useLocation();
     const data = location.state;
@@ -75,7 +75,7 @@ const UpdateChapter = () => {
 
     let navigate = useNavigate()
 
-    const UpdateChapter = (props) => {
+    const UpdateChapter = () => {
         const data = {
             "bookId": chapterDetail.bookId,
             "chapterName": name,
@@ -89,7 +89,7 @@ const UpdateChapter = () => {
             return
         }
         if (!okeChap) {
-            NotificationManager.error("Dữ liệu lỗi", "Nội dung chương phải từ 100 kí tự đến 15000 ký tự!", 2000)
+            NotificationManager.error("Dữ liệu lỗi", "Nội dung tập phải từ 100 kí tự đến 15000 ký tự!", 2000)
             return
         }
 
@@ -111,7 +111,7 @@ const UpdateChapter = () => {
 
     const onNameChange = (e) => {
         setName(e)
-        if (e.length < 5 || e.length > 50) {
+        if (e.length < 5 || e.length > 100) {
             setError(true)
         } else {
             setError(false)
@@ -139,7 +139,7 @@ const UpdateChapter = () => {
             }
         ).catch((err) => {
             console.log(err)
-            // navigate(-1);
+            navigate("/NotFound");
         })
     }, [])
 
@@ -162,7 +162,7 @@ const UpdateChapter = () => {
                     <Grid item xs={10}>
                         {isLoading === false ?
                             <FormControl fullWidth>
-                                <Typography variant="h5">Cập nhật chương {chapterDetail.name}</Typography>
+                                <Typography variant="h5">Cập nhật tập {chapterDetail.name}</Typography>
                                 <TextField
                                     id="outlined-uncontrolled"
                                     label="Số thứ tự truyện"
@@ -179,23 +179,25 @@ const UpdateChapter = () => {
                                         onNameChange(event.target.value);
                                     }}
                                     sx={{ width: "100%", margin: "1em" }}
-                                    helperText="Tên chương phải từ 5 đến 50 ký tự"
+                                    helperText="Tên tập phải từ 5 đến 100 ký tự"
                                     error={error}
                                 />
-                                <FormLabel id="demo-controlled-radio-buttons-group">Loại chương</FormLabel>
+                                <FormLabel id="demo-controlled-radio-buttons-group">Loại tập</FormLabel>
                                 <FormControlLabel
                                     control={<Android12Switch checked={demo} onChange={(e) => setDemo(e.target.checked)} />}
                                     label="Xem thử"
                                 />
                                 <FormControlLabel
                                     control={<Android12Switch checked={!states} onChange={(e) => setStates(!states)} />}
-                                    label="Ẩn chương"
+                                    label="Ẩn tập"
                                 />
-                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap} okeCallback={callBackOke} chap={{ text: chap }} >
+                                <EditorImage sx={{ width: "100%", marginBottom: "1em" }} parentCallback={callBackChap}
+                                    okeCallback={callBackOke}
+                                    chap={{ text: chap, bookId: chapterDetail.bookId, chapId: chapterDetail.chapterId }} >
                                 </EditorImage>
                                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1em" }}>
-                                    <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/"+chapterDetail.bookId) }}>Trở về</Button>
-                                    <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật chương</Button>
+                                    <Button variant="contained" color="warning" onClick={(e) => { navigate("/book/" + chapterDetail.bookId) }}>Trở về</Button>
+                                    <Button variant="contained" color="success" onClick={UpdateChapter}>Cập nhật tập</Button>
                                 </div>
                             </FormControl>
                             : <LinearProgress></LinearProgress>}

@@ -95,9 +95,9 @@ function Header() {
         setAnchorElUser(null);
     };
 
-    const handleChoseNav = (event, setting) =>{
+    const handleChoseNav = (event, setting) => {
         switch (setting) {
-            case 'HOT': navigate('/book/search/true')
+            case 'HOT': navigate('/book/search/true?hot=hot')
                 break;
             case 'Đang theo dõi': navigate('/book/likeBook')
                 break;
@@ -111,6 +111,7 @@ function Header() {
     const handleAvaMenuClick = (event, setting) => {
         switch (setting) {
             case 'Đăng xuất': logout()
+                setAva("")
                 break;
             case 'Tài khoản': navigate('/user/userInfo')
                 break;
@@ -132,17 +133,16 @@ function Header() {
         if (localStorage.getItem("UserId")) {
             setIsLoadingAva(true);
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
-        }else{
+        } else {
             setIsLoadingAva(false)
         }
     }, [])
 
     return (
         <>
-            <AppBar position="static" sx={{ backgroundColor: "#89D5C9" }}>
+            <AppBar position="static" sx={{ backgroundColor: "#4F709C" }}>
                 <Container maxWidth="xl" >
-                    <Toolbar disableGutters>
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={() => { navigate("/") }} />
+                    <Toolbar disableGutters>           
                         <Typography
                             variant="h6"
                             noWrap
@@ -197,7 +197,7 @@ function Header() {
                                 ))}
                             </Menu>
                         </Box>
-                        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        
                         <Typography
                             variant="h5"
                             noWrap
@@ -248,6 +248,7 @@ function Header() {
                                     type="text"
                                     placeholder="Tìm kiếm sách"
                                     onChange={(e) => search(e.target.value)}
+                                    onBlur={() => setIsLoading(true)}
                                 />
                             </div>
                             <div className='header__toolbar-search-history'>
@@ -273,7 +274,7 @@ function Header() {
                             </div>
                             <button className='header__toolbar-search-btn'>
                                 <SearchIcon className='header__toolbar-search-btn-icon' onClick={(e) => {
-                                    navigate("/book/search/true")
+                                    navigate("/book/search/true?search=" + searchTerm)
                                 }
                                 }></SearchIcon>
                             </button>
@@ -319,9 +320,9 @@ function Header() {
                             </Box>
                         }
                     </Toolbar>
-                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{ zIndex: 1 }} onMouseLeave={() => { setIsHover(!isHover); }}>
+                    {isLoadingCate === false ? <div className='header__toolbar-hover' hidden={isHover} style={{ zIndex: 100 }} onMouseLeave={() => { setIsHover(!isHover); }}>
                         {categories.map((cate) => (
-                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories=${cate.id}`) }}>{cate.name}</div>
+                            <div className='header__toolbar-category-list-item' onClick={(e) => { navigate(`/book/search/true?categories=${cate.id}&search=`) }}>{cate.name}</div>
                         ))}
                     </div> : <></>}
                 </Container>

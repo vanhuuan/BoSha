@@ -4,6 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import "../../css/BookCard2.css";
 import { useNavigate } from "react-router-dom";
+import { Star } from "@mui/icons-material";
 
 const BookCard2 = (props) => {
 
@@ -17,7 +18,7 @@ const BookCard2 = (props) => {
     }
 
     const handleChoseBook = (e) => {
-        navigate("/book/" + props.manga.id)
+        navigate("/book/" + props.manga.name.replaceAll(" ", "-") + "-" + props.manga.id)
     }
 
     return (
@@ -30,7 +31,7 @@ const BookCard2 = (props) => {
                     </div>
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">
-                            <FavoriteIcon style={{ fontSize: `16px`, marginRight: `2px` }}></FavoriteIcon>
+                            <Star style={{ fontSize: `16px`, marginRight: `2px` }}></Star>
                             <span style={{ marginRight: `8px` }}>{props.manga.star}</span>
                             <VisibilityIcon style={{ fontSize: `16px`, marginRight: `2px` }}></VisibilityIcon>
                             <span>{props.manga.view}</span>

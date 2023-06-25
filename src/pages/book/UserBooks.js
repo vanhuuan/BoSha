@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import BookCard2 from '../../components/book/BookCard2'
-import { useNavigate } from 'react-router-dom';
 import { userBookService } from '../../services/userBook.services';
 import '../../css/userbook.css'
 import { Button, Grid, LinearProgress } from '@mui/material';
@@ -56,7 +54,7 @@ const UserBook = () => {
 
             <div className='row d-flex flex-row'>
                 <div className='col-1'></div>
-                {isLoading == false ? <>
+                {isLoading === false ? <>
                     <div className='col-10 position-relative'>
                         <Grid container spacing={2}>
 
@@ -84,7 +82,7 @@ const UserBook = () => {
                         </Grid>
                     </div>
                     <div className='row d-flex justify-content-center flex-wrap' style={{ marginTop: '4em' }}>
-                    </div> </> : <LinearProgress style={{ margin: "2em" }} />
+                    </div> </> : <LinearProgress style={{ margin: "2em" }} variant='primary' />
                 }
             </div>
             <div className='col-lg-2 d-flex flex-column align-items-start' style={{ marginTop: '10px' }}>
