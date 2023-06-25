@@ -16,7 +16,7 @@ const ChangePassword = () => {
   console.log(token);
 
   function isValidPassword(pass) {
-    return /^([a-zA-Z]*\d*).{10,}/.test(pass);
+    return /^(?=.*\d)(?=.*[a-zA-Z]).{10,}$/.test(pass);
   }
 
   async function handleChangePass(){
@@ -68,7 +68,7 @@ const ChangePassword = () => {
             setConfirmPass("") 
           }}
           error = {check}
-          helperText={check?'Mật khẩu phải có ít nhất 10 ký tự và không bắt đầu bằng ký tự đặc biệt':''}
+          helperText={check?'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt':''}
         ></TextField>
         <TextField
           fullWidth

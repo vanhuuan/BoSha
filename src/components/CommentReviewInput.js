@@ -298,10 +298,11 @@ function Review(props) {
             "star": star
         }
         commentService.reviewBook(data).then((rs) => {
+            props.onChangeReview()
+            NotificationManager.success("Đánh giá thành công", "Đánh giá thành công", 3000)
             commentService.getUserBookReview(id).then((rs) => {
                 console.log("comment:", rs.data)
                 setReview(rs.data)
-                props.onChangeReview()
                 setIsReviewed(true)
             }).catch((err) => {
                 setIsReviewed(false)
