@@ -96,7 +96,7 @@ export default function SearchBook() {
     const findBook = (sort, state) => {
         setIsSearching(true)
         setPageNumber(1)
-        bookService.findBook(1, 12, searchInput.trim(), category, state, range[0], range[1], sort).then((rs) => {
+        bookService.findBook(1, 12, searchInput, category, state, range[0], range[1], sort).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
@@ -107,7 +107,7 @@ export default function SearchBook() {
     const findBooks = (cate, search = "") => {
         setIsSearching(true)
         setPageNumber(1)
-        bookService.findBook(1, 12, search.trim(), cate, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(1, 12, search, cate, state, range[0], range[1], sortBy).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
@@ -121,7 +121,7 @@ export default function SearchBook() {
 
     const fetchData = () => {
         console.log("Load more", pageNumber + 1)
-        bookService.findBook(pageNumber, 12, searchInput.trim(), category, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(pageNumber, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
             console.log("data new", rs.data.data);
             setData(old => old.concat(rs.data.data))
             setMangaList(rs.data)
@@ -182,7 +182,7 @@ export default function SearchBook() {
                                     <MenuItem value={"HotWeek"}>Xem nhiều nhất tuần</MenuItem>
                                     <MenuItem value={"HotMonth"}>Xem nhiều nhất tháng</MenuItem>
                                     <MenuItem value={"MostFollow"}>Theo dõi nhiều nhất</MenuItem>
-                                    <MenuItem value={"MostComment"}>Bình luận nhiều nhất</MenuItem>
+                                    <MenuItem value={"MostComment"}>Đánh giá nhiều nhất</MenuItem>
                                     <MenuItem value={"MostChapter"}>Số tập nhiều nhất</MenuItem>
                                 </Select>
                             </Grid>
