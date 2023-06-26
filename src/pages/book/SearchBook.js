@@ -217,7 +217,7 @@ export default function SearchBook() {
                                 findBook(sortBy, state);
                             }}>
                                 <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên truyện' className='searchManga' />
-                                <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
+                                <IconButton onClick={(e) => { findBook(sortBy, state); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
                             </form>
                         </div>
                     </div>
