@@ -197,16 +197,19 @@ function Comment(props) {
                                     {text.length} / 300 ký tự
                                 </Typography>
                             </div>
+                            <div>
                             {edit === true ?
                                 <Button sx={{}} onClick={() => { setIsCommented(true); setEdit(false); setText(commentEd.text) }}>Bỏ</Button>
                                 : <></>}
                             <IconButton sx={{
                                 marginRight: "1em",
+                                height: "100%",
                                 color: "#213555",
                                 '&:hover': {
                                     backgroundColor: "transparent"
                                 }
                             }} onClick={sendComment}> <Send /> </IconButton>
+                            </div>
                         </Box>
                     }
                     sx={{
@@ -427,16 +430,19 @@ function Review(props) {
                                     }}
                                 />
                             </div>
-                            {edit === true ?
-                                <Button sx={{}} onClick={() => { setIsReviewed(true); setEdit(false); setText(review.text) }}>Bỏ</Button>
-                                : <></>}
-                            <IconButton sx={{
-                                marginRight: "1em",
-                                color: "#213555",
-                                '&:hover': {
-                                    backgroundColor: "transparent"
-                                }
-                            }} onClick={sendReview}> <Send /> </IconButton>
+                            <div>
+                                {edit === true ?
+                                    <Button sx={{}} onClick={() => { setIsReviewed(true); setEdit(false); setText(review.text) }}>Bỏ</Button>
+                                    : <></>}
+                                <IconButton sx={{
+                                    marginRight: "1em",
+                                    height: "100%",
+                                    color: "#213555",
+                                    '&:hover': {
+                                        backgroundColor: "transparent"
+                                    }
+                                }} onClick={sendReview}> <Send /> </IconButton>
+                            </div>
                         </Box>
                     }
                     sx={{
