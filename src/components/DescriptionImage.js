@@ -402,7 +402,6 @@ function DescriptionImageCreate({ sendData }) {
         input.onchange = _ => {
             let files = Array.from(input.files);
             const imag = files[0];
-            console.log(imag)
             if (!imag) {
                 NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
                 return false;

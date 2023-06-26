@@ -31,7 +31,7 @@ const BottomInfo = (props) => {
     moment.updateLocale('vi', {
         relativeTime: {
             future: "%s",
-            past: "%s giây trước",
+            past: "%s",
             s: "vài giây trước",
             ss: "vài giây trước",
             m: "01 phút trước",

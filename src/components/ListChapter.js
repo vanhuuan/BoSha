@@ -45,7 +45,7 @@ export default function ListChapter(props) {
   moment.updateLocale('vi', {
     relativeTime: {
       future: "%s",
-      past: "%s giây trước",
+      past: "%s",
       s: function (number, withoutSuffix, key, isFuture) {
         return "Vài giây trước"
       },

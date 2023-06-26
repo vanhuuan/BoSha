@@ -34,7 +34,7 @@ const Chapter = () => {
     const [status, setStatus] = useState({
         "buyed": false,
         "liked": false,
-        "canEdit": false
+        "cadnEdit": false
     })
     const resultRef = useRef(null);
     console.log(id.split("-").slice(-1)[0])
@@ -44,7 +44,7 @@ const Chapter = () => {
     moment.updateLocale('vi', {
         relativeTime: {
             future: "%s",
-            past: "%s giây trước",
+            past: "%s",
             s: "vài giây trước",
             ss: "vài giây trước",
             m: "01 phút trước",

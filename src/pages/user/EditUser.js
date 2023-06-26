@@ -54,7 +54,8 @@ export default function EditUser() {
     }
 
     const validName = (name) => {
-        if (name.length < 5 || name.length > 30) {
+        var sname = name.trim()
+        if (sname.length < 5 || sname.length > 30) {
             setNameHelp("Tên phải có chiều dài từ 5 đến 30 ký tự")
         } else {
             setUserInfo(prevState => ({
@@ -82,7 +83,7 @@ export default function EditUser() {
             NotificationManager.error("Tên", 'không đúng định dạng', 5000);
             return
         }
-        if (phoneHelp.length > 0) {
+        if (!isVietnamesePhoneNumberValid(userInfo.phone)) {
             NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);
             return
         }

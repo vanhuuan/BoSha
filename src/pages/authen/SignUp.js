@@ -69,11 +69,11 @@ const SignUp = () => {
   const [password, setPassword] = useState("")
   const [notifyText, setNotifyText] = useState('')
 
-  const [checkPass, setCheckPass] = useState(false)
-  const [checkMail, setCheckMail] = useState(false)
+  const [checkPass, setCheckPass] = useState(true)
+  const [checkMail, setCheckMail] = useState(true)
 
   function isValidPassword(pass) {
-    return /^([a-zA-Z]*\d*).{10,}/.test(pass);
+    return /^(?=.*\d)(?=.*[a-zA-Z]).{10,}$/.test(pass);
   }
 
   function isValidEmail(email) {
@@ -125,10 +125,14 @@ const SignUp = () => {
       NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 5000)
       return
     }
+    if(userName.trim().length < 5 || userName.trim().length() > 30){
+      NotificationManager.error("Tên phải từ 5 đến 30 ký tự", "Lỗi định dạng", 5000)
+      return
+    }
     try {
       const login = await authService.register(account);
       if(login.status >= 200 && login.status < 300){
-        NotificationManager.error("Đăng ký thành công", "Thành công", 5000)
+        NotificationManager.success("Đăng ký thành công", "Thành công", 5000)
         navigate("/login")
         handleClickOpen()
       }else{
@@ -180,6 +184,8 @@ const SignUp = () => {
             fullWidth
             size='small' margin="normal" type={'text'} variant='outlined' placeholder='Tên của bạn'
             onChange={(e) => setUserName(e.target.value)}
+            error = { userName.trim().length < 5 || userName.trim().length() > 30}
+            helperText = 'Tên phải có độ dài từ 5 đến 30 ký tự'
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -209,7 +215,7 @@ const SignUp = () => {
               isValidPassword(e.target.value)? setCheckPass(true) : setCheckPass(false)
               setPassword(e.target.value)} 
             }
-            helperText={'Mật khẩu phải có ít nhất 10 ký tự và không bắt đầu bằng ký tự đặc biệt'}
+            helperText={'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt'}
             error = {!checkPass}
             InputProps={{
               startAdornment: (
