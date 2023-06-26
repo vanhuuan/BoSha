@@ -130,6 +130,14 @@ function Header() {
 
     useEffect(() => {
         load()
+        window.addEventListener("storage", () => {
+            if (localStorage.getItem("UserId")) {
+                setIsLoadingAva(true);
+                firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)
+            } else {
+                setIsLoadingAva(false)
+            }
+          });
         if (localStorage.getItem("UserId")) {
             setIsLoadingAva(true);
             firebaseService.getAva(localStorage.getItem("UserId"), setAvaImg)

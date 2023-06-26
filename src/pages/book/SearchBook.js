@@ -93,10 +93,10 @@ export default function SearchBook() {
         findBooks([searchParams.get("categories")], search)
     }, [searchParams])
 
-    const findBook = () => {
+    const findBook = (sort, state) => {
         setIsSearching(true)
         setPageNumber(1)
-        bookService.findBook(1, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(1, 12, searchInput, category, state, range[0], range[1], sort).then((rs) => {
             setPageNumber(1)
             setData(rs.data.data)
             setMangaList(rs.data)
@@ -173,11 +173,11 @@ export default function SearchBook() {
                                     labelId="demo-simple-select-helper-label"
                                     id="demo-simple-select-helper"
                                     value={sortBy}
-                                    onChange={(e) => { setSortBy(e.target.value); findBook() }}
+                                    onChange={(e) => { setSortBy(e.target.value); findBook(e.target.value, state) }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"Newest"}>Cập nhật mới</MenuItem>
-                                    <MenuItem value={"HotAll"}>Xem nhiều nhất</MenuItem>
+                                    <MenuItem value={"HotAllTime"}>Xem nhiều nhất</MenuItem>
                                     <MenuItem value={"HotDay"}>Xem nhiều nhất hôm nay</MenuItem>
                                     <MenuItem value={"HotWeek"}>Xem nhiều nhất tuần</MenuItem>
                                     <MenuItem value={"HotMonth"}>Xem nhiều nhất tháng</MenuItem>
@@ -194,7 +194,7 @@ export default function SearchBook() {
                                     labelId="state"
                                     id="demo-simple-select-helper"
                                     value={state}
-                                    onChange={(e) => { setState(e.target.value); findBook() }}
+                                    onChange={(e) => { setState(e.target.value); findBook(sortBy, e.target.value) }}
                                     sx={{ minWidth: "20em" }}
                                 >
                                     <MenuItem value={"All"}>Tất cả</MenuItem>
