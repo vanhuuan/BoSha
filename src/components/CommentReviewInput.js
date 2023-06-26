@@ -301,7 +301,7 @@ function Review(props) {
             "star": star
         }
         commentService.reviewBook(data).then((rs) => {
-            props.onChangeReview()
+            props.onChange()
             NotificationManager.success("Đánh giá thành công", "Đánh giá thành công", 3000)
             commentService.getUserBookReview(id).then((rs) => {
                 console.log("comment:", rs.data)
@@ -330,7 +330,7 @@ function Review(props) {
                 setIsReviewed(false)
                 setEdit(false)
                 setStar(5)
-                props.onChangeReview()
+                props.onChange()
             }).catch((e) => {
                 console.log(e)
                 NotificationManager.error("Có lỗi khi xóa đánh giá")
@@ -360,7 +360,7 @@ function Review(props) {
                 console.log("comment:", rs.data)
                 setReview(rs.data)
                 setIsReviewed(true)
-                props.onChangeReview()
+                props.onChange()
             }).catch((err) => {
                 setIsReviewed(false)
                 console.log(err)

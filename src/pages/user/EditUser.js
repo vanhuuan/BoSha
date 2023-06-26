@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowBackIos,  CheckCircle, EmailOutlined, Person, Person2, PhoneAndroidOutlined, PhotoCamera } from "@mui/icons-material";
+import { ArrowBackIos, CheckCircle, EmailOutlined, Person, Person2, PhoneAndroidOutlined, PhotoCamera } from "@mui/icons-material";
 import { Box, Divider, Grid, IconButton, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, Badge, Avatar, LinearProgress } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -37,12 +37,11 @@ export default function EditUser() {
     const [nameHelp, setNameHelp] = useState("")
 
     const validPhone = (phone) => {
+        setUserInfo(prevState => ({
+            ...prevState, "phone": phone
+        }))
         if (isVietnamesePhoneNumberValid(phone)) {
             console.log(phone)
-            setUserInfo(prevState => ({
-                ...prevState, "phone": phone
-            })
-            )
             setPhoneHelp("")
         } else {
             setPhoneHelp("Không đúng định dạng số điện thoại")
@@ -83,6 +82,7 @@ export default function EditUser() {
             NotificationManager.error("Tên", 'không đúng định dạng', 5000);
             return
         }
+        console.log(userInfo.phone)
         if (!isVietnamesePhoneNumberValid(userInfo.phone)) {
             NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);
             return
@@ -134,9 +134,9 @@ export default function EditUser() {
                                     <Badge
                                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                         badgeContent={
-                                            <IconButton disabled={isUploading} color={isUploading === false? "primary" : "error"} aria-label="upload picture" component="label">
+                                            <IconButton disabled={isUploading} color={isUploading === false ? "primary" : "error"} aria-label="upload picture" component="label">
                                                 <input hidden accept="image/*" type="file" onChange={(e) => {
-                                                    if(isUploading === true){
+                                                    if (isUploading === true) {
                                                         return
                                                     }
                                                     if (e.target.files[0]) {
@@ -146,7 +146,7 @@ export default function EditUser() {
                                                                 setImageUrl(URL.createObjectURL(e.target.files[0]));
                                                                 setAva(URL.createObjectURL(e.target.files[0]))
                                                                 NotificationManager.success("Ảnh phù hợp", "Kiểm tra ảnh thành công", 2000);
-                                                            }else{
+                                                            } else {
                                                                 NotificationManager.error("Ảnh không phù hợp", "Kiểm tra ảnh thành công", 2000);
                                                             }
                                                             setIsUploading(false)
