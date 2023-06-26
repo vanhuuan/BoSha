@@ -183,7 +183,7 @@ export default function SearchBook() {
                                     <MenuItem value={"HotMonth"}>Xem nhiều nhất tháng</MenuItem>
                                     <MenuItem value={"MostFollow"}>Theo dõi nhiều nhất</MenuItem>
                                     <MenuItem value={"MostComment"}>Bình luận nhiều nhất</MenuItem>
-                                    <MenuItem value={"MostChapter"}>Số chapter nhiều</MenuItem>
+                                    <MenuItem value={"MostChapter"}>Số tập nhiều nhất</MenuItem>
                                 </Select>
                             </Grid>
                             <Grid item xs={12} md={2} lg={2}>
