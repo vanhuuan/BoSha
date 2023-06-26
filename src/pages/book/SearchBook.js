@@ -214,7 +214,7 @@ export default function SearchBook() {
                         <div className='col-xs-7 col-lg-12'>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
-                                findBook();
+                                findBook(sortBy, state);
                             }}>
                                 <input type="text" value={searchInput} onChange={onSearchInputChange} placeholder='Tên truyện' className='searchManga' />
                                 <IconButton onClick={(e) => { findBook(); }}> <Search style={{ width: "2em", height: "2em" }}></Search></IconButton>
