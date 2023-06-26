@@ -93,7 +93,7 @@ const SignUp = () => {
       return true
     }
     if (key === 'password' && !isValidPassword(values)) {
-      NotificationManager.error('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
+      NotificationManager.error('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số')
       return true
     }
     return false
@@ -232,7 +232,7 @@ const SignUp = () => {
               setPassword(e.target.value)
             }
             }
-            helperText={'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt'}
+            helperText={'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số'}
             error={!checkPass}
             InputProps={{
               startAdornment: (

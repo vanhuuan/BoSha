@@ -29,7 +29,7 @@ const Login = () => {
       return true
     }
     if (key === 'password' && !PASSWORD_FORMAT.test(values)) {
-      setNotifyText('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt')
+      setNotifyText('Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số')
       return true
     }
     return false

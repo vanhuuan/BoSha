@@ -68,7 +68,7 @@ const ChangePassword = () => {
             setConfirmPass("") 
           }}
           error = {check}
-          helperText={check?'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số và ký tự đặc biệt':''}
+          helperText={check?'Mật khẩu phải có ít nhất 10 ký tự, có ký tự chữ, ký tự số':''}
         ></TextField>
         <TextField
           fullWidth
