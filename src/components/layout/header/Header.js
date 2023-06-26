@@ -43,7 +43,7 @@ function Header() {
         const delayDebounceFn = setTimeout(() => {
             if (search.length >= 3) {
                 setIsLoading(true)
-                bookService.searchBook(search).then((rs) => {
+                bookService.searchBook(search.trim()).then((rs) => {
                     console.log(rs.data)
                     setData(rs.data.data)
                     setIsLoading(false)
