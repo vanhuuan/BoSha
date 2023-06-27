@@ -93,11 +93,11 @@ export default function BookDetail() {
     const data = { bookId: book.id, bookName: book.name }
 
     const buyBook = (e) => {
-        if(isLogin === false){
+        if (isLogin === false) {
             navigate(
                 {
                     pathname: '/login',
-                    search: '?callBack='+window.location.href,
+                    search: '?callBack=' + window.location.href,
                 }
             )
             return
@@ -108,11 +108,11 @@ export default function BookDetail() {
     }
 
     const likeBook = () => {
-        if(isLogin === false){
+        if (isLogin === false) {
             navigate(
                 {
                     pathname: '/login',
-                    search: '?callBack='+window.location.href,
+                    search: '?callBack=' + window.location.href,
                 }
             )
             return
@@ -126,8 +126,8 @@ export default function BookDetail() {
     }
 
     const [isReviewChange, setIsReviewChange] = useState(true)
- 
-    const onChangeReview = () =>{
+
+    const onChangeReview = () => {
         setIsReviewChange(!isReviewChange)
     }
 
@@ -178,7 +178,8 @@ export default function BookDetail() {
                                                         </Button>
                                                         {book.price > 0 ?
                                                             <Button variant="contained" startIcon={<AddShoppingCartOutlined />} onClick={buyBook} sx={{ minWidth: "170px", marginBottom: "0.5em" }}>
-                                                                {status.buyed ? 'Đã sở hữu' : 'Mua truyện'}
+                                                                {status.buyed ? `Đã sở hữu với giá ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                                    .format(status.price)}` : 'Mua truyện'}
                                                             </Button>
                                                             :
                                                             <></>
