@@ -82,6 +82,10 @@ export default function EditUser() {
             NotificationManager.error("Tên", 'không đúng định dạng', 5000);
             return
         }
+        if(!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(userInfo.name)){
+            NotificationManager.error("Tên không hợp lệ", "Lỗi định dạng", 5000)
+            return
+          }
         console.log(userInfo.phone)
         if (!isVietnamesePhoneNumberValid(userInfo.phone)) {
             NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);

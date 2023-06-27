@@ -130,6 +130,12 @@ const SignUp = () => {
       NotificationManager.error("Tên phải từ 5 đến 30 ký tự", "Lỗi định dạng", 5000)
       return
     }
+
+    if(!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(userName.toString())){
+      NotificationManager.error("Tên không hợp lệ", "Lỗi định dạng", 5000)
+      return
+    }
+    
     try {
       const login = await authService.register(account);
       if (login.status >= 200 && login.status < 300) {
