@@ -112,7 +112,7 @@ function Header() {
         switch (setting) {
             case 'Đăng xuất': logout()
                 setAva("")
-                window.open( window.location.host,"_self")
+                window.location.replace(window.location.origin ,"_self")
                 break;
             case 'Tài khoản': navigate('/user/userInfo')
                 break;
