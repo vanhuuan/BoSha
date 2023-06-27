@@ -25,7 +25,7 @@ export const firebaseService = {
                 callback(`<div> Lỗi không tìm thấy truyện </div>`)
             });
     },
-    gerPreview: async (bookId, callback) => {
+    getPreview: async (bookId, callback) => {
         getDownloadURL(ref(storage, `books/${bookId}/preview.html`))
             .then((url) => {
                 const xhr = new XMLHttpRequest();

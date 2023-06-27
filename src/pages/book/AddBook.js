@@ -59,11 +59,11 @@ const AddBook = () => {
           } else {
             navigate(`/book/${rs.data.id}`)
           }
-          NotificationManager.success("Thêm truyện thành công", "Thành công", 2000)
+          NotificationManager.success("Thêm truyện thành công", "Thành công", 5000)
         }).catch((err) => console.log(err))
       }).catch((err) => console.log(err))
     }).catch((err) => {
-      NotificationManager.error("Thêm truyện không thành công", "Lỗi", 2000)
+      NotificationManager.error("Trùng tên với truyện khác", "Trùng tên", 5000)
       console.log(err)
     })
   }

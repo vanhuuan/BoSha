@@ -72,7 +72,7 @@ export default function BookDetail() {
         userBookService.bookDetail(bookId).then(
             (rs) => {
                 document.title = rs.data.name;
-                firebaseService.gerPreview(bookId, setPreviewText)
+                firebaseService.getPreview(bookId, setPreviewText)
                 setBook(rs.data)
                 bookService.bookStatus(bookId).then((rs) => {
                     console.log("status", rs)

@@ -100,12 +100,18 @@ const UpdateChapter = () => {
                 NotificationManager.success("Cập nhật thành công", name, 1000)
                 navigate(`/book/${data.bookId}`)
             }).catch((err) => console.log(err))
-        }).catch((err) => console.log(err))
+        }).catch((err) =>{ 
+            NotificationManager.error("Trùng tên với tập truyện khác", "Trùng tên", 5000)
+            console.log(err)
+        })
     }
 
     const setChapText = (data) => {
         console.log(data)
         setChap(data)
+        if(chap.length >= 100 && chap.length <= 15000){
+            setOkeChap(true)
+        }
         setIsLoading(false)
     }
 

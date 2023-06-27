@@ -16,50 +16,11 @@ function EditorImage(props) {
 
     const maxLength = "15000"
     const minLength = "100"
-    // const [convertedContent, setConvertedContent] = useState(null);
-
-    const uploadImageCallBack = (file) => {
-        console.log(file)
-        var imgFile = URL.createObjectURL(file)
-        return new Promise(
-            (resolve, reject) => {
-                imgService.checkImg(imgFile).then(() => {
-                    firebaseService.uploadChapterImg(props.chap.bookId, props.chap.chapId, imgFile, (url) => {
-                        resolve(url)
-                    })
-                }).catch(e => {
-                    reject(e)
-                })
-            }
-        );
-    }
-
-    const handleKeyCommand = (command, editorState) => {
-        if (command === 'backspace') {
-            const contentState = editorState.getCurrentContent();
-            const selectionState = editorState.getSelection();
-            const anchorKey = selectionState.getAnchorKey();
-            const currentContentBlock = contentState.getBlockForKey(anchorKey);
-            console.log(currentContentBlock)
-            const type = currentContentBlock.getType();
-            console.log(type)
-            if (type === 'atomic') {
-                const entityKey = currentContentBlock.getEntity();
-                if (entityKey) {
-                    contentState = contentState.deleteEntity(entityKey);
-                }
-            }
-            setEditorState(EditorState.set(editorState, {
-                currentContent: contentState
-            }));
-        }
-    };
 
     useEffect(() => {
         let raw = convertToRaw(editorState.getCurrentContent());
         let html = draftToHtml(raw)
         console.log(html)
-        // setConvertedContent(html);
         sendData(html)
     }, [editorState]);
 
@@ -78,24 +39,10 @@ function EditorImage(props) {
                 <Editor
                     editorState={editorState}
                     onEditorStateChange={setEditorState}
-                    // handleKeyCommand={handleKeyCommand}
                     wrapperClassName="TextEditor"
                     editorClassName="TextEditor"
                     toolbar={{
-                        // options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history', 'image'],
                         options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history']
-                        // image: {
-                        //     urlEnabled: false,
-                        //     uploadEnabled: true,
-                        //     alignmentEnabled: true,
-                        //     uploadCallback: uploadImageCallBack,
-                        //     previewImage: true,
-                        //     inputAccept: 'image/jpeg,image/jpg,image/png',
-                        //     alt: {
-                        //         present: true,
-                        //         mandatory: false
-                        //     }
-                        // }
                     }}
                     editorStyle={{ height: '30em' }}
                     handleBeforeInput={val => {

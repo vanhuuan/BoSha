@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FileInput from '../../components/UploadImg';
-import { Grid, Typography, TextField, Box, Button } from '@mui/material';
+import { Grid, Typography, TextField, Box, Button, LinearProgress } from '@mui/material';
 import RadioPrice from '../../components/RadioPrice';
 import MultipleSelect from '../../components/SelectMulti';
 import { EditorDescription } from '../../components/editor/editor';
@@ -46,6 +46,7 @@ const EditBook = () => {
     const [messageText, setMessageText] = useState("")
     const [titleText, setTitleText] = useState("Sai dữ liêu đầu vào")
     const [open, setOpen] = useState(false)
+    const [okeDesc, setOkeDesc] = useState(false)
     let navigate = useNavigate()
     const location = useLocation();
     const data = location.state;
@@ -61,7 +62,15 @@ const EditBook = () => {
                 setName(rs.data.name)
                 setListCategory(rs.data.category)
                 setState(rs.data.state)
-                firebaseService.gerPreview(id, (rs2) => { setDesc(rs2); setIsLoading(false) })
+                firebaseService.getPreview(id, (rs2) => { 
+                    setDesc(rs2); 
+                    if( rs2.length < 50 || rs2.length > 3000){
+                        setOkeDesc(false)
+                    }else{
+                        setOkeDesc(true)
+                    }
+                    setIsLoading(false) 
+                })
             }
         ).catch((err) => {
             console.log(err)
@@ -80,7 +89,7 @@ const EditBook = () => {
             setOpen(true)
             return;
         }
-        if (desc.length < 50 || desc.length > 3000) {
+        if (!okeDesc) {
             NotificationManager.error(book.name, 'Miêu tả phải chứa từ 50 đến 3000 ký tự', 1000);
             setOpen(true)
             return;
@@ -109,6 +118,7 @@ const EditBook = () => {
                     setIsLoading(false)
                 })
         }).catch((err) => {
+            NotificationManager.error("Trùng tên với truyện khác", "Trùng tên", 5000)
             console.log(err)
         }).finally(() => {
             setIsLoading(false)
@@ -127,6 +137,11 @@ const EditBook = () => {
 
     const callbackDesc = (childData) => {
         setDesc(childData)
+        if( childData.length < 50 || childData.length > 3000){
+            setOkeDesc(false)
+        }else{
+            setOkeDesc(true)
+        }
         setMessageText("")
     }
 
@@ -204,7 +219,7 @@ const EditBook = () => {
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1em 0' }}>
                                 <Button variant="contained" color='success' sx={{ width: '10em' }} onClick={updateBook}>Cập nhật truyện</Button>
                                 <Button variant="contained" color='error' sx={{ width: '10em' }} onClick={(e) => { navigate("/book/" + id) }} >Trở về</Button>
-                            </div> </> : <></>
+                            </div> </> : <LinearProgress></LinearProgress>
                         }
                     </Grid>
                     <Grid item xs={1}>

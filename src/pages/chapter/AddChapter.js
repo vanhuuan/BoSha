@@ -83,7 +83,7 @@ const AddChapter = () => {
                 navigate(`/book/${bookId}`)
             }).catch((err) => console.log(err))
         }).catch((err) => {
-            NotificationManager.error("Lỗi", "Lỗi thêm truyện!", 2000)
+            NotificationManager.error("Trùng tên với truyện khác", "Trùng tên", 5000)
             console.log(err)
         })
     }
