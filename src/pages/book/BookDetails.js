@@ -40,7 +40,8 @@ export default function BookDetail() {
     const [status, setStatus] = useState({
         "buyed": false,
         "liked": false,
-        "canEdit": false
+        "canEdit": false,
+        "price": 0
     })
     const [preview, setPreivew] = useState("")
     const [isLoading, setIsLoading] = useState(true)

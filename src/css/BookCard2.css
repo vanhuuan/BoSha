@@ -46,6 +46,19 @@
     text-align: center;
 }
 
+.bookcard2-group__top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* background-color: rgba(0, 0, 0, 0.5);
+    color: white; */
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    text-align: center;
+}
+
 
 .bookcard2-group__bottom {
     width: 100%;

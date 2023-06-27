@@ -199,7 +199,7 @@ const EditBook = () => {
                                                     >
                                                         <MenuItem value={"Unfinish"}>Chưa hoàn thành</MenuItem>
                                                         <MenuItem value={"Finish"}>Đã hoàn thành</MenuItem>
-                                                        <MenuItem value={"Suspend"}>Tạm dừng</MenuItem>
+                                                        <MenuItem value={"Susspend"}>Tạm dừng</MenuItem>
                                                     </Select>
                                                 </>
                                                 }

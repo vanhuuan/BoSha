@@ -9,6 +9,8 @@ import "../../css/home.css";
 import { userBookService } from '../../services/userBook.services';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NotificationManager } from 'react-notifications';
+import UserBuyBookCard from '../../components/book/UserBuyBookCard';
+import UserLikeBookCard from '../../components/book/UserLikeBookCard';
 
 const LikeBook = () => {
     let navigate = useNavigate()
@@ -140,7 +142,7 @@ const LikeBook = () => {
                                                     stars = item.numOfStar / item.numOfReview
                                                 }
                                                 return <Grid item xs={6} sm={4} md={2}>
-                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
+                                                    <UserBuyBookCard key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                                 </Grid>
                                             })
                                         }

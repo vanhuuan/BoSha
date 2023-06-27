@@ -5,11 +5,19 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import "../../css/BookCard2.css";
 import { useNavigate } from "react-router-dom";
 import { Star } from "@mui/icons-material";
+import abbrNum from "../../services/numberHelper";
+import { bookService } from "../../services/books.services";
 
-const UserBookCard = (props) => {
+const UserBuyBookCard = (props) => {
 
     let navigate = useNavigate()
-    var [state, setState] = useState("Bị chặn")
+    const [status, setStatus] = useState({
+        "buyed": false,
+        "liked": false,
+        "canEdit": false,
+        "price": 0
+    })
+
     const mangaName = (name) => {
         const newName = []
         name.split(' ').forEach(item => {
@@ -19,12 +27,12 @@ const UserBookCard = (props) => {
     }
 
     useEffect(() => {
-        switch(props.manga.state){
-            case "Unfinish": setState("Chưa hoàn thành"); break;
-            case "Finish": setState("Đã hoàn thành"); break;
-            case "Susspend": setState("Tạm dừng"); break;
-            case "Block": setState("Bị chặn"); break;
-        }
+        bookService.bookStatus(props.manga.id).then((rs) => {
+            console.log("status", rs)
+            setStatus(rs.data)
+        }).catch((err) => {
+            console.error("err load status", err)
+        })
     }, [])
 
     const handleChoseBook = (e) => {
@@ -37,7 +45,8 @@ const UserBookCard = (props) => {
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">
-                        {state}
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                    .format(status.price)}
                     </div>
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">
@@ -56,4 +65,4 @@ const UserBookCard = (props) => {
     );
 }
 
-export default UserBookCard;
+export default UserBuyBookCard;

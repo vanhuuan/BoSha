@@ -65,7 +65,8 @@ const Login = () => {
           console.log(searchParams.get("callBack"))
           window.location.replace(searchParams.get("callBack"))
         }
-        navigate("/")
+        // navigate("/")
+        window.location.replace( window.location.origin ,"_self")
       } else {
         NotificationManager.error("Đăng nhập không thành công", "Tên đăng nhập hoặc mật khẩu không đúng!", 2000)
         setNotifyText('Tên đăng nhập hoặc mật khẩu không đúng!')
@@ -91,7 +92,8 @@ const Login = () => {
         localStorage.setItem("Name", login.data.name)
         localStorage.setItem("Roles", login.data.roles)
         localStorage.setItem("Ava", login.data.photo)
-        navigate("/")
+        // navigate("/")
+        window.location.replace(window.location.origin ,"_self")
       } else {
         NotificationManager.error("Đăng nhập không thành công", "Email chưa đăng ký!", 2000)
         setNotifyText('Email chưa đăng ký!')
