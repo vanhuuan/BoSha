@@ -68,7 +68,7 @@ export default function BookDetail() {
         setIsLoading(false)
     }
 
-    useEffect(() => {
+    const fetch = () => {
         setIsLoading(true)
         userBookService.bookDetail(bookId).then(
             (rs) => {
@@ -88,6 +88,10 @@ export default function BookDetail() {
             console.log(err)
             navigate("/NotFound")
         })
+    }
+
+    useEffect(() => {
+        fetch()
     }, [id])
 
     const data = { bookId: book.id, bookName: book.name }
@@ -128,6 +132,7 @@ export default function BookDetail() {
     const [isReviewChange, setIsReviewChange] = useState(true)
 
     const onChangeReview = () => {
+        fetch()
         setIsReviewChange(!isReviewChange)
     }
 

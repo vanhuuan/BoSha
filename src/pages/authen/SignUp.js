@@ -126,7 +126,7 @@ const SignUp = () => {
       NotificationManager.error("Lỗi định dạng mật khẩu", "Lỗi định dạng", 5000)
       return
     }
-    if (userName.toString().trim().length < 5 || userName.toString().trim().length() > 30) {
+    if (userName.toString().trim().length < 5 || userName.toString().trim().length > 30) {
       NotificationManager.error("Tên phải từ 5 đến 30 ký tự", "Lỗi định dạng", 5000)
       return
     }
