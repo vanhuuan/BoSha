@@ -154,7 +154,7 @@ const Home = () => {
           <div className='col-10'>
             <div className='row no-gutter container-book' style={{ padding: "10px", margin: "20px 0", overflow: `hidden` }}>
               <div className='header-slider'>
-                <h1 className='title' style={{ textAlign: 'left', fontSize: "20px", lineHeight: "24px" }}>TRUYỆN HOT</h1>
+                <h1 className='title' style={{ textAlign: 'left', fontSize: "20px", lineHeight: "24px" }}>TRUYỆN HOT TRONG TUẦN</h1>
                 <div className='progress-bar'></div>
               </div>
               <div className='container-book-hot' style={{ padding: 0 }}>
@@ -191,7 +191,7 @@ const Home = () => {
           <div className='col-1'></div>
           <div className='col-10' style={{ marginRight: 0 }}>
             <div className='row no-gutter d-flex flex-row'>
-              <h1 className='title' style={{ textAlign: 'left' }}>TRUYỆN MỚI NHẤT</h1>
+              <h1 className='title' style={{ textAlign: 'left' }}>TRUYỆN MỚI CẬP NHẬT</h1>
             </div>
             <div>
               <InfiniteScroll

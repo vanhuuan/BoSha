@@ -256,7 +256,7 @@ const BuyBook = () => {
             if (localStorage.getItem("AccessToken")) {
                 navigate(-1)
             } else {
-                navigate("/login")
+                navigate("/logIn")
             }
 
         })

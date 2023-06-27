@@ -17,7 +17,7 @@ const BookInfo = (props) => {
             </Typography>
             <Typography style={{marginBottom: `0.5em`}}>
                 <span style={{ fontWeight: '600', width: '8em', display: 'inline-block' }}>Tình trạng: </span>
-                <span>{book.state === "Unfinish" ? "Chưa Hoàn thành" : "Đã hoàn thành"}</span>
+                <span>{book.state === "Unfinish" ? "Chưa Hoàn thành" : book.state === "Suspend" ? "Tạm dừng" : "Đã hoàn thành"}</span>
             </Typography>
         </>
     );
