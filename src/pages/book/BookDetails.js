@@ -133,6 +133,8 @@ export default function BookDetail() {
 
     const onChangeReview = () => {
         fetch()
+        var element = document.getElementById("review");
+        element.scrollIntoView();
         setIsReviewChange(!isReviewChange)
     }
 
