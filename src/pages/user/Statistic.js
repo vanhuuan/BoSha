@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Income from "../../components/chart/income";
 import { useState } from "react";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { BarChart, CalendarMonth, Person} from "@mui/icons-material";
+import { BarChart, CalendarMonth, Person } from "@mui/icons-material";
 import abbrNum from "../../services/numberHelper";
 import { useEffect } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
@@ -240,7 +240,7 @@ export default function UserStatistic() {
                             <Typography onClick={(e) => { navigate("/user/userInfo") }} sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }} ><Person /> Thông tin tài khoản </Typography>
                             <Typography sx={{ typography: { md: 'h5', sm: 'h10' }, cursor: "pointer" }} >Thống kê truyện <BarChart color="primary" /> </Typography>
                         </div>
-                        <Grid sx={{ padding: "0em 1em"}} container spacing={3}>
+                        <Grid sx={{ padding: "0em 1em" }} container spacing={3}>
                             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <div style={{ display: "flex" }}>
                                     <Typography>Khoảng thời gian thống kê từ </Typography>
@@ -393,7 +393,7 @@ export default function UserStatistic() {
                                                             <StyledTableCell align="left">{row.name.toLocaleString('vi-VN')}</StyledTableCell>
                                                             <StyledTableCell align="right">{row.numOfView.toLocaleString('vi-VN')}</StyledTableCell>
                                                             <StyledTableCell align="right">{row.revenue.toLocaleString('vi-VN')}</StyledTableCell>
-                                                            <StyledTableCell align="right">{row.star.toLocaleString('vi-VN')}</StyledTableCell>
+                                                            <StyledTableCell align="right">{(Math.round(row.star * 10) / 10).toLocaleString('vi-VN')}</StyledTableCell>
                                                             <StyledTableCell align="right">{row.numOfReview.toLocaleString('vi-VN')}</StyledTableCell>
                                                             <StyledTableCell align="right">{row.numOfChapter.toLocaleString('vi-VN')}</StyledTableCell>
                                                         </StyledTableRow>

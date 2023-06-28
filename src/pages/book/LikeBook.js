@@ -120,6 +120,7 @@ const LikeBook = () => {
                                                 var stars = 0;
                                                 if (item.numOfReview !== 0) {
                                                     stars = item.numOfStar / item.numOfReview
+                                                    stars = Math.round(stars * 10) / 10
                                                 }
                                                 return <Grid item xs={6} sm={4} md={2}>
                                                     <UserLikeBookCard key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
@@ -140,6 +141,7 @@ const LikeBook = () => {
                                                 var stars = 0;
                                                 if (item.numOfReview !== 0) {
                                                     stars = item.numOfStar / item.numOfReview
+                                                    stars = Math.round(stars * 10) / 10
                                                 }
                                                 return <Grid item xs={6} sm={4} md={2}>
                                                     <UserBuyBookCard key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />

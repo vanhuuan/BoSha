@@ -71,6 +71,7 @@ const UserBook = () => {
                                             var stars = 0;
                                             if (item.numOfReview !== 0) {
                                                 stars = item.numOfStar / item.numOfReview
+                                                stars = Math.round(stars * 10) / 10
                                             }
                                             return <Grid item xs={6} sm={4} md={2}>
                                                 <UserBookCard key={index} manga={{ state: item.state, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
