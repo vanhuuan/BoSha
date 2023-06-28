@@ -73,7 +73,7 @@ export default function EditUser() {
     }
 
     function isVietnamesePhoneNumberValid(number) {
-        return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number);
+        return /^(0|\+84)(3[2-9]|5[2689]|7[0-9]|8[1-689]|9[0-9])[0-9]{7}$/.test(number);
     }
 
     const validName = (name) => {
