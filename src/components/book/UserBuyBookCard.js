@@ -41,7 +41,7 @@ const UserBuyBookCard = (props) => {
 
     return (
         <>
-            <div class="bookcard2-group" onClick={handleChoseBook}>
+            <div class="bookcard2-group" onClick={handleChoseBook} style={{ transform: `scale(1)` }}>
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">

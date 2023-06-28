@@ -11,12 +11,12 @@ import { bookService } from "../../services/books.services";
 const UserLikeBookCard = (props) => {
 
     let navigate = useNavigate()
-    const [status, setStatus] = useState({
-        "buyed": false,
-        "liked": false,
-        "canEdit": false,
-        "price": 0
-    })
+    // const [status, setStatus] = useState({
+    //     "buyed": false,
+    //     "liked": false,
+    //     "canEdit": false,
+    //     "price": 0
+    // })
 
     const mangaName = (name) => {
         const newName = []
@@ -27,12 +27,12 @@ const UserLikeBookCard = (props) => {
     }
 
     useEffect(() => {
-        bookService.bookStatus(props.manga.id).then((rs) => {
-            console.log("status", rs)
-            setStatus(rs.data)
-        }).catch((err) => {
-            console.error("err load status", err)
-        })
+        // bookService.bookStatus(props.manga.id).then((rs) => {
+        //     console.log("status", rs)
+        //     setStatus(rs.data)
+        // }).catch((err) => {
+        //     console.error("err load status", err)
+        // })
     }, [])
 
     const handleChoseBook = (e) => {
@@ -41,11 +41,14 @@ const UserLikeBookCard = (props) => {
 
     return (
         <>
-            <div class="bookcard2-group" onClick={handleChoseBook}>
+            <div class="bookcard2-group" onClick={handleChoseBook} style={{ transform: `scale(1)` }}>
                 <Link className="bookcard2-group__container">
                     <img className="bookcard2-group__img" src={`${props.manga.image}`}></img>
                     <div className="bookcard2-group__top-left">
-                        {status.liked === true? <FavoriteIcon/> : <></>}
+                        Tập {props.manga.index}
+                    </div> 
+                    <div className="bookcard2-group__top-right">
+                        <FavoriteIcon sx={{ color: "#d62f51"}}/>
                     </div>
                     <div className="bookcard2-group__bottom from-transparent">
                         <div className="bookcard2-group__bottom-quantity">

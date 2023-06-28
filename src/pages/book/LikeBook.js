@@ -122,7 +122,7 @@ const LikeBook = () => {
                                                     stars = item.numOfStar / item.numOfReview
                                                 }
                                                 return <Grid item xs={6} sm={4} md={2}>
-                                                    <BookCard2 key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
+                                                    <UserLikeBookCard key={index} manga={{ index: item.lastestChapIndex, name: item.name, id: item.id, image: item.cover, star: stars, view: item.numOfView }} />
                                                 </Grid>
                                             })
                                         }
