@@ -246,7 +246,7 @@ const BuyBook = () => {
         buyBookService.checkOut(bookId).then((rs) => {
             console.log(rs)
             setCheckoutInfo(rs.data)
-            document.title = "Mua sách " + rs.data.bookName
+            document.title = "Mua truyện " + rs.data.bookName
             if (rs.data.buyLink) {
                 window.open(rs.data.buyLink, '_top', 'noopener,noreferrer');
             }
@@ -317,13 +317,13 @@ const BuyBook = () => {
                                                         aria-controls={open ? 'demo-customized-menu' : undefined}
                                                         aria-haspopup="true"
                                                         aria-expanded={open ? 'true' : undefined}
-                                                        variant="contained"
                                                         disableElevation
                                                         onClick={handleClick}
                                                         endIcon={<KeyboardArrowDownIcon />}
+                                                        sx={{ backgroundColor: "transparent", minWidth: 180, color: 'black', boxShadow: 1}}
                                                     >
-                                                        <PaymentOutlined />
-                                                        {paymentMethod}
+                                                        { paymentMethod === "VnPay"? <VnPayLogo/> : <PaymentOutlined />}
+                                                        <span style={{ marginLeft: "1em"}}>{paymentMethod}</span>
                                                     </Button>
                                                     <StyledMenu
                                                         id="demo-customized-menu"
