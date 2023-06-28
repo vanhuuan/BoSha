@@ -121,7 +121,7 @@ export default function SearchBook() {
 
     const fetchData = () => {
         console.log("Load more", pageNumber + 1)
-        bookService.findBook(pageNumber, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
+        bookService.findBook(pageNumber+1, 12, searchInput, category, state, range[0], range[1], sortBy).then((rs) => {
             console.log("data new", rs.data.data);
             setData(old => old.concat(rs.data.data))
             setMangaList(rs.data)
