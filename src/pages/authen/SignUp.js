@@ -59,6 +59,30 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
+function removeAccents(str) {
+  var AccentsMap = [
+    "aàảãáạăằẳẵắặâầẩẫấậ",
+    "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+    "dđ", "DĐ",
+    "eèẻẽéẹêềểễếệ",
+    "EÈẺẼÉẸÊỀỂỄẾỆ",
+    "iìỉĩíị",
+    "IÌỈĨÍỊ",
+    "oòỏõóọôồổỗốộơờởỡớợ",
+    "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+    "uùủũúụưừửữứự",
+    "UÙỦŨÚỤƯỪỬỮỨỰ",
+    "yỳỷỹýỵ",
+    "YỲỶỸÝỴ"
+  ];
+  for (var i = 0; i < AccentsMap.length; i++) {
+    var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+    var char = AccentsMap[i][0];
+    str = str.replace(re, char);
+  }
+  return str;
+}
+
 const SignUp = () => {
   let navigate = useNavigate()
 
@@ -131,11 +155,11 @@ const SignUp = () => {
       return
     }
 
-    if(!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(userName.toString())){
+    if (!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(removeAccents(userName.toString()))) {
       NotificationManager.error("Tên không hợp lệ", "Lỗi định dạng", 5000)
       return
     }
-    
+
     try {
       const login = await authService.register(account);
       if (login.status >= 200 && login.status < 300) {
@@ -147,7 +171,11 @@ const SignUp = () => {
         setNotifyText('Email đã tồn tại!!')
       }
     } catch (error) {
-      NotificationManager.error("Có lỗi xảy ra", "Lỗi đã xảy ra", 5000)
+      if (error.response.data === "Trung Email") {
+        NotificationManager.error("Tài khoản đã tồn tại", "Lỗi đã xảy ra", 5000)
+      } else {
+        NotificationManager.error("Có lỗi xảy ra", "Lỗi đã xảy ra", 5000)
+      }
       console.log(error.response.data)
     }
   }

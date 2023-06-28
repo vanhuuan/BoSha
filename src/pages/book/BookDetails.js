@@ -133,8 +133,6 @@ export default function BookDetail() {
 
     const onChangeReview = () => {
         fetch()
-        var element = document.getElementById("review");
-        element.scrollIntoView();
         setIsReviewChange(!isReviewChange)
     }
 
@@ -200,7 +198,7 @@ export default function BookDetail() {
                                                     <Grid item sm={3} xs={3}>
                                                         <div className='info-item'>
                                                             <div><StarBorderOutlined style={{ color: "#faaf00" }} /></div>
-                                                            <div><b>{book.numOfReview !== 0 ? book.numOfStar / (book.numOfReview) : book.numOfStar / (book.numOfReview + 1)}</b></div>
+                                                            <div><b>{Math.round((book.numOfReview !== 0 ? book.numOfStar / (book.numOfReview) : book.numOfStar / (book.numOfReview + 1)) * 10) / 10}</b></div>
                                                         </div>
                                                     </Grid>
                                                     <Grid item sm={3} xs={3}>

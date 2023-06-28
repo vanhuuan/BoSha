@@ -10,6 +10,30 @@ import { firebaseService } from "../../services/firebase.services";
 import "../../css/edituser.css"
 import { imgService } from "../../services/image.services";
 
+function removeAccents(str) {
+    var AccentsMap = [
+        "aàảãáạăằẳẵắặâầẩẫấậ",
+        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+        "dđ", "DĐ",
+        "eèẻẽéẹêềểễếệ",
+        "EÈẺẼÉẸÊỀỂỄẾỆ",
+        "iìỉĩíị",
+        "IÌỈĨÍỊ",
+        "oòỏõóọôồổỗốộơờởỡớợ",
+        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+        "uùủũúụưừửữứự",
+        "UÙỦŨÚỤƯỪỬỮỨỰ",
+        "yỳỷỹýỵ",
+        "YỲỶỸÝỴ"
+    ];
+    for (var i = 0; i < AccentsMap.length; i++) {
+        var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+        var char = AccentsMap[i][0];
+        str = str.replace(re, char);
+    }
+    return str;
+}
+
 export default function EditUser() {
     const [userInfo, setUserInfo] = useState({
         "id": "64524e67c851f42527dd44e0",
@@ -82,10 +106,10 @@ export default function EditUser() {
             NotificationManager.error("Tên", 'không đúng định dạng', 5000);
             return
         }
-        if(!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(userInfo.name)){
+        if (!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(removeAccents(userInfo.name))) {
             NotificationManager.error("Tên không hợp lệ", "Lỗi định dạng", 5000)
             return
-          }
+        }
         console.log(userInfo.phone)
         if (!isVietnamesePhoneNumberValid(userInfo.phone)) {
             NotificationManager.error("Số điện thoại", 'không đúng định dạng', 5000);
