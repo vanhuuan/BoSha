@@ -134,7 +134,7 @@ function DescriptionImage({ bookId, status }) {
                                 >
                                     <div class="text">&#8249;</div>
                                 </button>
-                                : <></>}
+                                : <></> }
                             <div class="slider">
                                 {imgs.map(p => (
                                     <span style={{ margin: "1em" }}>
@@ -301,13 +301,11 @@ function DescriptionImageEdit({ bookId }) {
                         <div className='progress-bar'></div>
                     </div>
                     <div className='container-book-hot' style={{ padding: 0 }}>
-                        {imgs.length > 8 ?
-                            <button class="handle left-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickLeft()}
-                            >
-                                <div class="text">&#8249;</div>
-                            </button>
-                            : <></>}
+                        <button class="handle left-handle" style={{ padding: 0 }}
+                            onClick={() => onHandleClickLeft()}
+                        >
+                            <div class="text">&#8249;</div>
+                        </button>
                         <div class="slider">
                             {imgs.map(p => (
                                 <span style={{ margin: "1em", position: "relative" }}>
@@ -326,13 +324,11 @@ function DescriptionImageEdit({ bookId }) {
                                 <img style={{ aspectRatio: '1/1', width: '6em' }} src={addimg} alt="Thêm ảnh mới" />
                             </span>
                         </div>
-                        {imgs.length > 8 ?
-                            <button class="handle right-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickRight()}
-                            >
-                                <div class="text">&#8250;</div>
-                            </button>
-                            : <></>}
+                        <button class="handle right-handle" style={{ padding: 0 }}
+                            onClick={() => onHandleClickRight()}
+                        >
+                            <div class="text">&#8250;</div>
+                        </button>
                     </div>
 
                 </div>
@@ -470,13 +466,11 @@ function DescriptionImageCreate({ sendData }) {
                         <div className='progress-bar'></div>
                     </div>
                     <div className='container-book-hot' style={{ padding: 0 }}>
-                        {imgs.length > 8 ?
-                            <button class="handle left-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickLeft()}
-                            >
-                                <div class="text">&#8249;</div>
-                            </button>
-                            : <></>}
+                        <button class="handle left-handle" style={{ padding: 0 }}
+                            onClick={() => onHandleClickLeft()}
+                        >
+                            <div class="text">&#8249;</div>
+                        </button>
                         <div class="slider">
                             {imgs.map(p => (
                                 <span style={{ margin: "1em", position: "relative" }}>
@@ -495,13 +489,11 @@ function DescriptionImageCreate({ sendData }) {
                                 <img style={{ aspectRatio: '1/1', width: '6em' }} src={addimg} alt="Thêm ảnh mới" />
                             </span>
                         </div>
-                        {imgs.length > 8 ?
-                            <button class="handle right-handle" style={{ padding: 0 }}
-                                onClick={() => onHandleClickRight()}
-                            >
-                                <div class="text">&#8250;</div>
-                            </button>
-                            : <></>}
+                        <button class="handle right-handle" style={{ padding: 0 }}
+                            onClick={() => onHandleClickRight()}
+                        >
+                            <div class="text">&#8250;</div>
+                        </button>
                     </div>
 
                 </div>
