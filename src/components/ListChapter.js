@@ -66,6 +66,7 @@ export default function ListChapter(props) {
     }
   });
 
+  
 
   React.useEffect(() => {
     load()
@@ -102,8 +103,12 @@ export default function ListChapter(props) {
 
             >
               <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
-                if (canBuyed || value.isDemo || canEdit)
+                if (canBuyed || value.isDemo || canEdit){
                   navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+                }else{
+                  const data = { bookId: book.id, bookName: book.name }
+                  navigate("/BuyBook", { state: data })
+                }
               }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>

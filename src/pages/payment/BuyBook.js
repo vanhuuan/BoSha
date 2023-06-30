@@ -256,7 +256,12 @@ const BuyBook = () => {
             if (localStorage.getItem("AccessToken")) {
                 navigate(-1)
             } else {
-                navigate("/logIn")
+                navigate(
+                    {
+                        pathname: '/login',
+                        search: '?callBack=' + window.location.hostname + "/book/" + bookId,
+                    }
+                )
             }
 
         })
