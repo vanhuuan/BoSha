@@ -89,7 +89,7 @@ const CommentList = forwardRef((props, ref) => {
                 ))}
                 {total > 10 ?
                     <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
-                    : <></>}
+                    : <> Chưa có bình luận nào</>}
             </> :
                 <CircularProgress></CircularProgress>
             }

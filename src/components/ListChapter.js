@@ -106,7 +106,7 @@ export default function ListChapter(props) {
                 if (canBuyed || value.isDemo || canEdit){
                   navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
                 }else{
-                  const data = { bookId: book.id, bookName: book.name }
+                  const data = { bookId: props.book.id, bookName: props.book.name }
                   navigate("/BuyBook", { state: data })
                 }
               }}>
@@ -144,8 +144,12 @@ export default function ListChapter(props) {
               className='chapter-item'
             >
               <ListItemButton className='list_Item_Button' role={undefined} dense onClick={(e) => {
-                if (canBuyed || value.isDemo || canEdit)
+                if (canBuyed || value.isDemo || canEdit){
                   navigate(`/chapter/${props.book.name.replaceAll(" ", "-")}-${props.book.id}/${value.chapterName.replaceAll(" ", "-")}-${value.chapterId}`)
+                }else{
+                  const data = { bookId: props.book.id, bookName: props.book.name }
+                  navigate("/BuyBook", { state: data })
+                }
               }}>
                 <ListItemText id={labelId} primary={`${value.chapterNumber} - ${value.chapterName}`} />
               </ListItemButton>

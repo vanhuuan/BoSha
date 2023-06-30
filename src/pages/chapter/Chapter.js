@@ -132,8 +132,8 @@ const Chapter = () => {
                         {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                             <div>
                                 <Comment chap={{ chapId: chapterId }} onUpdate={changeComment}></Comment>
-                                <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList>
                             </div> : <> </>}
+                            <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList>
                     </>
                         : <LinearProgress />
                     }
