@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef } from "react";
-import { CircularProgress, Pagination } from "@mui/material";
+import { CircularProgress, Pagination, Typography } from "@mui/material";
 import { Avatar, Grid, Paper } from "@mui/material";
 
 import "../css/CommentList.css";
@@ -63,7 +63,7 @@ const CommentList = forwardRef((props, ref) => {
 
     return (
         <div style={{ padding: 14 }} className="App" ref={ref}>
-            <h1>Bình luận</h1>
+            {commentsList.length === 0 ? <Typography variant="caption">Chưa có bình luận nào </Typography> : <h1>Bình luận</h1> }
             {isLoading === false ? <>
                 {commentsList.map((item, index) => (
                     <Paper style={{ padding: "40px 20px", backgroundColor: "#F9F9F9" }}>
@@ -89,7 +89,7 @@ const CommentList = forwardRef((props, ref) => {
                 ))}
                 {total > 10 ?
                     <Pagination count={total / 10 + 1} page={page + 1} sx={{ marginTop: '2em' }} onChange={handleChange} />
-                    : <> Chưa có bình luận nào</>}
+                    : <></>}
             </> :
                 <CircularProgress></CircularProgress>
             }
