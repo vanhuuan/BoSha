@@ -255,7 +255,7 @@ function Header() {
                                 <input
                                     className='header__toolbar-search-input'
                                     type="text"
-                                    placeholder="Tìm kiếm sách"
+                                    placeholder="Tìm kiếm truyện"
                                     onChange={(e) => search(e.target.value)}
                                     onBlur={() => setIsLoading(true)}
                                 />
