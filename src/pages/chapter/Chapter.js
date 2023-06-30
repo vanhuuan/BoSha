@@ -97,7 +97,7 @@ const Chapter = () => {
                     setIsLoading(false)
                     console.error(e)
                 })
-                
+
             }
         ).catch((err) => {
             console.log(err)
@@ -125,16 +125,17 @@ const Chapter = () => {
                             {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
                                 <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
                                 : <IconButton sx={{ color: "#4F709C" }} onClick={buyBook}>
-                                    <LockPerson style={{ marginLeft: "1em"}} /> Hãy mua truyện này.
+                                    <LockPerson style={{ marginLeft: "1em" }} /> Hãy mua truyện này.
                                 </IconButton>
                             }
                         </div>
-
-                        <Comment chap={{ chapId: chapterId }} onUpdate={changeComment}></Comment>
-                        <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList> </> :
-                        <>
-                            <LinearProgress />
-                        </>
+                        {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
+                            <div>
+                                <Comment chap={{ chapId: chapterId }} onUpdate={changeComment}></Comment>
+                                <CommentList chap={{ chapId: chapterId }} ref={resultRef} isLoad={isFetchComment}></CommentList>
+                            </div> : <> </>}
+                    </>
+                        : <LinearProgress />
                     }
                 </Grid>
                 <Grid item xs={1}></Grid>

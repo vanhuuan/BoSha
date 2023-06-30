@@ -257,7 +257,7 @@ export default function BookDetail() {
                                     </div>
                                 </div>
                                 <div id='review'>
-                                    {book.price === 0 || status.buyed === true ?
+                                    {(book.price === 0 || status.buyed === true ) && isLogin === true ?
                                         <Review book={{ bookId: bookId }} onChange={onChangeReview}></Review>
                                         : <></>}
                                     <ReviewList book={{ bookId: bookId }} isLoad={isReviewChange}></ReviewList>

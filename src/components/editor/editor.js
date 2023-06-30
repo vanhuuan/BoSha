@@ -6,8 +6,6 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
-import { imgService } from '../../services/image.services';
-import { firebaseService } from '../../services/firebase.services';
 
 
 function EditorImage(props) {

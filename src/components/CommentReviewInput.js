@@ -375,7 +375,7 @@ function Review(props) {
 
     return (
         <FormControl>
-            <FormLabel>Đánh giá của bạn cho bộ sách này</FormLabel>
+            <FormLabel>Đánh giá của bạn cho bộ truyện này</FormLabel>
             {isReviewed === false ?
                 <Textarea
                     minRows={3}
