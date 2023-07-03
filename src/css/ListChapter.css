@@ -9,3 +9,9 @@
         max-width: 200px;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .chapter-item-time {
+        display: none;
+    }
+}

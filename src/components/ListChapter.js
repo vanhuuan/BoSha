@@ -93,7 +93,7 @@ export default function ListChapter(props) {
                       }
                       navigate(`/chapter/updateChapter`, { state: data })
                     }}> <BorderColorIcon /> </IconButton> : <> {
-                      canBuyed || value.isDemo ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
+                      canBuyed || value.isDemo ? <ListItemText className='chapter-item-time' primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                     }</>
                   }
                 </div>
@@ -126,7 +126,7 @@ export default function ListChapter(props) {
               secondaryAction={
                 <div style={{ display: "flex" }}>
                   {
-                    canBuyed || value.isDemo || canEdit ? <ListItemText primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
+                    canBuyed || value.isDemo || canEdit ? <ListItemText className='chapter-item-time' primary={a} sx={{ marginLeft: "0.5em" }} /> : <LockPersonIcon></LockPersonIcon>
                   }
                   {
                     canEdit === true ? <IconButton color='primary' onClick={(e) => {
