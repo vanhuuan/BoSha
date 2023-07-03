@@ -10,6 +10,7 @@ import { Comment } from "../../components/CommentReviewInput";
 import { useNavigate } from "react-router-dom";
 import { bookService } from "../../services/books.services";
 import { LockPerson } from "@mui/icons-material";
+import "../../css/Chapter.css"
 
 const data = {
     "bookId": "643657ac8e27bd8b11654e30",
@@ -123,7 +124,7 @@ const Chapter = () => {
                             <Typography>{`Dài ${chap.replace(/(<([^>]+)>)/ig, '').trim().split(/\s+/).length} ký tự, cập nhật ${dateUpdate}`}</Typography>
                             <ChapterNav chapter={{ book: chapterDetail.bookId, chap: chapterId }} parentCallback={changeChapter} resultRef={resultRef}></ChapterNav>
                             {status.buyed === true || status.canEdit === true || chapterDetail.isDemo === true ?
-                                <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: chap }} style={{ textAlign: "left" }} className="chapter-inner"></div>
                                 : <IconButton sx={{ color: "#4F709C" }} onClick={buyBook}>
                                     <LockPerson style={{ marginLeft: "1em" }} /> Hãy mua truyện này.
                                 </IconButton>
