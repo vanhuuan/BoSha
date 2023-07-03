@@ -109,7 +109,8 @@ const UpdateChapter = () => {
     const setChapText = (data) => {
         console.log(data)
         setChap(data)
-        if(chap.length >= 100 && chap.length <= 15000){
+        if(data.length >= 100 && data.length <= 15000){
+            console.log("SET OKE")
             setOkeChap(true)
         }
         setIsLoading(false)
