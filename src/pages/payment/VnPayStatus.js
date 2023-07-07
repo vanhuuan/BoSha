@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { buyBookService } from '../../services/buybook.services';
-import { Box, Grid, LinearProgress, Typography } from '@mui/material';
+import { Box, Button, Grid, LinearProgress, Typography } from '@mui/material';
 import { NotificationManager } from 'react-notifications';
 
 const VnpayStatus = () => {
@@ -29,7 +29,7 @@ const VnpayStatus = () => {
                     console.log("Payment ok")
                 }, 2000)
 
-                navigate("/book/" + rs.data.bookId)
+                // navigate("/book/" + rs.data.bookId)
             } else if (rs.data.status === "Faild") {
                 setRs("Thất bại")
                 NotificationManager.error("Thanh toán không thành công", "Giao dịch không thành công", 2000)
@@ -38,7 +38,7 @@ const VnpayStatus = () => {
                     console.log("Payment notOk")
                 }, 2000)
 
-                navigate("/book/" + rs.data.bookId)
+                // navigate("/book/" + rs.data.bookId)
             } else {
                 setTimeout(() => {
                     setRetryCount(retry_count + 1)
@@ -48,6 +48,7 @@ const VnpayStatus = () => {
         }).catch((e) => {
             console.log("Loi roi", e)
             NotificationManager.error("Có lỗi trong quá trình kiểm tra giao dịch", "Giao dịch không thành công", 2000)
+            setIsLoading(false)
             // navigate("/")
         })
     }, [retry_count]);
@@ -59,14 +60,21 @@ const VnpayStatus = () => {
                 <Grid xs={8}>
                     {isLoading === false ? <>
                         {rs === "Thành công" ?
-                            <Alert severity="success">
+                            <Alert severity="success" sx={{ fontSize: '1.5rem', padding: "1rem" }}>
                                 <AlertTitle><strong>Thanh toán thành công</strong></AlertTitle>
                                 Hãy quay lại ứng dụng!
                             </Alert>
-                            : <Alert severity="error">
+                            : <Alert severity="error" sx={{ fontSize: '1.5rem', padding: "1rem" }}>
                                 <AlertTitle><strong>Thanh toán thất bại</strong></AlertTitle>
                                 Hãy quay lại ứng dụng!
                             </Alert>}
+                            <Button
+                            onClick={() => {
+                                navigate("/book/" + rs.data.bookId)
+                            }}
+                            sx={{ color: "#4F709C"}}>
+                                    Trở về trang truyện
+                                </Button>
                     </>
                         : <div>                    
                             <Typography variant='h5'>Đang kiểm tra tình trạng thanh toán, hãy chờ trong giây lát!</Typography>
