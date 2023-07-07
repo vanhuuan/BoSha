@@ -5,8 +5,9 @@ import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { buyBookService } from '../../services/buybook.services';
-import { Box, Button, Grid, LinearProgress, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, LinearProgress, Typography } from '@mui/material';
 import { NotificationManager } from 'react-notifications';
+import { ArrowBack } from '@mui/icons-material';
 
 const VnpayStatus = () => {
     const [searchParams] = useSearchParams();
@@ -44,6 +45,7 @@ const VnpayStatus = () => {
             } else {
                 setTimeout(() => {
                     setRetryCount(retry_count + 1)
+                    setIsLoading(true)
                 }, 5000)
 
             }
@@ -63,14 +65,14 @@ const VnpayStatus = () => {
                     {isLoading === false ? <>
                         {rs === "Thành công" ?
                             <Alert severity="success" sx={{ fontSize: '1.5rem', padding: "1rem" }}>
-                                <AlertTitle><strong>Thanh toán thành công</strong></AlertTitle>
+                                <AlertTitle sx={{ fontSize: '2rem' }}><strong>Thanh toán thành công</strong></AlertTitle>
                                 Hãy quay lại ứng dụng!
                             </Alert>
                             : <Alert severity="error" sx={{ fontSize: '1.5rem', padding: "1rem" }}>
-                                <AlertTitle><strong>Thanh toán thất bại</strong></AlertTitle>
+                                <AlertTitle sx={{ fontSize: '2rem' }}><strong>Thanh toán thất bại</strong></AlertTitle>
                                 Hãy quay lại ứng dụng!
                             </Alert>}
-                            <Button
+                            <IconButton
                             onClick={() => {
                                 if(bookId === ""){
                                     navigate("/")
@@ -79,8 +81,9 @@ const VnpayStatus = () => {
                                 }
                             }}
                             sx={{ color: "#4F709C"}}>
+                                <ArrowBack/>
                                     Trở về trang truyện
-                                </Button>
+                                </IconButton>
                     </>
                         : <div>                    
                             <Typography variant='h5'>Đang kiểm tra tình trạng thanh toán, hãy chờ trong giây lát!</Typography>
