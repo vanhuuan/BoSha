@@ -13,6 +13,7 @@ const VnpayStatus = () => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [rs, setRs] = useState("")
     const [retry_count, setRetryCount] = useState(0);
+    const [bookId, setBookId] = useState("")
 
     let navigate = useNavigate()
     useEffect(() => {
@@ -20,6 +21,9 @@ const VnpayStatus = () => {
         const buyId = searchParams.get('vnp_TxnRef')
         console.log("BuyId", buyId)
         buyBookService.getBuyBookStatus(buyId).then((rs) => {
+            if(rs.data.bookId){
+                setBookId(rs.data.bookId)
+            }
             console.log(rs)
             if (rs.data.status === "Suscess") {
                 setRs("Thành công")
@@ -28,7 +32,6 @@ const VnpayStatus = () => {
                 setTimeout(() => {
                     console.log("Payment ok")
                 }, 2000)
-
                 // navigate("/book/" + rs.data.bookId)
             } else if (rs.data.status === "Faild") {
                 setRs("Thất bại")
@@ -37,7 +40,6 @@ const VnpayStatus = () => {
                 setTimeout(() => {
                     console.log("Payment notOk")
                 }, 2000)
-
                 // navigate("/book/" + rs.data.bookId)
             } else {
                 setTimeout(() => {
@@ -70,7 +72,11 @@ const VnpayStatus = () => {
                             </Alert>}
                             <Button
                             onClick={() => {
-                                navigate("/book/" + rs.data.bookId)
+                                if(bookId === ""){
+                                    navigate("/")
+                                }else {
+                                    navigate("/book/" + bookId)
+                                }
                             }}
                             sx={{ color: "#4F709C"}}>
                                     Trở về trang truyện
