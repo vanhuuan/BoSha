@@ -10,6 +10,9 @@ import { firebaseService } from "../../services/firebase.services";
 import "../../css/edituser.css"
 import { imgService } from "../../services/image.services";
 
+const MIN_FILE_SIZE = 100 // 100Kb
+const MAX_FILE_SIZE = 6144 // 6MB
+
 function removeAccents(str) {
     var AccentsMap = [
         "aàảãáạăằẳẵắặâầẩẫấậ",
@@ -168,6 +171,25 @@ export default function EditUser() {
                                                         return
                                                     }
                                                     if (e.target.files[0]) {
+                                                        if (!e.target.files[0]) {
+                                                            NotificationManager.error("Không đúng định dạng", "Không đúng định dạng ảnh", 2000)
+                                                            return false;
+                                                        }
+                                                        if (!e.target.files[0].name.toLowerCase().match(/\.(jpg|jpeg|png)$/)) {
+                                                            NotificationManager.error("Chỉ nhận file .jpg, .jpeg, .png", "Không đúng định dạng ảnh", 2000)
+                                                            return false;
+                                                        }
+                                            
+                                                        const fileSizeKiloBytes = e.target.files[0].size / 1024
+                                            
+                                                        if (fileSizeKiloBytes < MIN_FILE_SIZE) {
+                                                            NotificationManager.error("File quá nhỏ, không đảm bảo độ phân giải", "Tối thiểu là 100 Kb", 2000);
+                                                            return
+                                                        }
+                                                        if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+                                                            NotificationManager.error("File quá lớn", "Tối đa là 6 Mb", 2000);
+                                                            return
+                                                        }
                                                         setIsUploading(true)
                                                         imgService.checkImg(e.target.files[0]).then((rs) => {
                                                             if (rs.data.status === "Oke") {
