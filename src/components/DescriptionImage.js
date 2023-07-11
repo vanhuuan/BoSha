@@ -446,13 +446,8 @@ function DescriptionImageCreate({ sendData }) {
 
     const onDeleteDescImg = async (img) => {
         if (await confirm("Bạn có chắc muốn xóa ảnh này chứ")) {
-            setIsDisa(true);
-            firebaseService.deleteDescImg(img, (u) => {
-                setImgs(imgs.filter(x => x.url !== u))
-                NotificationManager.success("Xóa ảnh thành công", "Thành công", 2000)
-            }).finally(() => {
-                setIsDisa(false);
-            })
+            setImgs(imgs.filter(x => x !== img))
+            NotificationManager.success("Xóa ảnh thành công", "Thành công", 2000)
         }
     }
 
