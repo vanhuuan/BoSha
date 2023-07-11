@@ -48,6 +48,8 @@ function Header() {
                     setData(rs.data.data)
                     setIsLoading(false)
                 })
+            }else{
+                setIsLoading(true)
             }
         }, 3000)
         return () => clearTimeout(delayDebounceFn)
@@ -250,14 +252,14 @@ function Header() {
                                 )
                             })}
                         </Box>
-                        <div className='header__toolbar-search'>
+                        <div className='header__toolbar-search' > 
                             <div className='header__toolbar-search-input-wrap'>
                                 <input
                                     className='header__toolbar-search-input'
                                     type="text"
                                     placeholder="Tìm kiếm truyện"
                                     onChange={(e) => search(e.target.value)}
-                                    onBlur={() => setIsLoading(true)}
+                                    onBlur={() => setIsLoading(false)}
                                 />
                             </div>
                             <div className='header__toolbar-search-history'>

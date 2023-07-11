@@ -158,7 +158,7 @@ button {
     box-shadow: 0 1px 5px #e0e0e0;
     overflow: hidden;
     display: block;
-    z-index: 2;
+    z-index: 11;
 }
 
 .header__toolbar-search-history-list {

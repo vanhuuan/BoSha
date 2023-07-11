@@ -53,7 +53,7 @@ export default function BookDetail() {
         isLogin = true
     }
     console.log("Login", isLogin)
-    const [showMore, setShowMore] = useState(true);
+    const [showMore, setShowMore] = useState(false);
 
     let navigate = useNavigate();
 
@@ -236,7 +236,7 @@ export default function BookDetail() {
                                             : <div style={{ padding: "1em 1em 0em" }} dangerouslySetInnerHTML={{ __html: preview }}></div>
                                         }
                                         {preview.length < 250 ? <></> :
-                                            <button className="btn" onClick={() => setShowMore(!showMore)}>{showMore ? "Mở rộng" : "Ít hơn"}</button>
+                                            <button className="btn" onClick={() => setShowMore(!showMore)}>{!showMore ? "Ít hơn" : "Mở rộng" }</button>
                                         }
                                     </div>
                                 </div>
